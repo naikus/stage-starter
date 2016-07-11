@@ -1,0 +1,38 @@
+@import "stage.less";
+
+
+* {
+  /* prevent callout when holding tap on links (the native dialog that comes up) */
+  -webkit-touch-callout: none;
+
+  /* prevent webkit from resizing text to fit */
+  -webkit-text-size-adjust: none;
+
+  /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+.border-box {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+article, section, aside, div, img, p, ul, li, h1, h2, h3, h4, h5, h6, .box, .inline-box, input,
+textarea, select {
+  .border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: Hevletica, sans-serif;
+}
+
+
+
+@import "loading.less";
+
+
+/* --------------------------------------- Additional Views ------------------------------------- */
+@import "views.less";

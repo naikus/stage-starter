@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <!-- meta http-equiv="Content-Security-Policy"
+        content="default-src 'self' 'unsafe-eval' 'unsafe-inline' https: http: data: gap:
+            wss://*.firebaseio.com https://fixmywhatever.firebaseio.com/;
+            style-src 'self' 'unsafe-inline';
+            media-src *" / -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="480" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="theme-color" content="#2f434e" />
+    <meta http-equiv="cleartype" content="on" />
+
+    <!-- Combined stage.less and app.less -->
+    <link rel="stylesheet" type="text/css" href="css/app.css" />
+    <link rel="stylesheet" type="text/css" href="css/dark.theme.css" />
+
+    <style>
+    </style>
+  </head>
+
+  <body>
+    <!-- All our views will be shown here -->
+    <div class="stage-viewport" id="viewPort"></div>
+
+    <!-- for older safari browsers -->
+    <script>
+      function addScript(src) {
+        var doc = document, s = doc.createElement("script"),
+            fs = doc.getElementsByTagName("script")[0];
+
+        s.src = src;
+        s.async = 1;
+        fs.parentNode.insertBefore(s, fs);
+        return addScript;
+      }
+      if(typeof Promise === "undefined") {
+        addScript("lib/promise.js");
+      }
+    </script>
+
+    <script src="lib/bundle.js"></script>
+    <script src="lib/activables.js"></script>
+
+    <script type="text/javascript" src="cordova.js"></script>
+  </body>
+</html>
