@@ -10,7 +10,7 @@ fi
 
 mkdir -p dist
 
-cordova create cordova-app org.mojojs.starter StarterApp --link-to=dist
+cordova create cordova-app org.stagejs.starter StarterApp --link-to=dist
 
 # copy the existing config.xml (Note the app id and name in this file will take precedence over the
 # cordova 'create' command above)
