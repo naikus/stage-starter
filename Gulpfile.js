@@ -22,6 +22,9 @@ var config = {
       // "js/",
       "modules/",
       "!less"
+    ],
+    libs: [
+      "activables"
     ]
   },
   dist: {
@@ -91,7 +94,12 @@ gulp.task("build", ["clean"], function() {
   }
 
   // Expose additional libs in the js and lib directories
-  
+  config.src.libs.forEach(function(lib) {
+    b.require("./" + lib, {
+      basedir: config.src.dir + "/lib",
+      expose: lib
+    });
+  });
 
   b.bundle().pipe(vsource("bundle.js")).pipe(gulp.dest(dist + "/lib/"));
 

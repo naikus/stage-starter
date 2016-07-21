@@ -14,6 +14,6 @@ AppStage = Stage({
 
 setTimeout(function() {
   AppStage.pushView("dashboard");
-}, 1000);
+}, 500);
 
 module.exports = AppStage;
