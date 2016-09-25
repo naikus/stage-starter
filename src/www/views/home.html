@@ -1,0 +1,25 @@
+<div class="stage-view home" data-view="home">
+  <div class="hero">
+    <a class="button inline" href="#/about">About</a>
+  </div>
+  <div class="content">
+    <section>
+      <h3>Home View</h3>
+    </section>
+  </div>
+  <div class="footer alt-bg">
+    <span class="text-x-small">Made using stage.js</span>
+  </div>
+  <script>
+    (function() {
+      var Stage = require("stage");
+      Stage.defineView("home", function(AppStage, viewUi) {
+        return {
+          initialize: function(opts) {
+          }
+        };
+      });
+
+    })();
+  </script>
+</div>

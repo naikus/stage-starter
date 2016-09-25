@@ -19,12 +19,12 @@ var config = {
       "fonts/",
       "images/",
       // "lib/",
-      // "js/",
-      "modules/",
+      "js/",
+      "views/",
       "!less"
     ],
     libs: [
-      "activables"
+      // add libraries here that you want to 'require'
     ]
   },
   dist: {

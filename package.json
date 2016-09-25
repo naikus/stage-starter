@@ -1,21 +1,13 @@
 {
-  "name": "stage-starter",
+  "name": "stage-project-site",
   "version": "1.0.0",
-  "description": "Stage.js starter application",
+  "description": "Project site for stage js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/naikus/stage-starter.git"
   },
   "keywords": [],
   "author": "aniketn3@gmail.com",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/naikus/stage-starter/issues"
-  },
-  "homepage": "https://github.com/naikus/stage-starter#readme",
   "devDependencies": {
     "browserify": "^13.0.1",
     "del": "^1.1.1",
@@ -30,7 +22,7 @@
     "yargs": "^1.2.1"
   },
   "dependencies": {
-    "redux": "^3.5.2",
-    "stage": "git+https://github.com/naikus/stage"
+    "ruta3": "^2.0.0",
+    "stage": "git+https://github.com/naikus/stage.git"
   }
 }

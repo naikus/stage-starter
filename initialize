@@ -24,12 +24,14 @@ cd cordova-app
 # add the appropriate platform
 cordova platforms add $1
 
-cordova plugin add cordova-plugin-inappbrowser
-cordova plugin add cordova-plugin-statusbar
-cordova plugin add cordova-plugin-dialogs
-cordova plugin add cordova-plugin-vibration
-cordova plugin add cordova-plugin-network-information
-cordova plugin add cordova-plugin-whitelist
+if [ "$1" != "browser" ] ; then
+  cordova plugin add cordova-plugin-inappbrowser
+  cordova plugin add cordova-plugin-statusbar
+  cordova plugin add cordova-plugin-dialogs
+  cordova plugin add cordova-plugin-vibration
+  cordova plugin add cordova-plugin-network-information
+  cordova plugin add cordova-plugin-whitelist
+fi
 
 
 # install local npm modules

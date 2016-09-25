@@ -1,19 +1,72 @@
-var Redux = require("redux"),
-    Stage = require("stage"),
+var Stage = require("stage"),
+    Routes = require("./routes"),
+    RouteHandler = require("./components/route-handler"),
     AppStage;
 
 
-Stage.views({
-  "dashboard": "modules/dashboard/index.html",
-  "about": "modules/about/index.html"
-});
+var viewInfo;
+for(var route in Routes) {
+  viewInfo = Routes[route];
+  Stage.view(viewInfo.view, viewInfo.template);
+}
 
 AppStage = Stage({
-  viewport: "#viewPort"
+  viewport: "#viewPort",
+  // transition: "lollipop"
+  transition: "slide"
 });
 
-setTimeout(function() {
-  AppStage.pushView("dashboard");
-}, 500);
+var routeHandler = RouteHandler(AppStage);
 
-module.exports = AppStage;
+
+function Nav() {
+  var navigation = document.getElementById("nav"),
+      items = Array.prototype.slice.call(navigation.getElementsByTagName("a"), 0);
+      selectedItem = null;
+
+  function selectItem() {
+    if(selectedItem) {
+      selectedItem.className = "";
+    }
+    var path = location.hash;
+    items.some(function(a) {
+      if(a.href.endsWith(path)) {
+        selectedItem = a;
+        return true;
+      }
+      return false;
+    });
+    if(selectedItem) {
+      selectedItem.className = "active";
+    }
+  }
+
+  window.addEventListener("hashchange", selectItem);
+
+  return {
+    selectItem: selectItem,
+    clear: function() {
+      if(!selectedItem) return;
+      selectedItem.className = "";
+      selectedItem = null;
+    }
+  };
+}
+
+
+var navigation = Nav();
+
+module.exports = window.App = {
+  run: function() {
+    var currPath = routeHandler.getPath(location.href), 
+        route = Routes[currPath];
+    if(route) {
+      routeHandler.route(currPath);
+    }else {
+      console.log('Defaulting to /home');
+      routeHandler.route("/home");
+    }
+    // Select item at curent path
+    navigation.selectItem();
+  }
+};
