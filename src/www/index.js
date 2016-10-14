@@ -12,8 +12,8 @@ for(var route in Routes) {
 
 AppStage = Stage({
   viewport: "#viewPort",
-  // transition: "lollipop"
-  transition: "slide"
+  transition: "lollipop"
+  // transition: "slide"
 });
 
 var routeHandler = RouteHandler(AppStage);

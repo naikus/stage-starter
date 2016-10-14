@@ -11,26 +11,26 @@
 // Background color for viewport views and other boxes
 @bg-color: #F1F3F6;
 // Background color for overlays, inlays etc.
-@alt-bg-color: #413541;
+@alt-bg-color: #353232; // #4a4358;
 // Text color to complement the background color
-@text-color: #4C4151;
+@text-color: #555544;// #4a4358;
 // Text color to complement alternate background color
-@alt-text-color: #FF9C4E;
+@alt-text-color: #ccc;
 // Default selected background color
-@selected-bg-color: #E36B52;
-@selected-bg-color-alt: #ED824E;
+@selected-bg-color: #e85563;
+@selected-bg-color-alt: #ef5a69;
 // Default selected text color
 @selected-text-color: #fff;
 
 // Active background color, when an element becomes active i.e. :active class
-@active-bg-color: lighten(#FF9C4E, 15%);
+@active-bg-color: lighten(@selected-bg-color, 15%);
 @active-text-color: @text-color;
 
-@primary-action-bg-color: #FF9C4E;
-@primary-action-text-color: darken(@text-color, 15%);
+@primary-action-bg-color: darken(#4cc3ff, 7%);
+@primary-action-text-color: darken(@text-color, 5%);
 
-@secondary-action-bg-color: darken(#4cc3ff, 7%);
-@secondary-action-text-color: #fff;
+@secondary-action-bg-color: darken(#4cc3ff, 0%);
+@secondary-action-text-color: darken(@text-color, 5%);
 
 @toolbar-bg-color: darken(@alt-bg-color, 3%);
 @toolbar-text-color: @text-color;
@@ -80,7 +80,7 @@
 
 
 html, body {
-  background-color: lighten(@alt-bg-color, 15%);
+  background-color: lighten(@alt-bg-color, 1%);
   color: @text-color;
   font-size: 1em;
 }
@@ -185,9 +185,9 @@ input,
 }
 
 .header {
-  background-color: darken(@alt-bg-color, 7%);
-  color: lighten(@alt-text-color, 5%);
-  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  background-color: darken(@alt-bg-color, 4%);
+  color: lighten(@alt-text-color, 1%);
+  // box-shadow: 0 0 10px rgba(0,0,0,0.2);
   border-bottom: 1px solid rgba(0,0,0,0.2);
   .logo {
     color: lighten(@alt-text-color, 10%);
@@ -196,7 +196,7 @@ input,
     // border-bottom: 5px solid transparent;
     &:active {
       background-color: rgba(0,0,0,0.06);
-      color: @alt-text-color;
+      color: @selected-bg-color;
       // border-bottom-color: @primary-action-bg-color;
     }
   }
@@ -211,7 +211,7 @@ input,
           color: @alt-text-color;
         }
         &.active {
-          border-bottom-color: @primary-action-bg-color;
+          border-bottom-color: @selected-bg-color;
         }
       }
     }
@@ -230,4 +230,7 @@ input,
 
 /* View specific styling */
 .stage-view.home {
+  .hero {
+    
+  }
 }
