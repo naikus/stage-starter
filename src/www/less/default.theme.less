@@ -11,19 +11,19 @@
 // Background color for viewport views and other boxes
 @bg-color: #F1F3F6;
 // Background color for overlays, inlays etc.
-@alt-bg-color: #353232; // #4a4358;
+@alt-bg-color: #33373a;
 // Text color to complement the background color
-@text-color: #555544;// #4a4358;
+@text-color: #333344;
 // Text color to complement alternate background color
 @alt-text-color: #ccc;
 // Default selected background color
-@selected-bg-color: #e85563;
-@selected-bg-color-alt: #ef5a69;
+@selected-bg-color: #00caff;
+@selected-bg-color-alt: lighten(@selected-bg-color, 20%);
 // Default selected text color
 @selected-text-color: #fff;
 
 // Active background color, when an element becomes active i.e. :active class
-@active-bg-color: lighten(@selected-bg-color, 15%);
+@active-bg-color: lighten(@selected-bg-color, 40%);
 @active-text-color: @text-color;
 
 @primary-action-bg-color: darken(#4cc3ff, 7%);
@@ -122,8 +122,8 @@ input,
    margin: 0;
    margin-bottom: 10px;
    // background-color: lighten(@bg-color, 5%);
-   background-color: darken(@bg-color, 3%);
-   color: @text-color;
+   background-color: lighten(@alt-bg-color, 15%);
+   color: @alt-text-color;
 
    -webkit-appearance: caret;
    .border-box;
@@ -152,7 +152,7 @@ input,
 .colored-buttons(@bgcolor: @info-color, @color: #fff) {
   background-color: @bgcolor;
   color: @color;
-  
+
   &:hover {
     background-color: darken(@bgcolor, 10%);
   }
@@ -231,6 +231,6 @@ input,
 /* View specific styling */
 .stage-view.home {
   .hero {
-    
+
   }
 }
