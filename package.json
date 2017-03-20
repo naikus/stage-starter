@@ -1,7 +1,7 @@
 {
-  "name": "stage-project-site",
+  "name": "stage-starter",
   "version": "1.0.0",
-  "description": "Project site for stage js",
+  "description": "Starter webapp that uses stage",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "ruta3": "^2.0.0",
-    "stage": "git+https://github.com/naikus/stage.git"
+    "stagejs": "github:naikus/stagejs",
+    "whatwg-fetch": "^2.0.3"
   }
 }
