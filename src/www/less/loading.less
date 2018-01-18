@@ -20,7 +20,7 @@
        -webkit-transform: translate3d(0, 0, 0);
    }
 }
-@-keyframes infinite-wait {
+@keyframes infinite-wait {
    0% {
        transform: translate3d(0, 0, 0);
    }
@@ -32,6 +32,7 @@
    }
 }
 
+
 #loading {
   z-index: 399;
   display: none;
@@ -41,7 +42,7 @@
   top: 0px;
   height: 4px;
   // background-color: rgba(0,0,0,0.1);
-  
+
   > .slider {
     will-change: transform;
     width: 20%;
@@ -51,12 +52,13 @@
     position: absolute;
     top: 0;
     left: 0;
-    
-    -webkit-animation: 5s linear 0s normal none infinite infinite-wait;
+    background-color: @selected-bg-color;
+
     -moz-animation: 5s linear 0s normal none infinite infinite-wait;
+    -webkit-animation: 5s linear 0s normal none infinite infinite-wait;
     animation: 5s linear 0s normal none infinite infinite-wait;
   }
-  
+
   &.show {
     display: block;
   }

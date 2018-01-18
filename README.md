@@ -1,2 +1,2 @@
-# stage-starter
-A commonjs starter app that uses stage view management
+# stage-starter-vue
+A starter mobile/web template that uses stagejs

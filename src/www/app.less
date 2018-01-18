@@ -1,0 +1,60 @@
+@import "../../node_modules/stage/src/stage.less";
+// @import (less) "fonts/feather/style.css";
+// @import (less) "fonts/roboto/style.css";
+@import "less/common.less";
+@import "less/form.less";
+@import "less/tabs.less";
+@import "less/loading.less";
+@import "less/animations.less";
+@import "less/layout.less";
+
+
+.button, button, input[type=button] {
+  text-transform: uppercase;
+}
+
+.alt-bg {
+  background-color: @alt-bg-color;
+  // background-color: @toolbar-bg-color;
+  color: @alt-text-color;
+}
+
+.stage-view {
+  background-color: @bg-color;
+  color: @text-color;
+
+  &.alt-bg {
+    .alt-bg;
+  }
+}
+
+
+.message {
+  padding: 10px;
+  color: #fff;
+
+  width: 94%;
+  margin: 3% 10px;
+
+  position: fixed;
+  bottom: 0;
+  left: 0;
+
+  z-index: 100;
+
+  background-color: rgba(0,0,0,0.05);
+  &.error {
+    background-color: @error-color;
+  }
+  &.success {
+    background-color: @success-color;
+  }
+}
+
+/* -------------------------------------- Additional Modules ------------------------------------ */
+// @import "modules/index.less";
+
+
+
+/* ---------------------------------------- Color Theme ----------------------------------------- */
+@import "less/color-theme.less";
