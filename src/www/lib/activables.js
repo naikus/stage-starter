@@ -23,7 +23,7 @@ function shallowCopy(...args) {
   for(let i = 0, len = sources.length; i < len; i++) {
     src = sources[i];
     for(let k in src) {
-      if(target.hasOwnProperty(k)) {
+      if(src.hasOwnProperty(k)) {
         target[k] = src[k];
       }
     }

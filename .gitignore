@@ -1,4 +1,7 @@
-/node_modules/
-/nbproject/
-/dist/
-/cordova-app/
+/nbproject
+/node_modules
+/cordova-app
+/.DS_Store
+/.idea
+/dist
+/atlassian-ide-plugin.xml

@@ -2,71 +2,65 @@
 @success-color: #94B75F;
 @warn-color: #F79204;
 @info-color: #4CC3FF;
-@invalid-color: #9B2D2D;
+@invalid-color: @error-color;
 
 
 
-@base-color: #3b495a;
+@base-color: #223344;
 // Background color for viewport views and other boxes
-@bg-color: #3b495a;
+@bg-color: #2E3D4C;
 // Background color for overlays, inlays etc.
-@alt-bg-color: lighten(@bg-color, 5%);
+@alt-bg-color: @base-color;
 // Text color to complement the background color
-@text-color: #acb7c3;
+@text-color: rgb(143, 154, 158);
 // Text color to complement alternate background color
-@alt-text-color: darken(@text-color, 5%);
+@alt-text-color: @text-color;
 // Default selected background color
-@selected-bg-color: #ff6600;
-@selected-bg-color-alt: darken(#ff6600, 5%);
+@selected-bg-color: rgba(58, 128, 146, 0.911);
+// @selected-bg-color: rgba(245, 117, 117, 0.911);
+@selected-bg-color-alt: darken(@selected-bg-color, 5%); // darken(#fc3b6b, 5%);
 // Default selected text color
 @selected-text-color: #fff;
 // Active background color, when an element becomes active i.e. :active class
-@active-bg-color: lighten(#4590e4, 10%);
+@active-bg-color: @darken(bg-color, 5%); // lighten(#f34277, 10%);
 @active-text-color: @text-color;
 
-@primary-action-bg-color: #4590e4;
+// @primary-action-bg-color: rgba(245, 117, 117, 0.911);
+@primary-action-bg-color: rgba(55, 176, 212, 0.911);
 @primary-action-text-color: #fff;
 
-@secondary-action-bg-color: darken(#4cc3ff, 0%);
-@secondary-action-text-color: #fff;
+@secondary-action-bg-color: lighten(@bg-color, 10%); // darken(#4cc3ff, 0%);
+@secondary-action-text-color: @text-color; // #fff;
 
-@toolbar-bg-color: @base-color;
+@toolbar-bg-color: #24303c;
 @toolbar-text-color: @text-color;
 
-@link-color: @text-color;
-
-
-
-
-
+@link-color: lighten(#4590e4, 10%);
+@input-bg-color: rgba(24, 24, 24, 0.08);
+@input-text-color: @text-color;
+@input-hint-color: darken(@text-color, 10%);
+@input-label-color: @text-color;
+@button-bg-color: rgba(150, 150, 190, 0.3);
+@button-text-color: #fff;
 
 /*
-@base-color: #fafafa;
-// Background color for viewport views and other boxes
-@bg-color: #fafafa;
-// Background color for overlays, inlays etc.
-@alt-bg-color: #3b495a;
-// Text color to complement the background color
-@text-color: #3b495a;
-// Text color to complement alternate background color
-@alt-text-color: #f6f6f6;
-// Default selected background color
-@selected-bg-color: #ff6600;
-@selected-bg-color-alt: darken(#ff6600, 5%);
-// Default selected text color
+@base-color: #fefefe;
+@bg-color: #fff;
+@alt-bg-color: #2c3133;
+@text-color: #717171;
+@alt-text-color: rgb(158, 175, 182); // darken(@text-color, 5%);
+@selected-bg-color: rgba(58, 128, 146, 0.911);
+@selected-bg-color-alt: darken(@selected-bg-color, 5%); // darken(#fc3b6b, 5%);
 @selected-text-color: #fff;
-// Active background color, when an element becomes active i.e. :active class
-@active-bg-color: lighten(#4590e4, 10%);
+@active-bg-color: rgba(0,0,0,0.04);
 @active-text-color: @text-color;
-
-@primary-action-bg-color: #4590e4;
+@primary-action-bg-color: rgba(63, 107, 121, 0.911);
 @primary-action-text-color: #fff;
-
-@secondary-action-bg-color: darken(#4cc3ff, 0%);
-@secondary-action-text-color: #fff;
-
-@toolbar-bg-color: @base-color;
-@toolbar-text-color: lighten(@text-color, 10%);
-
-@link-color: @text-color;
+@secondary-action-bg-color: darken(@bg-color, 10%); // darken(#4cc3ff, 0%);
+@secondary-action-text-color: @text-color; // #fff;
+@toolbar-bg-color: @alt-bg-color;
+@toolbar-text-color: @alt-text-color;
+@link-color: lighten(#0e87ce, 10%);
+@input-bg-color: rgba(0,0,0,0.03);
+@input-text-color: @text-color;
 */

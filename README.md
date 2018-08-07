@@ -1,2 +1,4 @@
-# stage-starter-vue
-A starter mobile/web template that uses stagejs
+stage-vidom
+=====
+
+A starter mobile/web template that uses stagejs and vidom

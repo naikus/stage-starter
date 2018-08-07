@@ -1,65 +1,157 @@
-/* global require module */
-const Stage = require("stage"),
-    Activables = require("activables"),
-    Routes = require("./routes"),
+/* global */
+const {createComponent, mount} = require("vidom"),
+    Stage = require("stage"),
     Config = require("./config"),
-    Store = require("store2").namespace(Config.appnamespace),
-    AppStage = Stage({
-      viewport: "#viewPort",
-      transition: "lollipop"
+    // Router = require("simple-router").default,
+    Storage = require("store2").namespace(Config.appnamespace),
+    Activables = require("activables"),
+
+    Sidebar = createComponent({
+      onInit() {},
+      onMount() {},
+      onRender() {
+        return (
+          <div class={"sidebar"}>
+          </div>
+        );
+      }
+    }),
+
+    Messages = createComponent({
+      onInit() {},
+      onMount() {},
+      onRender() {
+        return (
+          <div class={"messages"}>
+          </div>
+        );
+      }
+    }),
+
+    App = createComponent({
+      setupStage() {
+        const {viewportElem} = this,
+            {startView = "main", transition = "lollipop"} = this.attrs,
+            // router = Router.create(),
+            viewConfig = Config.views,
+            stage = this.stage = Stage({
+              viewport: viewportElem,
+              transition: transition || "lollipop"
+            });
+
+        viewportElem.addEventListener("beforeviewtransitionin", e => {
+          const viewId = e.viewId,
+              controller = this.stage.getViewController(viewId),
+              ViewActionBar = typeof controller.getActionBar === "function" ?
+                controller.getActionBar() : null;
+          // console.log("View actionbar", ViewActionBar);
+          this.setState({ViewActionBar: ViewActionBar});
+        });
+        /*
+        viewportElem.addEventListener("viewloadstart", e => {
+          const {viewId, error} = e;
+          this.setState({loading: true});
+        });
+        viewportElem.addEventListener("viewloadend", e => {
+          const {viewId, error} = e;
+          this.setState({loading: false});
+          console.log(e);
+        });
+        */
+        /*
+        viewportElem.addEventListener("beforeviewtransitionout", e => {
+          const {viewId} = e;
+          console.log(e);
+        });
+        */
+        // Register all the routes
+        Object.keys(viewConfig).forEach(path => {
+          const viewInfo = viewConfig[path], view = viewInfo.view;
+          Stage.view(view, viewInfo.template);
+        });
+        stage.pushView(startView, {});
+      },
+      setupBackButton() {
+        document.addEventListener("backbutton", e => {
+          const {stage} = this, controller = stage.getViewController(stage.currentView());
+          if(typeof controller.onBackButton === "function") {
+            controller.onBackButton();
+          }else {
+            try {
+              stage.popView();
+            }catch(e) {
+              navigator.app.exitApp();
+            }
+          }
+        }, false);
+      },
+      onInit() {
+        this.setState({
+          ViewActionBar: null,
+          loading: false
+        });
+      },
+      onMount() {
+        this.setupStage();
+        this.setupBackButton();
+      },
+      onRender() {
+        const {ViewActionBar, loading, showSidebar, messages} = this.state;
+        return (
+          <fragment>
+            <div ref={el => this.viewportElem = el} class="stage-viewport"></div>
+            <div class={"actionbar-container" + (ViewActionBar ? " show" : "")}>
+              {ViewActionBar ? <ViewActionBar /> : null}
+            </div>
+            {showSidebar ? <Sidebar /> : null}
+            {messages ? <Messages items={messages} /> : null}
+            <div class={"text-center anim" + (loading ? " show" : "")} id="loading">
+              <span class="slider slide"></span>
+            </div>
+          </fragment>
+        );
+      }
     });
 
+// Register custom events (lib/touch.js)
+// require("touch");
+
 
 /**
- * Sets up the back button on cordova
- * @param {Stage} AppStage The Stage instance
+ * Run the app
  */
-function setupBackButton(AppStage) {
-  document.addEventListener("backbutton", e => {
-    const controller = AppStage.getViewController(AppStage.currentView());
-    if(typeof controller.onBackButton === "function") {
-      controller.onBackButton();
-    }else {
-      try {
-        AppStage.popView();
-      }catch(e) {
-        navigator.app.exitApp();
-      }
-    }
-  }, false);
-}
-
-/**
- * Run the application with specified view
- * @param {String} viewName The name of the starting view
- */
-function run(viewName) {
-  const viewPort = AppStage.getViewPort(), activables = Activables(document);
-
-  // Register all the routes
-  Object.keys(Routes).forEach(r => {
-    const viewInfo = Routes[r];
-    Stage.view(viewInfo.view, viewInfo.templateUrl);
-  });
-
-
+function run() {
+  const activables = Activables(document);
   // Start the activables
   activables.start();
   window.addEventListener("unload", event => {
     activables.stop();
   });
+  const auth = Storage.get("auth"),
+      startView = (auth && auth.accountId && auth.apiKey) ? "sell" : "auth";
 
-
-  viewPort.addEventListener("viewloadstart", e => {}, false);
-  viewPort.addEventListener("viewloadend", e => {}, false);
-  setupBackButton(AppStage);
-
-  AppStage.pushView(viewName);
+  mount(document.getElementById("shell"), <App startView={startView} transition="lollipop" />);
 }
 
 
+// Register the service worker
+/*
+if("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("sw.js").then(
+      registration => {
+        console.log("Service worker registration success", registration);
+      },
+      error => {
+        console.log("Service worker registration failed", error);
+      }
+    );
+  });
+}
+*/
 
 module.exports = {
   run: run,
-  Store: Store
+  Storage,
+  Config
 };

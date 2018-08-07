@@ -1,12 +1,21 @@
 @import "../../node_modules/stage/src/stage.less";
-// @import (less) "fonts/feather/style.css";
-// @import (less) "fonts/roboto/style.css";
+@import "font/icons/style.less";
 @import "less/common.less";
-@import "less/form.less";
-@import "less/tabs.less";
-@import "less/loading.less";
-@import "less/animations.less";
-@import "less/layout.less";
+
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: Roboto, sans-serif, sans;
+  font-weight: 400;
+}
+h1,h2,h3,h4,h5,h6 {
+  font-weight: 400;
+}
+
+.stage-viewport {
+  background-color: @base-color;
+}
 
 
 .button, button, input[type=button] {
@@ -15,8 +24,12 @@
 
 .alt-bg {
   background-color: @alt-bg-color;
-  // background-color: @toolbar-bg-color;
   color: @alt-text-color;
+}
+
+.selected {
+  background-color: @selected-bg-color !important;
+  color: @selected-text-color !important;
 }
 
 .stage-view {
@@ -26,33 +39,38 @@
   &.alt-bg {
     .alt-bg;
   }
-}
 
-
-.message {
-  padding: 10px;
-  color: #fff;
-
-  width: 94%;
-  margin: 3% 10px;
-
-  position: fixed;
-  bottom: 0;
-  left: 0;
-
-  z-index: 100;
-
-  background-color: rgba(0,0,0,0.05);
-  &.error {
-    background-color: @error-color;
+  h2 {
+    padding-bottom: 10px;
+    // border-bottom: 1px solid rgba(0,0,0,0.1);
+    margin-top: 0;
+    font-weight: bold;
+    text-transform: uppercase;
   }
-  &.success {
-    background-color: @success-color;
+
+  > .content {
+    padding: 20px 30px;
   }
 }
+
+
+@import "components/form/style.less";
+@import "components/actionbar.less";
+.actionbar-container {
+  > div.actionbar {
+    /*
+    font-weight: bold;
+
+    width: 96%;
+    margin: 0 2%;
+    border-bottom: 2px solid lighten(@selected-bg-color, 30%);
+    */
+  }
+}
+
 
 /* -------------------------------------- Additional Modules ------------------------------------ */
-// @import "modules/index.less";
+// @import "modules/sell/style.less";
 
 
 

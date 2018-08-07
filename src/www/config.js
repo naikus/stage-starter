@@ -1,7 +1,19 @@
-/* global module */
+/* global */
 module.exports = {
-  appnamespace: "stagestarter",
-  apiServerUrl: "",
+  appnamespace: "slickposapp",
+  apiServerUrl: "https://api.slickpos.com",
   apiBasePath: "/api",
-  baseDir: "app"
+  // baseDir: "app",
+
+
+  views: {
+    "/sell": {
+      view: "sell",
+      template: "modules/sell/view.js"
+    },
+    "/auth": {
+      view: "auth",
+      template: "modules/auth/view.js"
+    }
+  }
 };

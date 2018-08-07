@@ -3,31 +3,24 @@
 if [ "$1" = "clean" ] ; then
    echo "Cleaning..."
    rm -rf cordova-app
-   rm -rf dist/*
+   rm -rf dist
    echo "Done!"
    exit
 fi
 
 mkdir -p dist
-npm install
 gulp build
 
+cordova create cordova-app naikus.github.io.swagpos SwagPos --link-to=./dist
 
-if [ ! -d cordova-app ] ; then
-  cordova create cordova-app naikus.github.io.stagestarter StageStarter --link-to=dist --verbose
-  cp -r hooks cordova-app
-  # copy the existing config.xml (Note the app id and name in this file will take precedence over the
-  # cordova 'create' command above)
-  cp src/config.xml cordova-app
-  # copy the resources directory (splash screen, app icon, etc.)
-  cp -r src/res cordova-app/
-fi
+# copy the existing config.xml (Note the app id and name in this file will take precedence over the
+# cordova 'create' command above)
+cp src/config.xml cordova-app
 
+# copy the resources directory (splash screen, app icon, etc.)
+cp -r src/res cordova-app/
 
 cd cordova-app
-
-# add the appropriate platform
-cordova platforms add $1
 
 if [ "$1" != "browser" ] ; then
   cordova plugin add cordova-plugin-inappbrowser
@@ -39,14 +32,11 @@ if [ "$1" != "browser" ] ; then
 fi
 
 
-if [ "$1" = "ios" ] ; then
-  # Add only ios specific plugins
-fi
-
-
-if [ "$1" = "andoird" ] ; then
-  # Add only ios specific plugins
-fi
-
+# add the appropriate platform
+cordova platforms add $1
 cordova prepare
+
+
+# install local npm modules
 cd ..
+yarn install

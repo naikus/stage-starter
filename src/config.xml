@@ -1,22 +1,20 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="naikus.github.io.hackernews" version="1.0.0"
+<widget id="naikus.github.io.swagpos" version="1.0.0"
     ios-CFBundleVersion="1"
     android-versionCode="1"
     xmlns="http://www.w3.org/ns/widgets"
     xmlns:cdv="http://cordova.apache.org/ns/1.0">
 
-  <allow-intent href="itms:*" />
-  <allow-intent href="itms-apps:*" />
-  <name>HackerNews</name>
-  <description>Simple Hacker News app</description>
+  <name>SwagPOS</name>
+  <description>Client App for SlickPOS</description>
   <author email="aniketn3@gmail.com" href="https://github.com/naikus">Aniket Naik</author>
 
   <content src="index.html" />
   <icon src="res/android/mipmap-xxxhdpi/ic_launcher.png" />
 
   <!-- ========================= Whitelist plugin configuration ================================ -->
-  <access origin="*" />
   <plugin name="cordova-plugin-whitelist" spec="1" />
+  <access origin="*" />
   <allow-intent href="http://*/*" />
   <allow-intent href="https://*/*" />
   <allow-intent href="tel:*" />
@@ -78,7 +76,7 @@
     <param name="ios-package" value="CDVStatusBar" />
     <param name="onload" value="true" />
   </feature>
-  <preference name="StatusBarBackgroundColor" value="#3b495a" />
+  <preference name="StatusBarBackgroundColor" value="#24303c" />
   <preference name="StatusBarOverlaysWebView" value="false" />
   <preference name="StatusBarStyle" value="blackopaque" />
 

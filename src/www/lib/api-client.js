@@ -1,6 +1,6 @@
 /* global console, Promise fetch Request */
 /* jshint eqnull:true */
-require("whatwg-fetch");
+import "whatwg-fetch";
 
 const ObjectToString = Object.prototype.toString,
     /**
@@ -88,89 +88,103 @@ const ObjectToString = Object.prototype.toString,
       const collector = [];
       collectParams(null, objParams, collector);
       return collector.join("&");
-    };
+    },
 
 
-/**
- * ApiClient prototype object used in create function
- */
-const ApiClientProto = {
-  /**
-   * Requests (http) the given 'path' with specified opts.
-   * @param {String} path The path to request to
-   * @param {Object} opts The options object similar to http fetch API
-   * @return {Promise} a Promise that resolves on successfull request.
-   */
-  call(path, opts) {
-    const url = (opts.apiUrl || this.options.apiUrl) + path,
-        xdr = url.indexOf("http://") === 0 || url.indexOf("https://") === 0,
-        headers = Object.assign({}, this.options.headers, opts.headers || {}),
-        options = Object.assign({}, this.options, {
-          method: "GET",
-          mode: xdr ? "cors" : "same-origin"
-        }, opts);
-    options.headers = headers;
-    // delete options.apiUrl;
-    // delete options.useToken;
-    // delete options.token;
-    const request = new Request(url, options), context = {path, options, request, response: null};
+    /**
+     * ApiClient prototype object used in create function
+     */
+    ApiClientProto = {
+      /**
+       * Requests (http) the given 'path' with specified opts.
+       * @param {String} path The path to request to
+       * @param {Object} opts The options object similar to http fetch API
+       * @return {Promise} a Promise that resolves on successfull request.
+       */
+      call(path, opts) {
+        const url = (opts.apiUrl || this.options.apiUrl) + path,
+            xdr = url.indexOf("http://") === 0 || url.indexOf("https://") === 0,
+            headers = Object.assign({}, this.options.headers, opts.headers || {}),
+            options = Object.assign({}, this.options, {
+              method: "GET",
+              mode: xdr ? "cors" : "same-origin"
+            }, opts);
+        options.headers = headers;
 
-    this.interceptors.forEach(interceptor => {
-      // here interceptors can modify request headers, etc.
-      interceptor(context);
-    });
+        if("FormData" in window && opts.body instanceof window.FormData) {
+          delete options.headers["Content-Type"];
+          delete options.headers["content-type"];
+        }
+        const request = new Request(url, options), context = {path, options, request, response: null};
 
-    return fetch(request)
-        .then(response => {
-          let resPromise = Promise.resolve(response);
-          resPromise.catch(err => {
-            throw err;
-          });
-
-          // const context = {path, options, request, response: resPromise};
-          context.response = resPromise;
-          this.interceptors.forEach(interceptor => {
-            const promise = interceptor(context);
-            // console.log("Interceptor returned", promise);
-            if(promise) {
-              context.response = promise;
-            }
-          });
-          return context.response;
+        let promise = Promise.resolve(context);
+        promise.catch(err => {
+          console.log(err);
+          throw err;
         });
-  },
+        this.interceptors.reduce((promise, interceptor) => {
+          // here interceptors can modify request headers, etc.
+          return promise.then(ctx => {
+            const ret = interceptor(ctx) || ctx;
+            return (typeof ret.then === "function") ? ret : Promise.resolve(ret);
+          });
+        }, promise);
 
-  setOption(name, value) {
-    this.options[name] = value;
-  },
+        return promise.then(ctx => {
+          ctx = ctx || context;
+          return fetch(request)
+              .then(response => {
+                let resPromise = Promise.resolve(response);
+                resPromise.catch(err => {
+                  console.log(err);
+                  throw err;
+                });
 
-  setHeader(name, value) {
-    this.options.headers[name] = value;
-  },
+                // const context = {path, options, request, response: resPromise};
+                ctx.response = resPromise;
+                this.interceptors.forEach(interceptor => {
+                  const promise = interceptor(ctx);
+                  // console.log("Interceptor returned", promise);
+                  if(promise) {
+                    ctx.response = promise;
+                  }
+                });
+                return ctx.response;
+              });
+        });
+      },
 
-  /**
-   * Adds a global interceptor to this API client. Every interceptor is called twice: before a
-   * request is sent and after the response is received, before eventually the promise is handed
-   * to the caller. This allows you to modify requests and responses. Send transparent requests
-   * in case of failures, etc.
-   * The interceptor function receives following object as options:
-   * {
-   *   path: The path to which the request is send or response was received
-   *   options: The options passed to the fetch request
-   *   request: The Request object of the fetch api
-   *   response: The Response object (if available) of the fetch api
-   * }
-   * @param {Function} func The interceptor function
-   */
-  interceptor(func) {
-    if(typeof func === "function") {
-      // console.log("Adding interceptor", func);
-      this.interceptors.push(func);
-    }else {
-      console.warn("[ApiClient] Interceptor expected function but found " + typeof(func));
-    }
-  }
-};
+      setOption(name, value) {
+        this.options[name] = value;
+      },
+
+      setHeader(name, value) {
+        this.options.headers[name] = value;
+      },
+
+      /**
+       * Adds a global interceptor to this API client. Every interceptor is called twice: before a
+       * request is sent and after the response is received, before eventually the promise is handed
+       * to the caller. This allows you to modify requests and responses. Send transparent requests
+       * in case of failures, etc.
+       * The interceptor function receives following object as options:
+       * {
+       *   path: The path to which the request is send or response was received
+       *   options: The options passed to the fetch request
+       *   request: The Request object of the fetch api
+       *   response: The Response object (if available) of the fetch api
+       * }
+       * @param {Function} func The interceptor function
+       */
+      interceptor(func) {
+        if(typeof func === "function") {
+          // console.log("Adding interceptor", func);
+          this.interceptors.push(func);
+        }else {
+          console.warn("[ApiClient] Interceptor expected function but found " + typeof(func));
+        }
+      }
+    };
 
 // Add convenience functions for get, put, post, delete http methods
 ["get", "post", "put", "delete"].forEach(function(m) {
@@ -207,7 +221,7 @@ const createApiClient = opts => {
   });
 };
 
-module.exports = {
+export default {
   create: createApiClient,
   asQueryParameters,
   asJson(response) {
@@ -218,3 +232,4 @@ module.exports = {
     }
   }
 };
+

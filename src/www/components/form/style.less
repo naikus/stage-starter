@@ -1,5 +1,6 @@
 // form controls
 @pad-default: 12px;
+@border-radius: 4px;
 
 a {
   color: @link-color;
@@ -13,16 +14,16 @@ input,
    padding: @pad-default;
    font-size: 1em;
    border: 1px solid rgba(0,0,0,0.07);
-   border-radius: 2px;
+   border-radius: @border-radius;
    display: block;
    position: relative;
    width: 100%;
    margin: 0;
    margin-bottom: 12px;
-   background-color: lighten(@bg-color, 5%);
-   color: @text-color;
+   background-color: @input-bg-color;
+   color: @input-text-color;
 
-   -webkit-appearance: caret;
+   // -webkit-appearance: caret;
    .border-box;
 
    &::-moz-focus-inner {
@@ -31,13 +32,13 @@ input,
    }
 
    &:focus {
-      border-bottom-color: lighten(@selected-bg-color-alt, 20%);
+      border-bottom-color: @selected-bg-color-alt;
       // box-shadow: 0 0 2px lighten(@active-bg-color, 10%);
       outline: 0;
    }
 
    &[disabled], &.disabled {
-      background-color: darken(@bg-color, 10%) !important;
+      background-color: desaturate(lighten(@bg-color, 5%), 5%) !important;
    }
 
    &.inline {
@@ -52,29 +53,26 @@ textarea {
    min-height: 100px;
 }
 .button, input[type=button], button, input[type=reset], input[type=submit] {
-   // background-color: darken(@bg-color, 20%);
-   border: 1px solid rgba(0,0,0,0.1);
-   border-radius: 2px;
-   // border-bottom-width: 3px;
+   background-color: @button-bg-color;
+   color: @button-text-color;
+   border: 1px solid rgba(0,0,0,0.2);
+   border-radius: @border-radius;
+   // text-transform: uppercase;
+   font-weight: bold;
+   border-bottom-width: 3px;
    cursor: pointer;
    text-align: center;
 
    .no-select;
 
-   /*
-   > .fa {
-      font-size: 1.1em;
-      margin-right: 5px;
-   }
-   */
 
    &:hover {
-      background-color: darken(@bg-color, 10%);
-      color: @alt-text-color;
+      background-color: darken(@button-bg-color, 10%);
+      color: @button-text-color;
    }
    &:focus {
-      box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
-      border: 1px solid rgba(0, 0, 0, 0.3);
+      // box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+      border-color: rgba(0, 0, 0, 0.3);
       outline: 0;
    }
    &:active, &.active {
@@ -92,12 +90,13 @@ textarea {
      background-color: darken(@primary-action-bg-color, 5%);
    }
    &.primary:focus {
-     box-shadow: 0 0 2px lighten(@primary-action-bg-color, 10%);
+     // box-shadow: 0 0 2px lighten(@primary-action-bg-color, 10%);
+     background-color: darken(@primary-action-bg-color, 5%);
      outline: none;
    }
    &.primary:active, &.primary.active {
-     border-color: darken(@primary-action-bg-color, 5%);
-     box-shadow: 0 0 5px rgba(0,0,0,0.08) inset;
+     // border-color: darken(@primary-action-bg-color, 10%);
+     // box-shadow: 0 0 5px rgba(0,0,0,0.08) inset;
      background-color: darken(@primary-action-bg-color, 8%);
      color: @primary-action-text-color;
    }
@@ -105,7 +104,7 @@ textarea {
    &[disabled], &[disabled]:hover, &[disabled]:active, &[diabled].active {
      box-shadow: none !important;
      border-color: rgba(0,0,0,0.1) !important;
-     color: lighten(@text-color, 35%) !important;
+     color: darken(@button-text-color, 45%) !important;
    }
 
    /*
@@ -131,14 +130,12 @@ textarea {
 label {
   display: block;
   padding: 3px 0;
-  font-weight: bolder;
+  // font-weight: bolder;
 
-  .hint {
-    font-size: 0.85em;
-    font-weight: 100;
+  span {
+    display: block;
   }
 }
-
 
 input[type=range] {
   padding: 0;
@@ -210,5 +207,32 @@ input[type=range] {
   }
   &::-ms-thumb {
     .thumb-style;
+  }
+}
+
+.field-container {
+  padding: 10px 0;
+  .hint {
+    font-size: 0.85em;
+    font-weight: 100;
+    color: @input-hint-color;
+    margin-bottom: 3px;
+  }
+
+  input, textarea, select, button {
+    margin-bottom: 5px;
+  }
+
+  .v-msg {
+    margin-bottom: 5px;
+  }
+
+  &.valid-false {
+    input, textarea, select {
+      border-bottom-color: @invalid-color;
+    }
+    > .v-msg {
+      color: @invalid-color;
+    }
   }
 }
