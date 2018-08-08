@@ -130,7 +130,7 @@ function run() {
   const auth = Storage.get("auth"),
       startView = (auth && auth.accountId && auth.apiKey) ? "sell" : "auth";
 
-  mount(document.getElementById("shell"), <App startView={startView} transition="lollipop" />);
+  mount(document.getElementById("shell"), <App startView={startView} transition="slide" />);
 }
 
 

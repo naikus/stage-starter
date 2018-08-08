@@ -5,13 +5,16 @@ Stage.defineView({
   id: "sell",
   template: `<div class="stage-view sell"></div>`,
   factory(stageContext, viewUi) {
-    const Content = createComponent({
+    const showAuth = e => stageContext.pushView("auth"),
+        Content = createComponent({
           onInit() {
             this.setState({});
           },
           onRender() {
             return (
-              <div class="content"></div>
+              <div class="content">
+                <button class="primary" onClick={showAuth}>Settings</button>
+              </div>
             );
           },
           onUpdate() {}
@@ -26,7 +29,7 @@ Stage.defineView({
                   <span class="text title">Sell</span>
                   {/* <!-- img class="img" src="images/logo-actionbar.png" alt="Logo" / --> */}
                 </div>
-                <div class="action activable right" onClick={e => stageContext.pushView("auth")}>
+                <div class="action activable right" onClick={showAuth}>
                   <i class="icon icon-settings"></i>
                 </div>
               </div>

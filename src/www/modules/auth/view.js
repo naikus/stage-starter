@@ -1,6 +1,6 @@
 const Stage = require("stage"),
     {createComponent, mount, unmount} = require("vidom"),
-    {Form, Rules, rb} = require("form"),
+    {Form, rb} = require("form"),
     {Storage, Config} = require("app");
 
 // console.log(Storage, Config, Form, Rules, rb);
@@ -10,7 +10,11 @@ Stage.defineView({
   // template not strictly needed unless you want custom CSS class
   template: `<div class="stage-view auth"></div>`,
   factory(stageContext, viewUi) {
-    const goBack = () => stageContext.popView(),
+    let previousView = null;
+    const goBack = () => {
+          previousView && stageContext.popView();
+        },
+
         validationRules = {
           accountId: [
             rb("required")
@@ -19,6 +23,7 @@ Stage.defineView({
             rb("required")
           ]
         },
+
         Content = createComponent({
           onInit() {
             const auth = Storage.get("auth") || {};
@@ -80,20 +85,21 @@ Stage.defineView({
               accountId,
               apiKey
             });
+            goBack();
           }
         }),
+
         ActionBar = createComponent({
           onRender() {
-            const hasPrevious = !!stageContext.previousView(),
-                back = hasPrevious ? (
-                  <div class="action activable" onClick={goBack}>
-                    <i class="icon icon-arrow-left"></i>
-                  </div>
-                ) : null;
+            const back = previousView ? (
+              <div class="action activable" onClick={goBack}>
+                <i class="icon icon-arrow-left"></i>
+              </div>
+            ) : null;
             return (
               <div class="actionbar auth">
                 {back}
-                <div class={"action" + (!hasPrevious ? " first" : "")}>
+                <div class={"action" + (!previousView ? " first" : "")}>
                   <span class="text">Auth Information</span>
                 </div>
               </div>
@@ -107,10 +113,11 @@ Stage.defineView({
       },
       initialize(viewOpts) {
         viewUi.addEventListener("transitionout", e => {
-          unmount(viewUi);
+          // unmount(viewUi);
         });
       },
       activate(viewOpts, done) {
+        previousView = viewOpts.fromView;
         mount(viewUi, <Content />, {}, done);
       },
       update(viewOpts) {
