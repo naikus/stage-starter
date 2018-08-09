@@ -51,9 +51,11 @@ const gulp = require("gulp"),
           // add libraries here that you want to 'require'
           {name: "activables", path: "lib"},
           {name: "clazz", path: "lib"},
-          // {name: "touch", path: "lib"},
+          {name: "touch", path: "lib"},
           {name: "api-client", path: "lib", file: "api-client"},
-          {name: "form", path: "components/form", file: "index"}
+
+          {name: "form", path: "components/form", file: "index"},
+          {name: "touch-target", path: "components"}
         ],
         // /*
         serviceworkers: [

@@ -1,7 +1,7 @@
 /* global */
 module.exports = {
-  appnamespace: "starterapp",
-  apiServerUrl: "https://api.starterapp.com",
+  appnamespace: "slickposapp",
+  apiServerUrl: "https://api.slickpos.com",
   apiBasePath: "/api",
   // baseDir: "app",
 

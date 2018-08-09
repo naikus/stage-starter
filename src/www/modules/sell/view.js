@@ -1,11 +1,15 @@
 const Stage = require("stage"),
-    {createComponent, mount} = require("vidom");
+    {createComponent, mount} = require("vidom"),
+    TouchTarget = require("touch-target");
 
 Stage.defineView({
   id: "sell",
   template: `<div class="stage-view sell"></div>`,
   factory(stageContext, viewUi) {
-    const showAuth = e => stageContext.pushView("auth"),
+    const showAuth = e => {
+          // console.log(e);
+          stageContext.pushView("auth");
+        },
         Content = createComponent({
           onInit() {
             this.setState({});
@@ -29,9 +33,11 @@ Stage.defineView({
                   <span class="text title">Sell</span>
                   {/* <!-- img class="img" src="images/logo-actionbar.png" alt="Logo" / --> */}
                 </div>
-                <div class="action activable right" onClick={showAuth}>
-                  <i class="icon icon-settings"></i>
-                </div>
+                <TouchTarget onAction={showAuth} action="tap">
+                  <div class="action activable right">
+                    <i class="icon icon-settings"></i>
+                  </div>
+                </TouchTarget>
               </div>
             );
           }

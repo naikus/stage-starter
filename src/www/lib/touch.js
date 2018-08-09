@@ -62,19 +62,16 @@ const Events = !("ontouchstart" in document.documentElement) ?
     createEvent = (type, params) => {
       return new window.CustomEvent(type, params);
     },
-    on = (type, listener, capture = false) => {
-      document.addEventListener(type, listener, capture);
+    on = (elem, type, listener, capture = false) => {
+      elem.addEventListener(type, listener, capture);
     },
-    off = (type, listener, capture = false) => {
-      document.removeEventListener(type, listener, capture);
-    },
-    defineEvent = definition => {
-      document.addEventListener("DOMContentLoaded", e => definition.setup(e), false);
-      document.addEventListener("unload", e => definition.destroy(e), false);
+    off = (elem, type, listener, capture = false) => {
+      elem.removeEventListener(type, listener, capture);
     },
 
-    TAP = () => {
-      const state = {}, 
+
+    tap = (elem = document) => {
+      const state = {},
           EventTypes = Events,
           clearState = (...args) => {
             if(args.length) {
@@ -88,7 +85,7 @@ const Events = !("ontouchstart" in document.documentElement) ?
           },
           handler = te => {
             const type = te.type, touches = te.touches, cTouches = te.changedTouches,
-                target = te.target;
+                target = te.currentTarget;
             let touch;
 
             switch(type) {
@@ -132,31 +129,30 @@ const Events = !("ontouchstart" in document.documentElement) ?
             }
           };
 
-      defineEvent({
-        type: "tap",
+      return {
+        // type: "tap",
         setup() {
-          on(EventTypes.touchstart, handler);
-          on(EventTypes.touchmove, handler);
-          on(EventTypes.touchend, handler);
-          on(EventTypes.touchcancel, handler);
-          on("_tapcancel", clearState);
+          on(elem, EventTypes.touchstart, handler);
+          on(elem, EventTypes.touchmove, handler);
+          on(elem, EventTypes.touchend, handler);
+          on(elem, EventTypes.touchcancel, handler);
+          on(elem, "_tapcancel", clearState);
         },
         destroy() {
-          off(EventTypes.touchstart, handler);
-          off(EventTypes.touchmove, handler);
-          off(EventTypes.touchend, handler);
-          off(EventTypes.touchcancel, handler);
-          off("_tapcancel", clearState);
+          off(elem, EventTypes.touchstart, handler);
+          off(elem, EventTypes.touchmove, handler);
+          off(elem, EventTypes.touchend, handler);
+          off(elem, EventTypes.touchcancel, handler);
+          off(elem, "_tapcancel", clearState);
         }
-      });
+      };
     },
 
-
-    DBLTAP = () => {
+    dbltap = elem => {
       const state = {}, handler = te => {
-        const now = Date.now(), 
-            elapsed = now - (state.last || now), 
-            target = te.target;
+        const now = Date.now(),
+            elapsed = now - (state.last || now),
+            target = te.currentTarget;
         if(elapsed > 0 && elapsed < 300 && state.target === target) {
           target.dispatchEvent(createEvent("dbltap", {
             detail: {
@@ -166,23 +162,22 @@ const Events = !("ontouchstart" in document.documentElement) ?
           state.last = state.target = null;
         }else {
           state.last = now;
-          state.target = te.target;
+          state.target = target;
         }
       };
 
-      defineEvent({
-        type: "dbltap",
+      return {
+        // type: "dbltap",
         setup() {
-          on("tap", handler);
+          on(elem, "tap", handler);
         },
         destroy() {
-          off("tap", handler);
+          off(elem, "tap", handler);
         }
-      });
+      };
     },
 
-
-    TAPHOLD = () => {
+    taphold = (elem = document) => {
       let timer;
       const state = {}, EventTypes = Events,
           hasMoved = (x1, y1, x2, y2) => {
@@ -193,7 +188,7 @@ const Events = !("ontouchstart" in document.documentElement) ?
             state.moved = state.x = state.y = undefined;
           },
           handler = te => {
-            const {type, target, touches} = te;
+            const {type, currentTarget, touches} = te;
             switch (type) {
               case EventTypes.touchstart:
                 if(touches.length !== 1) {
@@ -205,7 +200,7 @@ const Events = !("ontouchstart" in document.documentElement) ?
                   if(!state.moved) {
                     // Since iOS Safari dispatches a taphold if event handler has native alert
                     document.dispatchEvent(createEvent("_tapcancel"));
-                    target.dispatchEvent(createEvent("taphold", {
+                    currentTarget.dispatchEvent(createEvent("taphold", {
                       detail: {
                         nativeEvent: te
                       }
@@ -229,28 +224,27 @@ const Events = !("ontouchstart" in document.documentElement) ?
             }
           };
 
-      defineEvent({
-        type: "taphold",
+      return {
+        // type: "taphold",
         setup() {
-          on(EventTypes.touchstart, handler);
-          on(EventTypes.touchmove, handler);
-          on(EventTypes.touchend, handler);
-          on(EventTypes.touchcancel, handler);
-          on("_tapholdcancel", function() {
+          on(elem, EventTypes.touchstart, handler);
+          on(elem, EventTypes.touchmove, handler);
+          on(elem, EventTypes.touchend, handler);
+          on(elem, EventTypes.touchcancel, handler);
+          on(elem, "_tapholdcancel", function() {
             clearTimeout(timer);
           });
         },
         destroy() {
-          off(EventTypes.touchstart, handler);
-          off(EventTypes.touchmove, handler);
-          off(EventTypes.touchend, handler);
-          off(EventTypes.touchcancel, handler);
+          off(elem, EventTypes.touchstart, handler);
+          off(elem, EventTypes.touchmove, handler);
+          off(elem, EventTypes.touchend, handler);
+          off(elem, EventTypes.touchcancel, handler);
         }
-      });
+      };
     },
 
-
-    SWIPE = () => {
+    swipe = (elem = document) => {
       const state = {}, EventTypes = Events,
           /*
            * Calculate the delta difference between two points (x1,y1) and (x2,y2)
@@ -324,32 +318,49 @@ const Events = !("ontouchstart" in document.documentElement) ?
             }
           };
 
-      defineEvent({
-        type: "swipe",
+      return {
+        // type: "swipe",
         setup() {
-          on(EventTypes.touchstart, handler);
-          on(EventTypes.touchmove, handler);
-          on(EventTypes.touchend, handler);
-          on(EventTypes.touchcancel, handler);
+          on(elem, EventTypes.touchstart, handler);
+          on(elem, EventTypes.touchmove, handler);
+          on(elem, EventTypes.touchend, handler);
+          on(elem, EventTypes.touchcancel, handler);
         },
         destroy() {
-          off(EventTypes.touchstart, handler);
-          off(EventTypes.touchmove, handler);
-          off(EventTypes.touchend, handler);
-          off(EventTypes.touchcancel, handler);
+          off(elem, EventTypes.touchstart, handler);
+          off(elem, EventTypes.touchmove, handler);
+          off(elem, EventTypes.touchend, handler);
+          off(elem, EventTypes.touchcancel, handler);
         }
-      });
+      };
+    },
+
+    NOOP_DEFN = {
+      setup() {},
+      destroy() {}
+    },
+
+    EventFactory = {
+      tap,
+      taphold,
+      dbltap,
+      swipe
     };
 
-// Register only when click
-if(Events.tap === "tap") {
-  TAP();
-  DBLTAP();
-  TAPHOLD();
-  SWIPE();
-}
+
 
 module.exports = {
-  defineEvent,
-  stopEvent
+  EventTypes: Events,
+  stopEvent,
+  setup(elem, event) {
+    const factory = EventFactory[event];
+
+    if(!factory) {
+      // console.log("Event setup not found", event);
+      return NOOP_DEFN;
+    }
+    const def = factory(elem);
+    def.setup();
+    return def;
+  }
 };

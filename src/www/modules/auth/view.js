@@ -1,5 +1,6 @@
 const Stage = require("stage"),
     {createComponent, mount, unmount} = require("vidom"),
+    TouchTarget = require("touch-target"),
     {Form, rb} = require("form"),
     {Storage, Config} = require("app");
 
@@ -92,9 +93,11 @@ Stage.defineView({
         ActionBar = createComponent({
           onRender() {
             const back = previousView ? (
-              <div class="action activable" onClick={goBack}>
-                <i class="icon icon-arrow-left"></i>
-              </div>
+              <TouchTarget onAction={goBack} action="tap">
+                <div class="action activable">
+                  <i class="icon icon-arrow-left"></i>
+                </div>
+              </TouchTarget>
             ) : null;
             return (
               <div class="actionbar auth">

@@ -74,7 +74,7 @@
 
     &.active {
       background-color: transparent !important;
-      color: @selected-bg-color !important;
+      color: saturate(lighten(@selected-bg-color, 15%), 10%) !important;
     }
 
     .icon, .text {
