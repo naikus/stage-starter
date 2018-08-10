@@ -35,6 +35,7 @@ const {createComponent, mount} = require("vidom"),
             // router = Router.create(),
             viewConfig = Config.views,
             stage = this.stage = Stage({
+              transitionDelay: 50,
               viewport: viewportElem,
               transition: transition || "lollipop"
             });

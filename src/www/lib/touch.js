@@ -1,4 +1,4 @@
-/* global setTimeout, clearTimeout */
+/* global document, setTimeout, clearTimeout */
 (() => {
   if(typeof window.CustomEvent === "function") return;
 
@@ -10,7 +10,7 @@
    */
   function CustomEvent(type, init = {}) {
     const {bubbles = false, cancellable = false, detail} = init,
-        event = window.createEvent("Events");
+        event = document.createEvent("Events");
     event.detail = detail;
     event.initEvent(type, bubbles, cancellable);
     return event;
