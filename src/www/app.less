@@ -51,11 +51,20 @@ h1,h2,h3,h4,h5,h6 {
 
   > .content {
     padding: 20px 30px;
+
+    > .message {
+      margin: 5px 0;
+      padding: 5px;
+    }
   }
 }
 
 
 @import "components/form/style.less";
+@import "components/tabs/style.less";
+.tab-panel {
+  padding: 15px;
+}
 @import "components/actionbar.less";
 .actionbar-container {
   > div.actionbar {

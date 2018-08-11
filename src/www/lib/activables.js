@@ -61,7 +61,7 @@ function Activables(container, opts) {
 
       start = e => {
         if(element) return;
-        let target = e.target, lvl = options.level;
+        let target = e.target, lvl = level;
         while(target && lvl--) {
           if(hasClass(target, targetClass)) {
             element = target;

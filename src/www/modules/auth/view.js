@@ -9,7 +9,7 @@ const Stage = require("stage"),
 Stage.defineView({
   id: "auth",
   // template not strictly needed unless you want custom CSS class
-  template: `<div class="stage-view auth"></div>`,
+  template: `<div class="stage-view auth alt-bg"></div>`,
   factory(stageContext, viewUi) {
     let previousView = null;
     const goBack = () => {

@@ -86,6 +86,7 @@ const {createComponent, mount} = require("vidom"),
           }
         }, false);
       },
+      // Lifecycle methods
       onInit() {
         this.setState({
           ViewActionBar: null,

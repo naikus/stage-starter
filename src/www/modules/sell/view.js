@@ -1,14 +1,15 @@
 const Stage = require("stage"),
     {createComponent, mount} = require("vidom"),
-    TouchTarget = require("touch-target");
+    TouchTarget = require("touch-target"),
+    Tabs = require("tabs");
 
 Stage.defineView({
   id: "sell",
-  template: `<div class="stage-view sell"></div>`,
+  template: `<div class="stage-view no-actionbar sell"></div>`,
   factory(stageContext, viewUi) {
     const showAuth = e => {
           // console.log(e);
-          stageContext.pushView("auth");
+          stageContext.pushView("auth", {transition: "slide-up"});
         },
         Content = createComponent({
           onInit() {
@@ -16,9 +17,16 @@ Stage.defineView({
           },
           onRender() {
             return (
-              <div class="content">
-                <button class="primary" onClick={showAuth}>Settings</button>
-              </div>
+              <Tabs>
+                <Tabs.Tab title="Tab One">
+                  <TouchTarget action="tap" onAction={showAuth}>
+                    <span class="button inline primary">Settings</span>
+                  </TouchTarget>
+                </Tabs.Tab>
+                <Tabs.Tab title="Tab Two">
+                  <p class="message">Hello From Tab 2</p>
+                </Tabs.Tab>
+              </Tabs>
             );
           },
           onUpdate() {}
@@ -44,9 +52,11 @@ Stage.defineView({
         });
 
     return {
+      /*
       getActionBar() {
         return ActionBar;
       },
+      */
       // Stage app lifecycle functions. All are optional
       initialize(viewOpts) {},
       activate(viewOpts, done) {
