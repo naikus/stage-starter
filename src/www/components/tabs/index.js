@@ -27,7 +27,7 @@ const {createComponent, mount} = require("vidom"),
         let idx = Number(index), previousIndex = this.state.activeTab;
         idx = isNaN(idx) ? 0 : idx;
         this.setState({activeTab: idx});
-        const {onSelectionChanged} = this.props;
+        const {onSelectionChanged} = this.attrs;
         if(typeof onSelectionChanged === "function") {
           onSelectionChanged(index, previousIndex);
         }
