@@ -16,7 +16,7 @@ const gulp = require("gulp"),
     mergeStream = require("merge-stream"),
     // workbox = require("workbox-build"),
 
-    isProductionEnv = () => process.env.NODE_ENV === "production",
+    isProductionEnv = () => cliargs.env === "production" || process.env.NODE_ENV === "production",
 
     errorHandler = name => e => console.error(name + ": " + e.toString()),
 

@@ -35,7 +35,10 @@
   -webkit-transform: translate3d(0, -@actionbar-height, 0);
   transform: translate3d(0, -@actionbar-height, 0);
 
+  // opacity: 0; // for android 2.3
+
   &.show {
+    // opacity: 1; // for android 2.3
     -webkit-transform: none;
     transform: none;
   }

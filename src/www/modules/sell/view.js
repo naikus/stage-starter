@@ -9,7 +9,7 @@ Stage.defineView({
   factory(stageContext, viewUi) {
     const showAuth = e => {
           // console.log(e);
-          stageContext.pushView("auth", {transition: "slide-up"});
+          stageContext.pushView("auth", {transition: "slide"});
         },
         Content = createComponent({
           onInit() {

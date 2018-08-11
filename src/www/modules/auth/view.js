@@ -31,11 +31,12 @@ Stage.defineView({
             this.setState({
               valid: false,
               accountId: auth.accountId,
-              apiKey: auth.apiKey
+              apiKey: auth.apiKey,
+              city: "Pune"
             });
           },
           onRender() {
-            const {accountId, apiKey, valid} = this.state;
+            const {accountId, apiKey, city, valid} = this.state;
             return (
               <div class="content">
                 <p class="message">
@@ -48,6 +49,16 @@ Stage.defineView({
                     defaultValue={accountId}
                     label="Accound ID"
                     data-hint="Your Auth0 Account Id" />
+
+                  <select name="city"
+                    defaultValue={city}
+                    label="City"
+                    data-hint="Choose a city">
+                    <option value="Banglore">Banglore</option>
+                    <option value="Delhi">Delhi</option>
+                    <option value="Mumbai">Mumbai</option>
+                    <option value="Pune">Pune</option>
+                  </select>
 
                   <textarea name="apiKey"
                     defaultValue={apiKey}
@@ -71,6 +82,7 @@ Stage.defineView({
                 auth[f.name] = f.value;
                 return auth;
               }, {});
+              console.log(auth);
               this.setState({
                 valid,
                 ...auth
