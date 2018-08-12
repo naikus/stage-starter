@@ -66,10 +66,11 @@ Stage.defineView({
                     data-hint="Your Auth0 API Key" />
                 </Form>
                 <div class="actions">
-                  <button disabled={!valid} onClick={this.saveAuth.bind(this)}
-                    class="_pull-right primary inline">
-                    Save
-                  </button>
+                  <Touchable onAction={this.saveAuth.bind(this)} action="tap">
+                    <span disabled={!valid} class="button _pull-right primary inline">
+                      Save
+                    </span>
+                  </Touchable>
                 </div>
               </div>
             );

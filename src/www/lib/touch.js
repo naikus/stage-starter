@@ -68,6 +68,10 @@ const Events = !("ontouchstart" in document.documentElement) ?
     off = (elem, type, listener, capture = false) => {
       elem.removeEventListener(type, listener, capture);
     },
+    isDisabled = target => {
+      const disabled = target.getAttribute("disabled");
+      return disabled === "" || disabled === "true";
+    },
 
 
     tap = (elem = document) => {
@@ -86,6 +90,10 @@ const Events = !("ontouchstart" in document.documentElement) ?
           handler = te => {
             const type = te.type, touches = te.touches, cTouches = te.changedTouches,
                 target = te.currentTarget;
+
+            if(isDisabled(target)) {
+              return;
+            }
             let touch;
 
             switch(type) {
@@ -189,6 +197,9 @@ const Events = !("ontouchstart" in document.documentElement) ?
           },
           handler = te => {
             const {type, currentTarget, touches} = te;
+            if(isDisabled(currentTarget)) {
+              return;
+            }
             switch (type) {
               case EventTypes.touchstart:
                 if(touches.length !== 1) {
@@ -270,6 +281,9 @@ const Events = !("ontouchstart" in document.documentElement) ?
           },
           handler = te => {
             const {type, target} = te;
+            if(isDisabled(target)) {
+              return;
+            }
             let touches, touch, m, detail;
             switch (type) {
               case EventTypes.touchstart:
