@@ -28,6 +28,17 @@ const {createComponent, mount} = require("vidom"),
       }
     }),
 
+    LoadingIndicator = createComponent({
+      displayName: "LoadingIndicator",
+      onRender() {
+        return (
+          <div className="loading-indicator">
+            <div className="slider"></div>
+          </div>
+        );
+      }
+    }),
+
     App = createComponent({
       setupStage() {
         const {viewportElem} = this,
@@ -48,9 +59,9 @@ const {createComponent, mount} = require("vidom"),
           // console.log("View actionbar", ViewActionBar);
           this.setState({ViewActionBar: ViewActionBar});
         });
-        /*
+        // /*
         viewportElem.addEventListener("viewloadstart", e => {
-          const {viewId, error} = e;
+          // const {viewId, error} = e;
           this.setState({loading: true});
         });
         viewportElem.addEventListener("viewloadend", e => {
@@ -58,7 +69,7 @@ const {createComponent, mount} = require("vidom"),
           this.setState({loading: false});
           console.log(e);
         });
-        */
+        // */
         /*
         viewportElem.addEventListener("beforeviewtransitionout", e => {
           const {viewId} = e;
@@ -107,9 +118,7 @@ const {createComponent, mount} = require("vidom"),
             </div>
             {showSidebar ? <Sidebar /> : null}
             {messages ? <Messages items={messages} /> : null}
-            <div class={"text-center anim" + (loading ? " show" : "")} id="loading">
-              <span class="slider slide"></span>
-            </div>
+            {loading ? <LoadingIndicator /> : null}
           </fragment>
         );
       }

@@ -56,7 +56,7 @@ const gulp = require("gulp"),
 
           {name: "form", path: "components/form", file: "index"},
           {name: "tabs", path: "components/tabs", file: "index"},
-          {name: "touch-target", path: "components"}
+          {name: "touchable", path: "components"}
         ],
         // /*
         serviceworkers: [

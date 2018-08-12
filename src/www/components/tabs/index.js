@@ -1,6 +1,6 @@
 /* global setTimeout clearTimeout console */
 const {createComponent, mount} = require("vidom"),
-    TouchTarget = require("touch-target"),
+    Touchable = require("touchable"),
     isArray = that => Object.prototype.toString.call(that) === "[object Array]",
 
     Tab = createComponent({
@@ -42,12 +42,12 @@ const {createComponent, mount} = require("vidom"),
               {icon, title} = tab.attrs,
               iconEl = icon ? <i class={"icon " + icon}></i> : null;
           return (
-            <TouchTarget onAction={this.selectTab.bind(this, i)} action="tap">
+            <Touchable onAction={this.selectTab.bind(this, i)} action="tap">
               <li class={classNames} key={"TabItem_" + i}>
                 {iconEl}
                 <span>{title}</span>
               </li>
-            </TouchTarget>
+            </Touchable>
           );
         });
 

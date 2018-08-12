@@ -1,6 +1,6 @@
 const Stage = require("stage"),
     {createComponent, mount} = require("vidom"),
-    TouchTarget = require("touch-target"),
+    Touchable = require("touchable"),
     Tabs = require("tabs");
 
 Stage.defineView({
@@ -18,12 +18,12 @@ Stage.defineView({
           onRender() {
             return (
               <Tabs>
-                <Tabs.Tab title="Tab One">
-                  <TouchTarget action="tap" onAction={showAuth}>
+                <Tabs.Tab icon="icon-calendar" title="Tab One">
+                  <Touchable action="tap" onAction={showAuth}>
                     <span class="button inline primary">Settings</span>
-                  </TouchTarget>
+                  </Touchable>
                 </Tabs.Tab>
-                <Tabs.Tab title="Tab Two">
+                <Tabs.Tab icon="icon-clock" title="Tab Two">
                   <p class="message">Hello From Tab 2</p>
                 </Tabs.Tab>
               </Tabs>
@@ -41,11 +41,11 @@ Stage.defineView({
                   <span class="text title">Sell</span>
                   {/* <!-- img class="img" src="images/logo-actionbar.png" alt="Logo" / --> */}
                 </div>
-                <TouchTarget onAction={showAuth} action="tap">
+                <Touchable onAction={showAuth} action="tap">
                   <div class="action activable right">
                     <i class="icon icon-settings"></i>
                   </div>
-                </TouchTarget>
+                </Touchable>
               </div>
             );
           }
