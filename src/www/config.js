@@ -1,19 +1,21 @@
-/* global */
 module.exports = {
-  appnamespace: "slickposapp",
-  apiServerUrl: "https://api.slickpos.com",
+  appnamespace: "starterapp",
+  apiServerUrl: "",
   apiBasePath: "/api",
   // baseDir: "app",
 
-
   views: {
-    "/sell": {
-      view: "sell",
-      template: "modules/sell/view.js"
+    "/main": {
+      view: "main",
+      template: "modules/main/view.js"
     },
-    "/auth": {
-      view: "auth",
-      template: "modules/auth/view.js"
+    "/settings": {
+      view: "settings",
+      template: "modules/settings/view.js"
+    },
+    "/about": {
+      view: "about",
+      template: "modules/about/view.js"
     }
   }
 };

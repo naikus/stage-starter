@@ -67,7 +67,7 @@ const {createComponent, mount} = require("vidom"),
         viewportElem.addEventListener("viewloadend", e => {
           const {viewId, error} = e;
           this.setState({loading: false});
-          console.log(e);
+          // console.log(e);
         });
         // */
         /*
@@ -138,8 +138,8 @@ function run() {
   window.addEventListener("unload", event => {
     activables.stop();
   });
-  const auth = Storage.get("auth"),
-      startView = (auth && auth.accountId && auth.apiKey) ? "sell" : "auth";
+  const settings = Storage.get("settings"),
+      startView = settings ? "main" : "settings";
 
   mount(document.getElementById("shell"), <App startView={startView} transition="slide" />);
 }

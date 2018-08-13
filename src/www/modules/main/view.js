@@ -4,13 +4,11 @@ const Stage = require("stage"),
     Tabs = require("tabs");
 
 Stage.defineView({
-  id: "sell",
-  template: `<div class="stage-view no-actionbar sell"></div>`,
+  id: "main",
+  template: `<div class="stage-view main"></div>`,
   factory(stageContext, viewUi) {
-    const showAuth = e => {
-          // console.log(e);
-          stageContext.pushView("auth", {transition: "slide"});
-        },
+    const showSettings = e => stageContext.pushView("settings"/* , {transition: "slide"} */),
+        showAbout = e => stageContext.pushView("about", {transition: "slide-up"}),
         Content = createComponent({
           onInit() {
             this.setState({});
@@ -19,7 +17,7 @@ Stage.defineView({
             return (
               <Tabs>
                 <Tabs.Tab icon="icon-calendar" title="Tab One">
-                  <Touchable action="tap" onAction={showAuth}>
+                  <Touchable action="tap" onAction={showSettings}>
                     <span class="button inline primary">Settings</span>
                   </Touchable>
                 </Tabs.Tab>
@@ -28,8 +26,7 @@ Stage.defineView({
                 </Tabs.Tab>
               </Tabs>
             );
-          },
-          onUpdate() {}
+          }
         }),
 
         // Actionbar
@@ -38,12 +35,17 @@ Stage.defineView({
             return (
               <div class="actionbar main">
                 <div class="action first">
-                  <span class="text title">Sell</span>
+                  <span class="text title">Dashboard</span>
                   {/* <!-- img class="img" src="images/logo-actionbar.png" alt="Logo" / --> */}
                 </div>
-                <Touchable onAction={showAuth} action="tap">
+                <Touchable onAction={showSettings} action="tap">
                   <div class="action activable right">
                     <i class="icon icon-settings"></i>
+                  </div>
+                </Touchable>
+                <Touchable onAction={showAbout} action="tap">
+                  <div class="action activable right">
+                    <i class="icon icon-help-circle"></i>
                   </div>
                 </Touchable>
               </div>
@@ -52,13 +54,11 @@ Stage.defineView({
         });
 
     return {
-      /*
+      // Stage app lifecycle functions.
+      initialize(viewOpts) {},
       getActionBar() {
         return ActionBar;
       },
-      */
-      // Stage app lifecycle functions. All are optional
-      initialize(viewOpts) {},
       activate(viewOpts, done) {
         mount(viewUi, <Content />, null, done);
       },

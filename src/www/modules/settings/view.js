@@ -1,3 +1,4 @@
+/* global location */
 const Stage = require("stage"),
     {createComponent, mount, unmount} = require("vidom"),
     Touchable = require("touchable"),
@@ -7,48 +8,49 @@ const Stage = require("stage"),
 // console.log(Storage, Config, Form, Rules, rb);
 
 Stage.defineView({
-  id: "auth",
+  id: "settings",
   // template not strictly needed unless you want custom CSS class
-  template: `<div class="stage-view auth alt-bg"></div>`,
+  template: `<div class="stage-view settings alt-bg"></div>`,
   factory(stageContext, viewUi) {
     let previousView = null;
     const goBack = () => {
-          previousView && stageContext.popView();
+          previousView ? stageContext.popView() : location.reload();
         },
 
         validationRules = {
-          accountId: [
+          fullName: [
             rb("required")
           ],
-          apiKey: [
+          address: [
             rb("required")
           ]
         },
 
         Content = createComponent({
           onInit() {
-            const auth = Storage.get("auth") || {};
+            const settings = Storage.get("settings") || {};
             this.setState({
               valid: false,
-              accountId: auth.accountId,
-              apiKey: auth.apiKey,
-              city: "Pune"
+              settings: {
+                fullName: settings.fullName,
+                city: settings.city || "Pune",
+                address: settings.address
+              }
             });
           },
           onRender() {
-            const {accountId, apiKey, city, valid} = this.state;
+            const {settings: {fullName, city, address}, valid} = this.state;
             return (
               <div class="content">
                 <p class="message">
-                  Set or change your accountId and API key here.
-                  Leave blank if you've already set it.
+                  A sample form with validation
                 </p>
                 <Form rules={validationRules} onChange={this.handleFormChange.bind(this)}>
                   <input type="text"
-                    name="accountId"
-                    defaultValue={accountId}
-                    label="Accound ID"
-                    data-hint="Your Auth0 Account Id" />
+                    name="fullName"
+                    defaultValue={fullName}
+                    label="Full Name"
+                    data-hint="Your given name and last name" />
 
                   <select name="city"
                     defaultValue={city}
@@ -60,13 +62,13 @@ Stage.defineView({
                     <option value="Pune">Pune</option>
                   </select>
 
-                  <textarea name="apiKey"
-                    defaultValue={apiKey}
-                    label="API Key"
-                    data-hint="Your Auth0 API Key" />
+                  <textarea name="address"
+                    defaultValue={address}
+                    label="Address"
+                    data-hint="Your street address" />
                 </Form>
                 <div class="actions">
-                  <Touchable onAction={this.saveAuth.bind(this)} action="tap">
+                  <Touchable onAction={this.saveSettings.bind(this)} action="tap">
                     <span disabled={!valid} class="button _pull-right primary inline">
                       Save
                     </span>
@@ -79,26 +81,23 @@ Stage.defineView({
           handleFormChange(formModel) {
             const {fields, valid} = formModel;
             if(valid) {
-              const auth = fields.reduce((auth, f) => {
-                auth[f.name] = f.value;
-                return auth;
+              const newSettings = fields.reduce((s, f) => {
+                s[f.name] = f.value;
+                return s;
               }, {});
-              console.log(auth);
+              console.log(newSettings);
               this.setState({
                 valid,
-                ...auth
+                settings: newSettings
               });
             }else {
               this.setState({valid: false});
             }
           },
 
-          saveAuth() {
-            const {accountId, apiKey} = this.state;
-            Storage.set("auth", {
-              accountId,
-              apiKey
-            });
+          saveSettings() {
+            const {settings} = this.state;
+            Storage.set("settings", settings);
             goBack();
           }
         }),
@@ -113,10 +112,10 @@ Stage.defineView({
               </Touchable>
             ) : null;
             return (
-              <div class="actionbar auth">
+              <div class="actionbar settings">
                 {back}
                 <div class={"action" + (!previousView ? " first" : "")}>
-                  <span class="text">Auth Information</span>
+                  <span class="text">Settings</span>
                 </div>
               </div>
             );
