@@ -11,18 +11,9 @@ const {createComponent, mount} = require("vidom"),
       onMount() {},
       onRender() {
         return (
-          <div class={"sidebar"}>
-          </div>
-        );
-      }
-    }),
-
-    Messages = createComponent({
-      onInit() {},
-      onMount() {},
-      onRender() {
-        return (
-          <div class={"messages"}>
+          <div class="sidebar-container">
+            <div class="sidebar">
+            </div>
           </div>
         );
       }
@@ -117,7 +108,6 @@ const {createComponent, mount} = require("vidom"),
               {ViewActionBar ? <ViewActionBar /> : null}
             </div>
             {showSidebar ? <Sidebar /> : null}
-            {messages ? <Messages items={messages} /> : null}
             {loading ? <LoadingIndicator /> : null}
           </fragment>
         );

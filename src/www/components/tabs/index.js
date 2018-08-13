@@ -38,7 +38,8 @@ const {createComponent, mount} = require("vidom"),
             children = isArray(this.children) ? this.children : [this.children];
         let items;
         items = children.map((tab, i) => {
-          const classNames = (i === activeTab) ? "tab-item selected" : "tab-item",
+          const classNames = (i === activeTab) ? "tab-item activable selected" :
+                "tab-item activable",
               {icon, title} = tab.attrs,
               iconEl = icon ? <i class={"icon " + icon}></i> : null;
           return (

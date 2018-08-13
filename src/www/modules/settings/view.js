@@ -13,9 +13,8 @@ Stage.defineView({
   template: `<div class="stage-view settings alt-bg"></div>`,
   factory(stageContext, viewUi) {
     let previousView = null;
-    const goBack = () => {
-          previousView ? stageContext.popView() : location.reload();
-        },
+    const goBack = () => previousView ? stageContext.popView() : location.reload(),
+        showAbout = e => stageContext.pushView("about", {transition: "slide-up"}),
 
         validationRules = {
           fullName: [
@@ -117,6 +116,11 @@ Stage.defineView({
                 <div class={"action" + (!previousView ? " first" : "")}>
                   <span class="text">Settings</span>
                 </div>
+                <Touchable onAction={showAbout} action="tap">
+                  <div class="action activable right">
+                    <i class="icon icon-help-circle"></i>
+                  </div>
+                </Touchable>
               </div>
             );
           }
@@ -132,7 +136,8 @@ Stage.defineView({
         });
       },
       activate(viewOpts, done) {
-        previousView = viewOpts.fromView;
+        const {fromView, viewAction} = viewOpts;
+        previousView = stageContext.previousView();
         mount(viewUi, <Content />, {}, done);
       },
       update(viewOpts) {

@@ -4676,7 +4676,7 @@ stack-trace@0.0.10:
 
 "stage@git+https://github.com/naikus/stage.git":
   version "1.0.0-beta"
-  resolved "git+https://github.com/naikus/stage.git#6058d670225c68d31350665798d24a5f67563aea"
+  resolved "git+https://github.com/naikus/stage.git#547e07218123bec5601a2d12fa5b85ad1bd93a09"
 
 static-extend@^0.1.1:
   version "0.1.2"
