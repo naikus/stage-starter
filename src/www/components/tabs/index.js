@@ -1,4 +1,4 @@
-/* global setTimeout clearTimeout console */
+/* global console */
 const {createComponent, mount} = require("vidom"),
     Touchable = require("touchable"),
     isArray = that => Object.prototype.toString.call(that) === "[object Array]",

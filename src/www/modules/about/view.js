@@ -5,8 +5,8 @@ const Stage = require("stage"),
 Stage.defineView({
   id: "about",
   template: `<div class="stage-view no-actionbar about"></div>`,
-  factory(stageContext, viewUi) {
-    const goBack = _ => stageContext.popView(),
+  factory(viewContext, viewUi) {
+    const goBack = _ => viewContext.popView(),
         Content = createComponent({
           onRender() {
             return (

@@ -1,4 +1,4 @@
-/* global */
+/* global setTimeout, clearTimeout */
 const {createComponent, mount} = require("vidom"),
     Stage = require("stage"),
     Config = require("./config"),
@@ -7,12 +7,52 @@ const {createComponent, mount} = require("vidom"),
     Activables = require("activables"),
 
     Sidebar = createComponent({
-      onInit() {},
-      onMount() {},
+      displayName: "Sidebar",
+      setVisible(show, callback) {
+        clearTimeout(this.timeoutId);
+        if(show) {
+          this.setPanelVisible();
+          this.timeoutId = setTimeout(this.showSidebar.bind(this), 50);
+        }else {
+          this.setPanelVisible();
+          this.timeoutId = setTimeout(this.hide.bind(this), 350);
+        }
+      },
+      setPanelVisible() {
+        this.setState({
+          stage: ["active"]
+        });
+      },
+      showSidebar() {
+        this.setState({
+          stage: ["active", "show"]
+        });
+      },
+      hide() {
+        this.setState({
+          stage: []
+        });
+      },
+
+      onInit() {
+        this.hide();
+      },
+
+      onChange(prevAttrs, prevChildren, prevState) {
+        const {active} = this.attrs, prevActive = prevAttrs.active;
+        if(active && !prevActive) {
+          this.setVisible(true);
+        }else if(!active && prevActive) {
+          this.setVisible(false);
+        }
+      },
+
       onRender() {
+        const {stage} = this.state;
         return (
-          <div class="sidebar-container">
+          <div class={"sidebar-pane " + stage.join(" ")}>
             <div class="sidebar">
+              {this.children}
             </div>
           </div>
         );
@@ -39,7 +79,14 @@ const {createComponent, mount} = require("vidom"),
             stage = this.stage = Stage({
               transitionDelay: 50,
               viewport: viewportElem,
-              transition: transition || "lollipop"
+              transition: transition || "lollipop",
+              context: {
+                application: {
+                  showSidebar: bShow => {
+                    this.setSidebarVisible(bShow);
+                  }
+                }
+              }
             });
 
         viewportElem.addEventListener("beforeviewtransitionin", e => {
@@ -88,11 +135,19 @@ const {createComponent, mount} = require("vidom"),
           }
         }, false);
       },
+      toggleSidebar() {
+        this.setState({showSidebar: !this.state.showSidebar});
+      },
+      setSidebarVisible(bVisible) {
+        this.setState({showSidebar: bVisible});
+      },
+
       // Lifecycle methods
       onInit() {
         this.setState({
           ViewActionBar: null,
-          loading: false
+          loading: false,
+          showSidebar: false
         });
       },
       onMount() {
@@ -100,14 +155,16 @@ const {createComponent, mount} = require("vidom"),
         this.setupBackButton();
       },
       onRender() {
-        const {ViewActionBar, loading, showSidebar, messages} = this.state;
+        const {ViewActionBar, loading, showSidebar} = this.state;
         return (
           <fragment>
             <div ref={el => this.viewportElem = el} class="stage-viewport"></div>
             <div class={"actionbar-container" + (ViewActionBar ? " show" : "")}>
               {ViewActionBar ? <ViewActionBar /> : null}
             </div>
-            {showSidebar ? <Sidebar /> : null}
+            <Sidebar active={showSidebar}>
+              <div class="summary" onClick={this.toggleSidebar.bind(this)}></div>
+            </Sidebar>
             {loading ? <LoadingIndicator /> : null}
           </fragment>
         );

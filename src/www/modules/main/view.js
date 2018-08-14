@@ -6,9 +6,11 @@ const Stage = require("stage"),
 Stage.defineView({
   id: "main",
   template: `<div class="stage-view main"></div>`,
-  factory(stageContext, viewUi) {
-    const showSettings = e => stageContext.pushView("settings"/* , {transition: "slide"} */),
-        showAbout = e => stageContext.pushView("about", {transition: "slide-up"}),
+  factory(viewContext, viewUi) {
+    const {application} = viewContext.context(),
+        setSidebarVisible = e => application.showSidebar(true),
+        showSettings = e => viewContext.pushView("settings"/* , {transition: "slide"} */),
+        showAbout = e => viewContext.pushView("about", {transition: "slide-up"}),
         Content = createComponent({
           onInit() {
             this.setState({});
@@ -22,7 +24,9 @@ Stage.defineView({
                   </Touchable>
                 </Tabs.Tab>
                 <Tabs.Tab icon="icon-clock" title="Tab Two">
-                  <p class="message">Hello From Tab 2</p>
+                  <Touchable action="tap" onAction={setSidebarVisible}>
+                    <span class="button inline primary">Show/Hide Sidebar</span>
+                  </Touchable>
                 </Tabs.Tab>
               </Tabs>
             );

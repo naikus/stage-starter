@@ -89,6 +89,57 @@ h1,h2,h3,h4,h5,h6 {
 @import "components/loading-indicator.less";
 
 
+/* ------------------------------------------- Sidebar ------------------------------------------ */
+.sidebar-pane {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  z-index: @actionbar-zindex + 1;
+  display: none;
+
+  background-color: rgba(0,0,0,0);
+  -webkit-transition: background-color 300ms ease;
+  -moz-transition: background-color 300ms ease;
+  transition: background-color 300ms ease;
+
+  > .sidebar {
+    will-change: transform;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 55%;
+    height: 100%;
+    overflow-y: auto;
+    .transition-transform(650ms, @bezier-func);
+    .translate(-110%);
+    background-color: lighten(@alt-bg-color, 5%);
+  }
+
+  &.active {
+    display: block;
+  }
+
+  &.show {
+    background-color: rgba(0,0,0,0.4);
+    > .sidebar {
+      .transformNone;
+    }
+  }
+
+}
+
+.sidebar {
+  .summary {
+    height: 100px;
+    background-color: darken(desaturate(@selected-bg-color, 10%), 15%)
+  }
+}
+
+
 /* -------------------------------------- Additional Modules ------------------------------------ */
 @import "modules/about/style.less";
 

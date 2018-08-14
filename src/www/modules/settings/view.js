@@ -11,10 +11,10 @@ Stage.defineView({
   id: "settings",
   // template not strictly needed unless you want custom CSS class
   template: `<div class="stage-view settings alt-bg"></div>`,
-  factory(stageContext, viewUi) {
+  factory(viewContext, viewUi) {
     let previousView = null;
-    const goBack = () => previousView ? stageContext.popView() : location.reload(),
-        showAbout = e => stageContext.pushView("about", {transition: "slide-up"}),
+    const goBack = () => previousView ? viewContext.popView() : location.reload(),
+        showAbout = e => viewContext.pushView("about", {transition: "slide-up"}),
 
         validationRules = {
           fullName: [
@@ -137,7 +137,7 @@ Stage.defineView({
       },
       activate(viewOpts, done) {
         const {fromView, viewAction} = viewOpts;
-        previousView = stageContext.previousView();
+        previousView = viewContext.previousView();
         mount(viewUi, <Content />, {}, done);
       },
       update(viewOpts) {
