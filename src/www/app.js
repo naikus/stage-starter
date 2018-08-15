@@ -4,6 +4,8 @@ const {createComponent, mount} = require("vidom"),
     Config = require("./config"),
     // Router = require("simple-router").default,
     Storage = require("store2").namespace(Config.appnamespace),
+
+    Touchable = require("touchable"),
     Activables = require("activables"),
 
     Sidebar = createComponent({
@@ -163,7 +165,9 @@ const {createComponent, mount} = require("vidom"),
               {ViewActionBar ? <ViewActionBar /> : null}
             </div>
             <Sidebar active={showSidebar}>
-              <div class="summary" onClick={this.toggleSidebar.bind(this)}></div>
+              <Touchable action="tap" onAction={this.toggleSidebar.bind(this)}>
+                <div class="summary"></div>
+              </Touchable>
             </Sidebar>
             {loading ? <LoadingIndicator /> : null}
           </fragment>

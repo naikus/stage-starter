@@ -1,5 +1,5 @@
 const {createComponent} = require("vidom"),
-    {EventTypes, setup} = require("touch");
+    {EventTypes, stopEvent, setup} = require("touch");
 
 module.exports = createComponent({
   onMount() {
@@ -28,6 +28,7 @@ module.exports = createComponent({
   },
 
   dispatchAction(e) {
+    stopEvent(e);
     const {onAction} = this.attrs;
     if(onAction) {
       onAction(e);
