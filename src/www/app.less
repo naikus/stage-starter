@@ -111,12 +111,14 @@ h1,h2,h3,h4,h5,h6 {
     top: 0;
     left: 0;
     bottom: 0;
-    width: 55%;
+    width: 300px;
     height: 100%;
     overflow-y: auto;
-    .transition-transform(650ms, @bezier-func);
+    .transition-transform(550ms, @bezier-func);
     .translate(-110%);
-    background-color: lighten(@alt-bg-color, 5%);
+    background-color: @bg-color;
+    border-right: 1px solid darken(@bg-color, 2%);
+    // box-shadow: 0 0 3px darken(@alt-bg-color, 19%);
   }
 
   &.active {
@@ -134,8 +136,9 @@ h1,h2,h3,h4,h5,h6 {
 
 .sidebar {
   .summary {
-    height: 100px;
-    background-color: darken(desaturate(@selected-bg-color, 10%), 15%)
+    height: 160px;
+    background-color: darken(@bg-color, 3%);
+    border-bottom: 1px solid rgba(0,0,0,0.1);
   }
 }
 

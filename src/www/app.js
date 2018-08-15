@@ -12,7 +12,7 @@ const {createComponent, mount} = require("vidom"),
         clearTimeout(this.timeoutId);
         if(show) {
           this.setPanelVisible();
-          this.timeoutId = setTimeout(this.showSidebar.bind(this), 50);
+          this.timeoutId = setTimeout(this.showSidebar.bind(this), 100);
         }else {
           this.setPanelVisible();
           this.timeoutId = setTimeout(this.hide.bind(this), 350);
