@@ -14,7 +14,7 @@ Stage.defineView({
   factory(viewContext, viewUi) {
     let previousView = null;
     const goBack = () => previousView ? viewContext.popView() : location.reload(),
-        showAbout = e => viewContext.pushView("about", {transition: "slide-up"}),
+        showAbout = e => viewContext.pushView("about"),
 
         validationRules = {
           fullName: [
