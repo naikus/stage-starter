@@ -5,7 +5,7 @@
 @invalid-color: @error-color;
 
 
-
+@brand-color: rgba(64, 204, 247, 0.911);
 @base-color: #223344;
 // Background color for viewport views and other boxes
 @bg-color: #2E3D4C;
@@ -22,7 +22,7 @@
 // Default selected text color
 @selected-text-color: #fff;
 // Active background color, when an element becomes active i.e. :active class
-@active-bg-color: @darken(bg-color, 5%); // lighten(#f34277, 10%);
+@active-bg-color: darken(@bg-color, 5%); // lighten(#f34277, 10%);
 @active-text-color: lighten(@text-color, 10%);
 
 // @primary-action-bg-color: rgba(245, 117, 117, 0.911);

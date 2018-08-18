@@ -143,6 +143,26 @@ const {createComponent, mount} = require("vidom"),
       setSidebarVisible(bVisible) {
         this.setState({showSidebar: bVisible});
       },
+      navigateTo(view) {
+        this.toggleSidebar();
+        setTimeout(_ => {
+          this.stage.pushView(view, {});
+        }, 300);
+      },
+      renderMenuItems() {
+        return [
+          {view: "main", title: "Home"},
+          {view: "settings", title: "Settings"},
+          {view: "about", title: "About"}
+        ].map(item => {
+          const {view, title} = item;
+          return (
+            <Touchable action="tap" onAction={this.navigateTo.bind(this, view)}>
+              <li class="activable">{title}</li>
+            </Touchable>
+          );
+        });
+      },
 
       // Lifecycle methods
       onInit() {
@@ -166,8 +186,12 @@ const {createComponent, mount} = require("vidom"),
             </div>
             <Sidebar active={showSidebar}>
               <Touchable action="tap" onAction={this.toggleSidebar.bind(this)}>
-                <div class="summary"></div>
+                <div class="branding">
+                </div>
               </Touchable>
+              <ul class="menu">
+                {this.renderMenuItems()}
+              </ul>
             </Sidebar>
             {loading ? <LoadingIndicator /> : null}
           </fragment>
