@@ -2,7 +2,10 @@ const stringValue = value => value === null || typeof(value) === "undefined" ? "
     invalid = message => ({valid: false, message}),
     Rules = {
       required(value, field) {
-        const val = stringValue(value);
+        let val = stringValue(value), {trim = true} = this;
+        if(trim) {
+          val = val.trim();
+        }
         if(!val) {
           const message = this.message || `${field.node.attrs.label} is required`;
           return invalid(message);

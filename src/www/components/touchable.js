@@ -1,5 +1,10 @@
 const {createComponent} = require("vidom"),
-    {EventTypes, stopEvent, setup} = require("touch");
+    {EventTypes, stopEvent, setup} = require("touch"),
+
+    isDisabled = target => {
+      const disabled = target.getAttribute("disabled");
+      return disabled === "" || disabled === "true";
+    };
 
 module.exports = createComponent({
   onMount() {
@@ -30,7 +35,7 @@ module.exports = createComponent({
   dispatchAction(e) {
     stopEvent(e);
     const {onAction} = this.attrs;
-    if(onAction) {
+    if(!isDisabled(this.domElement) && onAction) {
       onAction(e);
     }
   }
