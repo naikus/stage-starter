@@ -2,10 +2,11 @@
   .tabs-nav {
     list-style-type: none;
     margin: 0;
-    padding: 5px 10px 0;
+    padding: 0px 10px 0;
     overflow: auto;
 
-    background-color: @alt-bg-color;
+    background-color: @base-color;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 
     > .tab-item {
       border-bottom: 2px solid transparent;
@@ -31,6 +32,7 @@
 
       &.selected {
         background-color: transparent !important;
+        color: @text-color !important;
         border-bottom: 2px solid lighten(@selected-bg-color, 7%);
       }
 

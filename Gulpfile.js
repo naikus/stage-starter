@@ -54,9 +54,12 @@ const gulp = require("gulp"),
           {name: "touch", path: "lib"},
           {name: "api-client", path: "lib", file: "api-client"},
 
+          // Components
           {name: "form", path: "components/form", file: "index"},
           {name: "tabs", path: "components/tabs", file: "index"},
           {name: "touchable", path: "components"}
+
+          // Services
         ],
         // /*
         serviceworkers: [
@@ -105,15 +108,13 @@ gulp.task("clean", cb => {
   return del([config.dist.app_dir], cb);
 });
 
-
-
 gulp.task("build:libs", () => {
   const b = browserify({debug: false, builtins: true}),
       deps = pkg.dependencies,
       distDir = config.dist.app_dir;
 
   Object.keys(deps).forEach(dep => b.require(dep));
-
+  /*
   // Expose additional libs in the js and lib directories
   config.src.libs.forEach(lib => {
     b.require("./" + (lib.file || lib.name), {
@@ -121,7 +122,7 @@ gulp.task("build:libs", () => {
       expose: lib.name
     });
   });
-
+  */
   let stream = b.transform("babelify").bundle().pipe(vsource("lib.js"));
   return uglifyIfProduction(stream).pipe(gulp.dest(distDir + "/js"));
 });
@@ -211,9 +212,19 @@ gulp.task("build:app", () => {
   b.require("./src/www/app.js", {expose: "app"});
   // Exclude vendors since we've created a separate bundle for vendor libraries
   Object.keys(pkg.dependencies).forEach(dep => b.external(dep));
+
+  // Expose additional libs in the js and lib directories
+  config.src.libs.forEach(lib => {
+    b.require("./" + (lib.file || lib.name), {
+      basedir: config.src.dir + lib.path,
+      expose: lib.name
+    });
+  });
+  /*
   config.src.libs.forEach(lib => {
     b.external(lib.name);
   });
+  */
 
   let modStream,
       appStream = b.transform("babelify")
