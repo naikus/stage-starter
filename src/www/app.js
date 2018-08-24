@@ -10,7 +10,7 @@ const {createComponent, mount} = require("vidom"),
 
     Sidebar = createComponent({
       displayName: "Sidebar",
-      setVisible(show, callback) {
+      setVisible(show) {
         clearTimeout(this.timeoutId);
         if(show) {
           this.setPanelVisible();
@@ -35,6 +35,13 @@ const {createComponent, mount} = require("vidom"),
           stage: []
         });
       },
+      sidebarAction(e) {
+        console.log(e);
+        const {onEmptyAction} = this.attrs;
+        if(onEmptyAction) {
+          onEmptyAction();
+        }
+      },
 
       onInit() {
         this.hide();
@@ -52,7 +59,10 @@ const {createComponent, mount} = require("vidom"),
       onRender() {
         const {stage} = this.state;
         return (
-          <div class={"sidebar-pane " + stage.join(" ")}>
+          <div class={"sidebar-container " + stage.join(" ")}>
+            <Touchable action="tap" onAction={this.sidebarAction.bind(this)}>
+              <div class="sidebar-pane"></div>
+            </Touchable>
             <div class="sidebar">
               {this.children}
             </div>
@@ -184,7 +194,7 @@ const {createComponent, mount} = require("vidom"),
             <div class={"actionbar-container" + (ViewActionBar ? " show" : "")}>
               {ViewActionBar ? <ViewActionBar /> : null}
             </div>
-            <Sidebar active={showSidebar}>
+            <Sidebar active={showSidebar} onEmptyAction={this.toggleSidebar.bind(this)}>
               <Touchable action="tap" onAction={this.toggleSidebar.bind(this)}>
                 <div class="branding">
                 </div>

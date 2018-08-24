@@ -91,7 +91,7 @@ h1,h2,h3,h4,h5,h6 {
 
 
 /* ------------------------------------------- Sidebar ------------------------------------------ */
-.sidebar-pane {
+.sidebar-container {
   position: fixed;
   width: 100%;
   height: 100%;
@@ -102,9 +102,20 @@ h1,h2,h3,h4,h5,h6 {
   display: none;
 
   background-color: rgba(0,0,0,0);
+  // /*
   -webkit-transition: background-color 300ms ease;
   -moz-transition: background-color 300ms ease;
   transition: background-color 300ms ease;
+  // */
+
+  >.sidebar-pane {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: transparent;
+  }
 
   > .sidebar {
     // will-change: transform;
@@ -133,9 +144,7 @@ h1,h2,h3,h4,h5,h6 {
       .transformNone;
     }
   }
-
 }
-
 .sidebar {
   .no-select;
   .branding {
