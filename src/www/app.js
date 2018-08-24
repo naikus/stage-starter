@@ -153,21 +153,21 @@ const {createComponent, mount} = require("vidom"),
       setSidebarVisible(bVisible) {
         this.setState({showSidebar: bVisible});
       },
-      navigateTo(view) {
+      navigateTo(view, transition) {
         this.toggleSidebar();
         setTimeout(_ => {
-          this.stage.pushView(view, {});
+          this.stage.pushView(view, {transition});
         }, 300);
       },
       renderMenuItems() {
         return [
           {view: "main", title: "Home"},
           {view: "settings", title: "Settings"},
-          {view: "about", title: "About"}
+          {view: "about", title: "About", transition: "slide-up"}
         ].map(item => {
-          const {view, title} = item;
+          const {view, title, transition = "slide"} = item;
           return (
-            <Touchable action="tap" onAction={this.navigateTo.bind(this, view)}>
+            <Touchable action="tap" onAction={this.navigateTo.bind(this, view, transition)}>
               <li class="activable">{title}</li>
             </Touchable>
           );
@@ -195,10 +195,8 @@ const {createComponent, mount} = require("vidom"),
               {ViewActionBar ? <ViewActionBar /> : null}
             </div>
             <Sidebar active={showSidebar} onEmptyAction={this.toggleSidebar.bind(this)}>
-              <Touchable action="tap" onAction={this.toggleSidebar.bind(this)}>
-                <div class="branding">
-                </div>
-              </Touchable>
+              <div class="branding">
+              </div>
               <ul class="menu">
                 {this.renderMenuItems()}
               </ul>
