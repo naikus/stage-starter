@@ -142,6 +142,7 @@ const {createComponent, mount} = require("vidom"),
             try {
               stage.popView();
             }catch(e) {
+              console.log(e);
               navigator.app.exitApp();
             }
           }

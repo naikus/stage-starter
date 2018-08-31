@@ -240,3 +240,14 @@ input[type=range] {
     }
   }
 }
+
+.spin-button {
+  // transition: width 200ms ease, border-radius 200ms ease;
+  transition: background-color 500ms ease;
+  &.busy {
+  }
+  > .icon {
+    display: inline-block;
+    margin: 0;
+  }
+}

@@ -2,7 +2,7 @@
 const Stage = require("stage"),
     {createComponent, mount, unmount} = require("vidom"),
     Touchable = require("touchable"),
-    {Form, rb} = require("form"),
+    {SpinButton, Form, rb} = require("form"),
     {Storage, Config} = require("app");
 
 // console.log(Storage, Config, Form, Rules, rb);
@@ -30,6 +30,7 @@ Stage.defineView({
             const settings = Storage.get("settings") || {};
             this.setState({
               valid: false,
+              busy: false,
               settings: {
                 fullName: settings.fullName,
                 city: settings.city || "Pune",
@@ -38,7 +39,7 @@ Stage.defineView({
             });
           },
           onRender() {
-            const {settings: {fullName, city, address}, valid} = this.state;
+            const {settings: {fullName, city, address}, valid, busy} = this.state;
             return (
               <div class="content">
                 <p class="message">
@@ -67,11 +68,12 @@ Stage.defineView({
                     data-hint="Your street address" />
                 </Form>
                 <div class="actions">
-                  <Touchable onAction={this.saveSettings.bind(this)} action="tap">
-                    <span disabled={!valid} class="button _pull-right primary inline">
-                      Save
-                    </span>
-                  </Touchable>
+                  <SpinButton onClick={this.saveSettings.bind(this)}
+                    class="_pull-right primary inline"
+                    disabled={!valid || busy}
+                    busy={busy}>
+                    Save
+                  </SpinButton>
                 </div>
               </div>
             );
@@ -96,8 +98,12 @@ Stage.defineView({
 
           saveSettings() {
             const {settings} = this.state;
-            Storage.set("settings", settings);
-            goBack();
+            this.setState({busy: true});
+            window.setTimeout(() => {
+              this.setState({busy: false});
+              Storage.set("settings", settings);
+              goBack();
+            }, 2000);
           }
         }),
 
