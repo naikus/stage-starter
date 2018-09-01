@@ -17,7 +17,7 @@ const {createComponent, mount} = require("vidom"),
           this.timeoutId = setTimeout(this.showSidebar.bind(this), 100);
         }else {
           this.setPanelVisible();
-          this.timeoutId = setTimeout(this.hide.bind(this), 350);
+          this.timeoutId = setTimeout(this.hide.bind(this), 400);
         }
       },
       setPanelVisible() {
@@ -158,7 +158,7 @@ const {createComponent, mount} = require("vidom"),
         this.toggleSidebar();
         setTimeout(_ => {
           this.stage.pushView(view, {transition});
-        }, 300);
+        }, 400);
       },
       renderMenuItems() {
         return [
