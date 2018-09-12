@@ -102,12 +102,6 @@ h1,h2,h3,h4,h5,h6 {
   z-index: @actionbar-zindex + 1;
   display: none;
 
-  background-color: rgba(0,0,0,0);
-  -webkit-transition: background-color @easing-duration ease;
-  -moz-transition: background-color @easing-duration ease;
-  transition: background-color @easing-duration ease;
-  will-change: opacity;
-
 
   >.sidebar-pane {
     position: absolute;
@@ -115,10 +109,16 @@ h1,h2,h3,h4,h5,h6 {
     height: 100%;
     top: 0;
     left: 0;
-    background: transparent;
+    background: @alt-bg-color;
+    opacity: 0;
+    -webkit-transition: opacity @easing-duration ease;
+    -moz-transition: opacity @easing-duration ease;
+    transition: opacity @easing-duration ease;
+    will-change: opacity;
   }
 
   > .sidebar {
+    .no-select;
     will-change: transform;
     position: absolute;
     top: 0;
@@ -131,15 +131,17 @@ h1,h2,h3,h4,h5,h6 {
     .transition-transform(@easing-duration, @easing-func);
     background-color: @bg-color;
     color: @text-color;
-    border-right: 1px solid rgba(0,0,0,0.6);
+    border-right: 1px solid rgba(0,0,0,0.2);
   }
 
-  &.active {
+  &.visible {
     display: block;
   }
 
   &.show {
-    background-color: rgba(0,0,0,0.55);
+    >.sidebar-pane {
+      opacity: 0.5;
+    }
     > .sidebar {
       .transformNone;
       // box-shadow: 0 0 5px rgba(0,0,0,0.1);
@@ -147,7 +149,6 @@ h1,h2,h3,h4,h5,h6 {
   }
 }
 .sidebar {
-  .no-select;
   .branding {
     min-height: 100px;
     background-color: @alt-bg-color;

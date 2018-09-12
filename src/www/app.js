@@ -22,12 +22,12 @@ const {createComponent, mount} = require("vidom"),
       },
       setPanelVisible() {
         this.setState({
-          stage: ["active"]
+          stage: ["visible"]
         });
       },
       showSidebar() {
         this.setState({
-          stage: ["active", "show"]
+          stage: ["visible", "show"]
         });
       },
       hide() {
@@ -209,7 +209,7 @@ const {createComponent, mount} = require("vidom"),
         this.setNavVisible(false);
         setTimeout(_ => {
           this.stage.pushView(view, {transition});
-        }, 50);
+        }, 250);
       },
       renderNavItems() {
         return this.navItems.map(item => {
