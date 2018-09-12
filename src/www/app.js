@@ -82,90 +82,137 @@ const {createComponent, mount} = require("vidom"),
       }
     }),
 
-    App = createComponent({
-      setupStage() {
-        const {viewportElem} = this,
-            {startView = "main", transition = "lollipop"} = this.attrs,
-            // router = Router.create(),
-            viewConfig = Config.views,
-            stage = this.stage = Stage({
-              transitionDelay: 50,
-              viewport: viewportElem,
-              transition: transition || "lollipop",
-              context: {
-                application: {
-                  showSidebar: bShow => {
-                    this.setSidebarVisible(bShow);
-                  }
-                }
-              }
-            });
+    StageComponent = createComponent({
+      onMount() {
+        this.setupStage();
+        this.setupBackButton();
+      },
+      onRender() {
+        return (
+          <div ref={element => this.viewport = element} class="stage-viewport"></div>
+        );
+      },
+      // Stage component manages its own views and rendering lifecycle
+      shouldRerender() {
+        console.log("will not re-render");
+        return false;
+      },
+      onUnmount() {
+        this.deregisterListeners();
+      },
 
-        viewportElem.addEventListener("beforeviewtransitionin", e => {
-          const viewId = e.viewId,
-              controller = this.stage.getViewController(viewId),
-              ViewActionBar = typeof controller.getActionBar === "function" ?
-                controller.getActionBar() : null;
-          // console.log("View actionbar", ViewActionBar);
-          this.setState({ViewActionBar: ViewActionBar});
+      pushView(view, options = {}) {
+        this.stageInstance.pushView(view, options);
+      },
+      getViewController(viewId) {
+        return this.stageInstance.getViewController(viewId);
+      },
+      setupStage() {
+        const {viewport, attrs: {
+          startView, viewConfig,
+          transition,
+          context = {}
+        }} = this;
+
+        let stageInstance = this.stageInstance = Stage({
+          viewport: viewport,
+          transition: transition || "lollipop",
+          transitionDelay: 50,
+          context
         });
-        // /*
-        viewportElem.addEventListener("viewloadstart", e => {
-          // const {viewId, error} = e;
-          this.setState({loading: true});
-        });
-        viewportElem.addEventListener("viewloadend", e => {
-          const {viewId, error} = e;
-          this.setState({loading: false});
-          // console.log(e);
-        });
-        // */
-        /*
-        viewportElem.addEventListener("beforeviewtransitionout", e => {
-          const {viewId} = e;
-          console.log(e);
-        });
-        */
+
+        // Register view load listeners
+        this.registerListeners();
+
         // Register all the routes
         Object.keys(viewConfig).forEach(path => {
-          const viewInfo = viewConfig[path], view = viewInfo.view;
-          Stage.view(view, viewInfo.template);
+          const {view, template} = viewConfig[path];
+          Stage.view(view, template);
         });
-        stage.pushView(startView, {});
+        stageInstance.pushView(startView, {});
       },
       setupBackButton() {
         document.addEventListener("backbutton", e => {
-          const {stage} = this, controller = stage.getViewController(stage.currentView());
+          const {stageInstance} = this,
+              controller = stageInstance.getViewController(stageInstance.currentView());
           if(typeof controller.onBackButton === "function") {
             controller.onBackButton();
           }else {
             try {
-              stage.popView();
+              stageInstance.popView();
             }catch(e) {
-              console.log(e);
               navigator.app.exitApp();
             }
           }
         }, false);
       },
-      toggleSidebar() {
-        this.setState({showSidebar: !this.state.showSidebar});
+      registerListeners() {
+        const {viewport, attrs: {
+          onViewLoadStart,
+          onViewLoadEnd,
+          onBeforeViewTransitionIn,
+          onBeforeViewTransitionOut
+        }} = this;
+
+        if(typeof onViewLoadStart === "function") {
+          viewport.addEventListener("viewloadstart", onViewLoadStart);
+        }
+        if(typeof onViewLoadEnd === "function") {
+          viewport.addEventListener("viewloadend", onViewLoadEnd);
+        }
+        if(typeof onBeforeViewTransitionIn === "function") {
+          viewport.addEventListener("beforeviewtransitionin", onBeforeViewTransitionIn);
+        }
+        if(typeof onBeforeViewTransitionOut === "function") {
+          viewport.addEventListener("beforeviewtransitionout", onBeforeViewTransitionOut);
+        }
       },
-      setSidebarVisible(bVisible) {
-        this.setState({showSidebar: bVisible});
+      deregisterListeners() {
+        const {stageInstance, viewport, attrs: {
+          onViewLoadEnd,
+          onViewLoadStart,
+          onBeforeViewTransitionIn,
+          onBeforeViewTransitionOut
+        }} = this;
+        if(typeof onViewLoadEnd === "function") {
+          viewport.removeEventListener("viewloadend", onViewLoadEnd);
+        }
+        if(typeof onViewLoadStart === "function") {
+          viewport.removeEventListener("viewloadstart", onViewLoadStart);
+        }
+        if(typeof onBeforeViewTransitionIn === "function") {
+          viewport.removeEventListener("viewloadend", onBeforeViewTransitionIn);
+        }
+        if(typeof onBeforeViewTransitionOut === "function") {
+          viewport.removeEventListener("viewloadstart", onBeforeViewTransitionOut);
+        }
+      }
+    }),
+
+    App = createComponent({
+      navItems: [
+        {view: "main", title: "Home"},
+        {view: "settings", title: "Settings"},
+        {view: "about", title: "About", transition: "slide-up"}
+      ],
+
+      getContext() {
+        return {
+          application: {
+            setNavVisible: show => {
+              this.setNavVisible(show);
+            }
+          }
+        };
       },
       navigateTo(view, transition) {
-        this.toggleSidebar();
+        this.setNavVisible(false);
         setTimeout(_ => {
           this.stage.pushView(view, {transition});
-        }, 500);
+        }, 50);
       },
-      renderMenuItems() {
-        return [
-          {view: "main", title: "Home"},
-          {view: "settings", title: "Settings"},
-          {view: "about", title: "About", transition: "slide-up"}
-        ].map(item => {
+      renderNavItems() {
+        return this.navItems.map(item => {
           const {view, title, transition = "slide"} = item;
           return (
             <Touchable action="tap" onAction={this.navigateTo.bind(this, view, transition)}>
@@ -174,32 +221,64 @@ const {createComponent, mount} = require("vidom"),
           );
         });
       },
+      setNavVisible(visible) {
+        this.setState({showMainNav: visible === false ? false : true});
+      },
+
+      // Stage event listeners
+      onBeforeViewTransitionIn(e) {
+        const viewId = e.viewId,
+            controller = this.stage.getViewController(viewId),
+            ViewActionBar = typeof controller.getActionBar === "function" ?
+              controller.getActionBar() : null;
+        // console.log("View actionbar", ViewActionBar);
+        this.setState({ViewActionBar: ViewActionBar});
+      },
+      onBeforeViewTransitionOut(e) {
+        const {viewId} = e;
+        console.log(e);
+      },
+      onViewLoadStart(e) {
+        this.setState({loading: true});
+      },
+      onViewLoadEnd(e) {
+        const {viewId, error} = e;
+        this.setState({loading: false});
+      },
 
       // Lifecycle methods
       onInit() {
         this.setState({
           ViewActionBar: null,
           loading: false,
-          showSidebar: false
+          showMainNav: false
         });
       },
       onMount() {
-        this.setupStage();
-        this.setupBackButton();
       },
       onRender() {
-        const {ViewActionBar, loading, showSidebar} = this.state;
+        const {startView = "sale"} = this.attrs,
+            {ViewActionBar, loading, showMainNav} = this.state,
+            context = this.getContext();
         return (
           <fragment>
-            <div ref={el => this.viewportElem = el} class="stage-viewport"></div>
+            <StageComponent ref={comp => this.stage = comp}
+              viewConfig={Config.views}
+              startView={startView}
+              transition="lollipop"
+              context={context}
+              onViewLoadStart={this.onViewLoadStart.bind(this)}
+              onViewLoadEnd={this.onViewLoadEnd.bind(this)}
+              onBeforeViewTransitionIn={this.onBeforeViewTransitionIn.bind(this)} />
+            {/* onBeforeViewTransitionOut={this.onBeforeViewTransitionOut.bind(this)} /> */}
             <div class={"actionbar-container" + (ViewActionBar ? " show" : "")}>
               {ViewActionBar ? <ViewActionBar /> : null}
             </div>
-            <Sidebar active={showSidebar} onEmptyAction={this.toggleSidebar.bind(this)}>
+            <Sidebar active={showMainNav} onEmptyAction={this.setNavVisible.bind(this, false)}>
               <div class="branding">
               </div>
               <ul class="menu">
-                {this.renderMenuItems()}
+                {this.renderNavItems()}
               </ul>
             </Sidebar>
             {loading ? <LoadingIndicator /> : null}

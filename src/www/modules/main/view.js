@@ -8,7 +8,7 @@ Stage.defineView({
   template: `<div class="stage-view main"></div>`,
   factory(viewContext, viewUi) {
     const {application} = viewContext.context(),
-        setSidebarVisible = e => application.showSidebar(true),
+        setSidebarVisible = e => application.setNavVisible(true),
         showSettings = e => viewContext.pushView("settings"/* , {transition: "slide"} */),
         showAbout = e => viewContext.pushView("about", {transition: "slide-up"}),
         Content = createComponent({
