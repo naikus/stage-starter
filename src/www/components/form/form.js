@@ -25,7 +25,7 @@ const {createComponent, elem} = require("vidom"),
       displayName: "Form",
 
       initializeFields() {
-        const {children} = this,
+        const {children = []} = this,
             fields = children.map((child, i) => {
               return this.createFieldModel(child, i);
             });

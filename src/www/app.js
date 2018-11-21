@@ -213,10 +213,16 @@ const {createComponent, mount} = require("vidom"),
       },
       renderNavItems() {
         return this.navItems.map(item => {
-          const {view, title, transition = "slide"} = item;
+          const {
+            icon, title, view, transition = "lollipop",
+            handler = this.navigateTo.bind(this, view, transition)
+          } = item;
           return (
-            <Touchable action="tap" onAction={this.navigateTo.bind(this, view, transition)}>
-              <li class="activable">{title}</li>
+            <Touchable action="tap" onAction={handler}>
+              <li class="activable">
+                <i class={"icon " + icon}></i>
+                <span class="title">{title}</span>
+              </li>
             </Touchable>
           );
         });
@@ -276,6 +282,7 @@ const {createComponent, mount} = require("vidom"),
             </div>
             <Sidebar active={showMainNav} onEmptyAction={this.setNavVisible.bind(this, false)}>
               <div class="branding">
+                {/* <img class="logo" src="images/logo.svg" alt="Logo" /> */}
               </div>
               <ul class="menu">
                 {this.renderNavItems()}
@@ -286,10 +293,6 @@ const {createComponent, mount} = require("vidom"),
         );
       }
     });
-
-// Register custom events (lib/touch.js)
-// require("touch");
-
 
 /**
  * Run the app
@@ -314,10 +317,10 @@ if("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker.register("sw.js").then(
       registration => {
-        console.log("Service worker registration success", registration);
+        console.debug("Service worker registration success", registration);
       },
       error => {
-        console.log("Service worker registration failed", error);
+        console.debug("Service worker registration failed", error);
       }
     );
   });
@@ -326,6 +329,6 @@ if("serviceWorker" in navigator) {
 
 module.exports = {
   run: run,
-  Storage,
-  Config
+  Config,
+  Storage
 };
