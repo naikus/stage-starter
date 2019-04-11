@@ -1,6 +1,7 @@
 const Stage = require("stage"),
     {createComponent, mount} = require("vidom"),
     Touchable = require("touchable"),
+    Modal = require("modal"),
     Tabs = require("tabs");
 
 Stage.defineView({
@@ -16,19 +17,30 @@ Stage.defineView({
             this.setState({});
           },
           onRender() {
+            const {showModal} = this.attrs;
             return (
-              <Tabs>
-                <Tabs.Tab icon="icon-calendar" title="Tab One">
-                  <Touchable action="tap" onAction={showSettings}>
-                    <span class="button inline primary">Settings</span>
-                  </Touchable>
-                </Tabs.Tab>
-                <Tabs.Tab icon="icon-clock" title="Tab Two">
-                  <Touchable action="tap" onAction={setSidebarVisible}>
-                    <span class="button inline primary">Show/Hide Sidebar</span>
-                  </Touchable>
-                </Tabs.Tab>
-              </Tabs>
+              <fragment>
+                <Tabs>
+                  <Tabs.Tab icon="icon-calendar" title="Tab One">
+                    <Touchable action="tap" onAction={showSettings}>
+                      <span class="button inline primary">Settings</span>
+                    </Touchable>
+                  </Tabs.Tab>
+                  <Tabs.Tab icon="icon-clock" title="Tab Two">
+                    <Touchable action="tap" onAction={setSidebarVisible}>
+                      <span class="button inline primary">Show/Hide Sidebar</span>
+                    </Touchable>
+                  </Tabs.Tab>
+                </Tabs>
+                {this.renderModal()}
+              </fragment>
+            );
+          },
+          renderModal() {
+            return (
+              <Modal>
+                <h2>Hello World!!!</h2>
+              </Modal>
             );
           }
         }),
@@ -55,7 +67,10 @@ Stage.defineView({
               </div>
             );
           }
-        });
+        }),
+        renderContent = (viewOpts, done) => {
+          mount(viewUi, <Content options={viewOpts} />, null, done);
+        };
 
     return {
       // Stage app lifecycle functions.
@@ -64,10 +79,10 @@ Stage.defineView({
         return ActionBar;
       },
       activate(viewOpts, done) {
-        mount(viewUi, <Content />, null, done);
+        renderContent(viewOpts, done);
       },
       update(viewOpts) {
-        mount(viewUi, <Content />, null);
+        renderContent(viewOpts);
       },
       deactivate(viewOpts) {},
       destroy() {}

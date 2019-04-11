@@ -1,5 +1,7 @@
 const {createComponent, elem} = require("vidom"),
     VALID = {valid: true, message: ""},
+    objToString = Object.prototype.toString,
+    isArray = that => objToString.call(that).slice(8, -1) === "Array",
 
     defaultFieldRenderer = fldModel => {
       const {node: Field, valid, message, showLabel, hint} = fldModel,
@@ -25,10 +27,13 @@ const {createComponent, elem} = require("vidom"),
       displayName: "Form",
 
       initializeFields() {
-        const {children = []} = this,
-            fields = children.map((child, i) => {
-              return this.createFieldModel(child, i);
-            });
+        let {children = []} = this;
+        if(!isArray(children)) {
+          children = [children];
+        }
+        const fields = children.map((child, i) => {
+          return this.createFieldModel(child, i);
+        });
         this.setState({
           pristine: true,
           valid: true,
@@ -146,7 +151,7 @@ const {createComponent, elem} = require("vidom"),
             nodeAttrs = field.node.attrs,
             attrs = {
               ...nodeAttrs,
-              value: field.value,
+              value: field.value, // This important or else onChange event does not fire
               onChange: e => {
                 this.handleFieldChange(attrs.name, e);
                 nodeAttrs.onChange && nodeAttrs.onChange(e);

@@ -116,7 +116,7 @@ const {createComponent, mount} = require("vidom"),
 
         let stageInstance = this.stageInstance = Stage({
           viewport: viewport,
-          transition: transition || "lollipop",
+          transition: transition,
           transitionDelay: 50,
           context
         });
@@ -190,6 +190,7 @@ const {createComponent, mount} = require("vidom"),
     }),
 
     App = createComponent({
+      defaultTransition: "lollipop",
       navItems: [
         {view: "main", title: "Home"},
         {view: "settings", title: "Settings"},
@@ -209,12 +210,12 @@ const {createComponent, mount} = require("vidom"),
         this.setNavVisible(false);
         setTimeout(_ => {
           this.stage.pushView(view, {transition});
-        }, 250);
+        }, 220);
       },
       renderNavItems() {
         return this.navItems.map(item => {
           const {
-            icon, title, view, transition = "lollipop",
+            icon, title, view, transition = this.defaultTransition,
             handler = this.navigateTo.bind(this, view, transition)
           } = item;
           return (
@@ -271,7 +272,7 @@ const {createComponent, mount} = require("vidom"),
             <StageComponent ref={comp => this.stage = comp}
               viewConfig={Config.views}
               startView={startView}
-              transition="lollipop"
+              transition={this.defaultTransition}
               context={context}
               onViewLoadStart={this.onViewLoadStart.bind(this)}
               onViewLoadEnd={this.onViewLoadEnd.bind(this)}

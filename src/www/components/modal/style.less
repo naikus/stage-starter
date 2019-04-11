@@ -1,0 +1,44 @@
+.modal-container {
+  @bezier-func: cubic-bezier(0.19, 1, 0.22, 1);
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  background: transparent;
+  z-index: 999;
+  visibility: hidden;
+
+  background: rgba(0,0,0,0.4);
+  opacity: 0;
+  transition: opacity 400ms ease-in-out;
+
+  > .modal {
+    position: fixed;
+    width: 50%;
+    min-height: 100px;
+    left: 25%;
+    top: 10%;
+
+    padding: 15px;
+    background: lighten(@alt-bg-color, 55%);
+    border: 1px solid rgba(0,0,0,0.1);
+    color: @alt-text-color;
+    border-radius: 5px;
+    text-align: center;
+    
+    transform: translate3d(0, -300%, 0);
+    transition: transform 400ms @bezier-func 100ms;
+  }
+
+  &.__visible {
+    visibility: visible;
+    opacity: 1;
+    > .modal {
+      transform: none;
+    }
+  }
+}

@@ -10,10 +10,10 @@ module.exports = createComponent({
     icon: "string",
     class: "string"
   },
-  getInitialState() {
-    return {};
+  onInit() {
+    this.setState({});
   },
-  render() {
+  onRender() {
     const {onClick, disabled, icon = "icon-check", busy, class: className = ""} = this.attrs,
         buttonClass = "spin-button " + className + (busy ? " busy anim" : "");
     return (
