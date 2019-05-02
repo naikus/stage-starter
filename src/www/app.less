@@ -110,7 +110,7 @@ h1,h2,h3,h4,h5,h6 {
     height: 100%;
     top: 0;
     left: 0;
-    background: @alt-bg-color;
+    background: rgba(0,0,0,0.35);
     opacity: 0;
     -webkit-transition: opacity @easing-duration ease;
     -moz-transition: opacity @easing-duration ease;
@@ -141,7 +141,7 @@ h1,h2,h3,h4,h5,h6 {
 
   &.show {
     >.sidebar-pane {
-      opacity: 0.5;
+      opacity: 1;
     }
     > .sidebar {
       .transformNone;

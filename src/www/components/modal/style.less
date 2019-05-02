@@ -10,15 +10,19 @@
   width: 100%;
   background: transparent;
   z-index: 999;
-  visibility: hidden;
-
   background: rgba(0,0,0,0.4);
+
+  visibility: hidden;
   opacity: 0;
-  transition: opacity 400ms ease-in-out;
+  // transition: opacity 400ms ease-in-out;
+  animation-fill-mode: forwards;
+  animation-duration: 400ms;
+  animation-timing-function: ease-in-out;
+  animation-name: model_close;
 
   > .modal {
     position: fixed;
-    width: 50%;
+    min-width: 50%;
     min-height: 100px;
     left: 25%;
     top: 10%;
@@ -31,14 +35,58 @@
     text-align: center;
     
     transform: translate3d(0, -300%, 0);
-    transition: transform 400ms @bezier-func 100ms;
+    // transition: transform 400ms @bezier-func 150ms;
+    animation-fill-mode: forwards;
+    animation-duration: 400ms;
+    animation-timing-function: @bezier-func;
+    animation-name: model_content_close;
+    // animation: model_content_close 400ms @bezier-func 0 1 normal forwards running;
   }
 
   &.__visible {
+    // visibility: visible;
+    // opacity: 1;
+    animation-name: model_open;
+    > .modal {
+      // transform: none;
+      animation-name: model_content_open;
+    }
+  }
+}
+
+@keyframes model_close {
+  0% {
     visibility: visible;
     opacity: 1;
-    > .modal {
-      transform: none;
-    }
+  }
+  100% {
+    visibility: hidden;
+    opacity: 0;
+  }
+}
+@keyframes model_open {
+  0% {
+    visibility: hidden;
+    opacity: 0;
+  }
+  100% {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+@keyframes model_content_close {
+  0% {
+    transform: none;
+  }
+  100% {
+    transform: translate3d(0, -300%, 0);
+  }
+}
+@keyframes model_content_open {
+  0% {
+    transform: translate3d(0, -300%, 0);
+  }
+  100% {
+    transform: none;
   }
 }

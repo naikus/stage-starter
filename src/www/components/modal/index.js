@@ -3,28 +3,39 @@ const {createComponent} = require("vidom"),
     Modal = createComponent(
       {
         onInit() {
-          this.setState({
-            visible: false
-          });
+          this.setState({wasVisible: false});
         },
         onRender() {
-          const {target = "body"} = this.attrs, {visible} = this.state;
-          console.log("Modal rendering", visible);
-          return (
-            <Portal target={target}>
-              <div class={`modal-container${visible ? " __visible": " "}`}>
-                <div class="modal">
-                  {this.children}
+          const {target = "body", visible} = this.attrs, {wasVisible} = this.state;
+          return (visible || wasVisible) ?
+            (
+              <Portal target={target}>
+                <div class={`modal-container ${visible ? "__visible": ""}`}>
+                  <div class="modal">
+                    {this.children}
+                  </div>
                 </div>
-              </div>
-            </Portal>
-          );
+              </Portal>
+            ) :
+            null;
+        },
+        onUpdate(prevAttrs, prevChildren, prevState, prevContext) {
+          const {visible: prevVisible} = prevAttrs,
+              {visible} = this.attrs,
+              {wasVisible} = this.state;
+
+          if(visible && !wasVisible) {
+            this.setState({wasVisible: true});
+          }
         },
         onMount() {
           console.log("Modal Mounted");
-          window.setTimeout(_ => {
-            this.setState({visible: true});
-          }, 1300);
+          if(this.attrs.visible) {
+            this.update();
+          }
+        },
+        onUnmount() {
+          console.log("Modal unmounting");
         }
       },
       // Static props

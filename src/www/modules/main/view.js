@@ -8,6 +8,7 @@ Stage.defineView({
   id: "main",
   template: `<div class="stage-view main"></div>`,
   factory(viewContext, viewUi) {
+    let modelVisible = false;
     const {application} = viewContext.context(),
         setSidebarVisible = e => application.setNavVisible(true),
         showSettings = e => viewContext.pushView("settings"/* , {transition: "slide"} */),
@@ -17,7 +18,7 @@ Stage.defineView({
             this.setState({});
           },
           onRender() {
-            const {showModal} = this.attrs;
+            const {showModal} = this.attrs.options;
             return (
               <fragment>
                 <Tabs>
@@ -32,15 +33,10 @@ Stage.defineView({
                     </Touchable>
                   </Tabs.Tab>
                 </Tabs>
-                {this.renderModal()}
+                <Modal visible={showModal}>
+                  <h2 onClick={toggleModel}>Hello World!!!</h2>
+                </Modal>
               </fragment>
-            );
-          },
-          renderModal() {
-            return (
-              <Modal>
-                <h2>Hello World!!!</h2>
-              </Modal>
             );
           }
         }),
@@ -54,6 +50,11 @@ Stage.defineView({
                   <span class="text title">Dashboard</span>
                   {/* <!-- img class="img" src="images/logo-actionbar.png" alt="Logo" / --> */}
                 </div>
+                <Touchable onAction={toggleModel} action="tap">
+                  <div class="action activable right">
+                    <i class="icon icon-bell"></i>
+                  </div>
+                </Touchable>
                 <Touchable onAction={showSettings} action="tap">
                   <div class="action activable right">
                     <i class="icon icon-settings"></i>
@@ -68,6 +69,10 @@ Stage.defineView({
             );
           }
         }),
+        toggleModel = () => {
+          modelVisible = !modelVisible;
+          renderContent({showModal: modelVisible});
+        },
         renderContent = (viewOpts, done) => {
           mount(viewUi, <Content options={viewOpts} />, null, done);
         };

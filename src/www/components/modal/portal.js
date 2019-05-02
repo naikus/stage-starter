@@ -1,4 +1,4 @@
-const {createComponent, mount, unmount} = require("vidom"),
+const {createComponent, mount, unmountSync} = require("vidom"),
     Portal = createComponent({
       displayName: "Portal",
       onInit() {
@@ -22,7 +22,7 @@ const {createComponent, mount, unmount} = require("vidom"),
       },
 
       onUnmount() {
-        unmount(this.element);
+        unmountSync(this.element);
         this.element.parentNode.removeChild(this.element);
       }
     });

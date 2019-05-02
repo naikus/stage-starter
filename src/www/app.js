@@ -193,7 +193,7 @@ const {createComponent, mount} = require("vidom"),
       defaultTransition: "lollipop",
       navItems: [
         {view: "main", title: "Home"},
-        {view: "settings", title: "Settings"},
+        {view: "settings", title: "Settings", transition: "slide"},
         {view: "about", title: "About", transition: "slide-up"}
       ],
 
@@ -210,7 +210,7 @@ const {createComponent, mount} = require("vidom"),
         this.setNavVisible(false);
         setTimeout(_ => {
           this.stage.pushView(view, {transition});
-        }, 220);
+        }, 200);
       },
       renderNavItems() {
         return this.navItems.map(item => {
