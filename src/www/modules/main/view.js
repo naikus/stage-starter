@@ -8,7 +8,7 @@ Stage.defineView({
   id: "main",
   template: `<div class="stage-view main"></div>`,
   factory(viewContext, viewUi) {
-    let modelVisible = false;
+    let modalVisible = false;
     const {application} = viewContext.context(),
         setSidebarVisible = e => application.setNavVisible(true),
         showSettings = e => viewContext.pushView("settings"/* , {transition: "slide"} */),
@@ -33,8 +33,8 @@ Stage.defineView({
                     </Touchable>
                   </Tabs.Tab>
                 </Tabs>
-                <Modal visible={showModal}>
-                  <h2 onClick={toggleModel}>Hello World!!!</h2>
+                <Modal visible={showModal} class="hello">
+                  <div className="hello-world" onClick={toggleModal}>Hello World!!!</div>
                 </Modal>
               </fragment>
             );
@@ -50,7 +50,7 @@ Stage.defineView({
                   <span class="text title">Dashboard</span>
                   {/* <!-- img class="img" src="images/logo-actionbar.png" alt="Logo" / --> */}
                 </div>
-                <Touchable onAction={toggleModel} action="tap">
+                <Touchable onAction={toggleModal} action="tap">
                   <div class="action activable right">
                     <i class="icon icon-bell"></i>
                   </div>
@@ -69,9 +69,9 @@ Stage.defineView({
             );
           }
         }),
-        toggleModel = () => {
-          modelVisible = !modelVisible;
-          renderContent({showModal: modelVisible});
+        toggleModal = () => {
+          modalVisible = !modalVisible;
+          renderContent({showModal: modalVisible});
         },
         renderContent = (viewOpts, done) => {
           mount(viewUi, <Content options={viewOpts} />, null, done);

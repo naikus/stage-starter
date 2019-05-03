@@ -6,12 +6,15 @@ const {createComponent} = require("vidom"),
           this.setState({wasVisible: false});
         },
         onRender() {
-          const {target = "body", visible} = this.attrs, {wasVisible} = this.state;
+          console.log(this.attrs);
+          const {target = "body", visible} = this.attrs,
+              clazz = this.attrs.class,
+              {wasVisible} = this.state;
           return (visible || wasVisible) ?
             (
               <Portal target={target}>
                 <div class={`modal-container ${visible ? "__visible": ""}`}>
-                  <div class="modal">
+                  <div class={`modal ${clazz}`}>
                     {this.children}
                   </div>
                 </div>
