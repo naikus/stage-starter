@@ -23,13 +23,13 @@ Stage.defineView({
               <fragment>
                 <Tabs>
                   <Tabs.Tab icon="icon-calendar" title="Tab One">
-                    <Touchable action="tap" onAction={showSettings}>
-                      <span class="button inline primary">Settings</span>
+                    <Touchable action="tap" onAction={setSidebarVisible}>
+                      <span class="button inline primary">Show/Hide Sidebar</span>
                     </Touchable>
                   </Tabs.Tab>
                   <Tabs.Tab icon="icon-clock" title="Tab Two">
-                    <Touchable action="tap" onAction={setSidebarVisible}>
-                      <span class="button inline primary">Show/Hide Sidebar</span>
+                    <Touchable action="tap" onAction={showSettings}>
+                      <span class="button inline primary">Settings</span>
                     </Touchable>
                   </Tabs.Tab>
                 </Tabs>
@@ -45,7 +45,7 @@ Stage.defineView({
         ActionBar = createComponent({
           onRender() {
             return (
-              <div class="actionbar main">
+              <div class="actionbar">
                 <div class="action first">
                   <span class="text title">Dashboard</span>
                   {/* <!-- img class="img" src="images/logo-actionbar.png" alt="Logo" / --> */}

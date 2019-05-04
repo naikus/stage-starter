@@ -117,7 +117,7 @@ Stage.defineView({
               </Touchable>
             ) : null;
             return (
-              <div class="actionbar settings">
+              <div class="actionbar">
                 {back}
                 <div class={"action" + (!previousView ? " first" : "")}>
                   <span class="text">Settings</span>

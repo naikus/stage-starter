@@ -239,7 +239,10 @@ const {createComponent, mount} = require("vidom"),
             ViewActionBar = typeof controller.getActionBar === "function" ?
               controller.getActionBar() : null;
         // console.log("View actionbar", ViewActionBar);
-        this.setState({ViewActionBar: ViewActionBar});
+        this.setState({
+          viewId,
+          ViewActionBar
+        });
       },
       onBeforeViewTransitionOut(e) {
         const {viewId} = e;
@@ -265,7 +268,7 @@ const {createComponent, mount} = require("vidom"),
       },
       onRender() {
         const {startView = "sale"} = this.attrs,
-            {ViewActionBar, loading, showMainNav} = this.state,
+            {ViewActionBar, loading, showMainNav, viewId} = this.state,
             context = this.getContext();
         return (
           <fragment>
@@ -278,7 +281,7 @@ const {createComponent, mount} = require("vidom"),
               onViewLoadEnd={this.onViewLoadEnd.bind(this)}
               onBeforeViewTransitionIn={this.onBeforeViewTransitionIn.bind(this)} />
             {/* onBeforeViewTransitionOut={this.onBeforeViewTransitionOut.bind(this)} /> */}
-            <div class={"actionbar-container" + (ViewActionBar ? " show" : "")}>
+            <div class={"actionbar-container " + (ViewActionBar ? (viewId + " show") : "")}>
               {ViewActionBar ? <ViewActionBar /> : null}
             </div>
             <Sidebar active={showMainNav} onEmptyAction={this.setNavVisible.bind(this, false)}>

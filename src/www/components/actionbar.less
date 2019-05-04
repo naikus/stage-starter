@@ -31,11 +31,14 @@
   margin: 0;
 
   will-change: transform;
+  /*
+  -webkit-transition: background-color 200ms ease, -webkit-transform 200ms ease;
+  transition: background-color 200ms ease, transform 200ms ease;
+  */
   -webkit-transition: -webkit-transform 200ms ease;
   transition: transform 200ms ease;
   -webkit-transform: translate3d(0, -@actionbar-height, 0);
   transform: translate3d(0, -@actionbar-height, 0);
-
   // opacity: 0; // for android 2.3
 
   &.show {
@@ -59,7 +62,7 @@
 
     // border-right: 1px solid lighten(@alt-bg-color, 9%);
     min-width: 45px;
-    height: @actionbar-height;
+    // height: @actionbar-height;
     text-align: center;
     position: relative;
     user-select: none;

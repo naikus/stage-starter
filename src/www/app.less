@@ -83,7 +83,7 @@ h1,h2,h3,h4,h5,h6 {
     width: 94%;
     margin: 0 3%;
     */
-    border-bottom: 1px solid rgba(0,0,0,0.1);
+    // border-bottom: 1px solid rgba(0,0,0,0.1);
   }
 }
 @import "components/loading-indicator.less";
@@ -132,7 +132,7 @@ h1,h2,h3,h4,h5,h6 {
     .transition-transform(@easing-duration, @easing-func);
     background-color: @bg-color;
     color: @text-color;
-    border-right: 1px solid rgba(0,0,0,0.2);
+    // border-right: 1px solid rgba(0,0,0,0.4);
   }
 
   &.visible {
@@ -145,14 +145,14 @@ h1,h2,h3,h4,h5,h6 {
     }
     > .sidebar {
       .transformNone;
-      // box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
     }
   }
 }
 .sidebar {
   .branding {
     min-height: 100px;
-    background-color: @alt-bg-color;
+    background-color: desaturate(darken(@brand-color, 20%), 20%);
     // border-bottom: 4px solid darken(@brand-color, 15%);
   }
   .menu {
@@ -171,6 +171,12 @@ h1,h2,h3,h4,h5,h6 {
 /* -------------------------------------- Additional Modules ------------------------------------ */
 @import "modules/about/style.less";
 @import "modules/main/style.less";
+
+// settings
+.actionbar-container.settings {
+  background-color: @alt-bg-color;
+  color: @alt-text-color;
+}
 
 
 
