@@ -6,7 +6,7 @@ const {createComponent} = require("vidom"),
           this.setState({wasVisible: false});
         },
         onRender() {
-          console.log(this.attrs);
+          // console.log(this.attrs);
           const {target = "body", visible} = this.attrs,
               clazz = this.attrs.class,
               {wasVisible} = this.state;
@@ -32,13 +32,13 @@ const {createComponent} = require("vidom"),
           }
         },
         onMount() {
-          console.log("Modal Mounted");
+          // console.log("Modal Mounted");
           if(this.attrs.visible) {
             this.update();
           }
         },
         onUnmount() {
-          console.log("Modal unmounting");
+          // console.log("Modal unmounting");
         }
       },
       // Static props

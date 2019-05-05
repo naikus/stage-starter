@@ -16,7 +16,7 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 .stage-viewport {
-  background-color: @base-color;
+  background-color: @alt-bg-color;
 }
 
 
@@ -152,7 +152,7 @@ h1,h2,h3,h4,h5,h6 {
 .sidebar {
   .branding {
     min-height: 100px;
-    background-color: desaturate(darken(@brand-color, 20%), 20%);
+    background-color: @brand-color;
     // border-bottom: 4px solid darken(@brand-color, 15%);
   }
   .menu {
@@ -163,6 +163,9 @@ h1,h2,h3,h4,h5,h6 {
       text-transform: uppercase;
       padding: 15px;
       color: lighten(@text-color, 20%);
+      > .icon {
+        margin-right: 10px;
+      }
     }
   }
 }

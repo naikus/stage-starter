@@ -94,7 +94,7 @@ const {createComponent, mount} = require("vidom"),
       },
       // Stage component manages its own views and rendering lifecycle
       shouldRerender() {
-        console.log("will not re-render");
+        // console.log("will not re-render");
         return false;
       },
       onUnmount() {
@@ -192,9 +192,9 @@ const {createComponent, mount} = require("vidom"),
     App = createComponent({
       defaultTransition: "lollipop",
       navItems: [
-        {view: "main", title: "Home"},
-        {view: "settings", title: "Settings", transition: "slide"},
-        {view: "about", title: "About", transition: "slide-up"}
+        {view: "main", title: "Home", icon: "icon-home"},
+        {view: "settings", title: "Settings", icon: "icon-settings", transition: "slide"},
+        {view: "about", title: "About", icon: "icon-help-circle", transition: "slide-up"}
       ],
 
       getContext() {
@@ -246,7 +246,7 @@ const {createComponent, mount} = require("vidom"),
       },
       onBeforeViewTransitionOut(e) {
         const {viewId} = e;
-        console.log(e);
+        // console.log(e);
       },
       onViewLoadStart(e) {
         this.setState({loading: true});
