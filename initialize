@@ -39,4 +39,4 @@ cordova prepare
 
 # install local npm modules
 cd ..
-yarn install
+npm install
