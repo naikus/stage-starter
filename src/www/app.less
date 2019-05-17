@@ -16,7 +16,7 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 .stage-viewport {
-  background-color: @alt-bg-color;
+  background-color: @bg-color;
 }
 
 
@@ -110,7 +110,7 @@ h1,h2,h3,h4,h5,h6 {
     height: 100%;
     top: 0;
     left: 0;
-    background: rgba(0,0,0,0.35);
+    background: rgba(0,0,0,0.2);
     opacity: 0;
     -webkit-transition: opacity @easing-duration ease;
     -moz-transition: opacity @easing-duration ease;
@@ -130,8 +130,8 @@ h1,h2,h3,h4,h5,h6 {
     overflow-y: auto;
     .translate(-101%);
     .transition-transform(@easing-duration, @easing-func);
-    background-color: @bg-color;
-    color: @text-color;
+    background-color: lighten(@bg-color, 8%);
+    color: darken(@text-color, 8%);
     // border-right: 1px solid rgba(0,0,0,0.4);
   }
 
@@ -152,7 +152,7 @@ h1,h2,h3,h4,h5,h6 {
 .sidebar {
   .branding {
     min-height: 100px;
-    background-color: @brand-color;
+    background-color: lighten(@bg-color, 5%);
     // border-bottom: 4px solid darken(@brand-color, 15%);
   }
   .menu {
@@ -177,8 +177,8 @@ h1,h2,h3,h4,h5,h6 {
 
 // settings
 .actionbar-container.settings {
-  background-color: @alt-bg-color;
-  color: @alt-text-color;
+  // background-color: @alt-bg-color;
+  // color: @alt-text-color;
 }
 
 

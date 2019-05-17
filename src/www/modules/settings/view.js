@@ -10,7 +10,7 @@ const Stage = require("stage"),
 Stage.defineView({
   id: "settings",
   // template not strictly needed unless you want custom CSS class
-  template: `<div class="stage-view settings alt-bg"></div>`,
+  template: `<div class="stage-view settings"></div>`,
   factory(viewContext, viewUi) {
     let previousView = null;
     const goBack = () => previousView ? viewContext.popView() : location.reload(),

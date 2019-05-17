@@ -67,7 +67,7 @@
     position: relative;
     user-select: none;
     // transition: background-color 100ms ease;
-    padding: 17px 0;
+    padding: 17px 0 14px;
 
     .border-box;
 
@@ -82,7 +82,7 @@
 
     &.active {
       // background-color: transparent !important;
-      color: saturate(lighten(@selected-bg-color, 15%), 10%) !important;
+      color: saturate(lighten(@brand-color, 15%), 10%) !important;
     }
 
     .icon, .text {
@@ -97,7 +97,7 @@
 
     .text {
       text-transform: uppercase;
-      margin: 0 5px;
+      margin: 2px 5px;
     }
 
     .icon {

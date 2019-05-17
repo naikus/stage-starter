@@ -1,6 +1,6 @@
 // form controls
 @pad-default: 12px;
-@border-radius: 4px;
+@border-radius: 3px;
 
 a {
   color: @link-color;
@@ -63,7 +63,7 @@ textarea {
    border-radius: @border-radius;
    // text-transform: uppercase;
    font-weight: bold;
-   border-bottom-width: 3px;
+   border-bottom-width: 1px;
    cursor: pointer;
    text-align: center;
 
@@ -137,7 +137,8 @@ label {
   // font-weight: bolder;
 
   span {
-    display: block;
+    display: inline-block;
+    margin-right: 5px;
   }
 }
 
@@ -220,7 +221,7 @@ input[type=range] {
     font-size: 0.85em;
     font-weight: 100;
     color: @input-hint-color;
-    margin-bottom: 3px;
+    margin: 4px 4px 4px 0;
   }
 
   input, textarea, select, button {

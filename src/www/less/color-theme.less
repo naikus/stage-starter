@@ -44,24 +44,28 @@
 @button-text-color: #fff;
 
 // /*
-@brand-color: #2b507e;
-@base-color: #fefefe;
-@bg-color: #f8f8f8;
-@alt-bg-color: #232e3b;
-@text-color: #848d9c;
-@alt-text-color: rgb(154, 163, 182); // darken(@text-color, 5%);
-@selected-bg-color: rgba(42, 120, 236, 0.911);
-@selected-bg-color-alt: darken(@selected-bg-color, 5%); // darken(#fc3b6b, 5%);
-@selected-text-color: #fff;
-@active-bg-color: rgba(0,0,0,0.04);
+@brand-color: #c9387b;
+@base-color: #33333d;
+@bg-color: @base-color;
+@alt-bg-color: lighten(@base-color, 15%);
+@text-color: #ddd2d9;
+@alt-text-color: @text-color;
+@selected-bg-color: rgba(255,255,255,0.1);
+@selected-bg-color-alt: rgba(255,255,255,0.1);
+@selected-text-color: @text-color;
+@active-bg-color: rgba(0,0,0,0.05);
 @active-text-color: @text-color;
-@primary-action-bg-color: rgba(201, 26, 114, 0.911);
+@primary-action-bg-color: desaturate(@brand-color, 15%);
 @primary-action-text-color: #fff;
-@secondary-action-bg-color: darken(@bg-color, 10%); // darken(#4cc3ff, 0%);
+@secondary-action-bg-color: desaturate(@primary-action-bg-color, 15%); // darken(#4cc3ff, 0%);
 @secondary-action-text-color: @text-color; // #fff;
-@toolbar-bg-color: @bg-color;
-@toolbar-text-color: @text-color;
+@toolbar-bg-color: lighten(@base-color, 5%);
+@toolbar-text-color: darken(@text-color, 5%);
 @link-color: lighten(#0e87ce, 10%);
-@input-bg-color: rgba(0,0,0,0.03);
-@input-text-color: @text-color;
+@input-bg-color: rgba(0,0,0,0.05);
+@input-text-color: darken(@text-color, 5%);
+@input-hint-color: desaturate(darken(@text-color, 30%), 10%);
+@input-label-color: @text-color;
+@button-bg-color: rgba(150, 150, 190, 0.3);
+@button-text-color: @text-color;
 // */
