@@ -44,7 +44,7 @@ const {createComponent, elem} = require("vidom"),
       createFieldModel(fldNode, index) {
         const {name, defaultValue} = fldNode.attrs,
             fieldId = fldNode.attrs.id || fldNode.key || "field_" + index,
-            fieldName = name || fieldId;
+            fieldName = name;
         return {
           node: fldNode,
           name: fieldName,
