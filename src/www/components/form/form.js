@@ -99,7 +99,7 @@ const {createComponent, elem} = require("vidom"),
         const {target} = event,
             type = target.type,
             value = (type === "checkbox" || type === "radio") ?
-              target.checked : target.value || target.textContent,
+              target.checked : target.value, // || target.textContent,
             {onChange} = this.attrs,
             {fields} = this.state,
             fieldsInfo = this.getFieldsMap(fields),

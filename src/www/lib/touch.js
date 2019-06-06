@@ -23,7 +23,7 @@ const Events = !("ontouchstart" in document.documentElement) ?
       {
         tap: "click",
         taphold: "mousedown",
-        dbltap: "dblcick",
+        dbltap: "dblclick",
         touchstart: "mousedown",
         touchend: "mouseup",
         touchmove: "mousemove",
@@ -158,28 +158,31 @@ const Events = !("ontouchstart" in document.documentElement) ?
 
     dbltap = elem => {
       const state = {}, handler = te => {
-        const now = Date.now(),
-            elapsed = now - (state.last || now),
-            target = te.currentTarget;
-        if(elapsed > 0 && elapsed < 300 && state.target === target) {
-          target.dispatchEvent(createEvent("dbltap", {
-            detail: {
-              nativeEvent: te
+            const now = Date.now(),
+                elapsed = now - (state.last || now),
+                target = te.currentTarget;
+            if(elapsed > 0 && elapsed < 300 && state.target === target) {
+              target.dispatchEvent(createEvent("dbltap", {
+                detail: {
+                  nativeEvent: te
+                }
+              }));
+              state.last = state.target = null;
+            }else {
+              state.last = now;
+              state.target = target;
             }
-          }));
-          state.last = state.target = null;
-        }else {
-          state.last = now;
-          state.target = target;
-        }
-      };
+          },
+          tapDefn = EventFactory.tap(elem);
 
       return {
         // type: "dbltap",
         setup() {
+          tapDefn.setup();
           on(elem, "tap", handler);
         },
         destroy() {
+          tapDefn.destroy();
           off(elem, "tap", handler);
         }
       };
