@@ -50,18 +50,19 @@ Stage.defineView({
                   <span class="text title">Dashboard</span>
                   {/* <!-- img class="img" src="images/logo-actionbar.png" alt="Logo" / --> */}
                 </div>
+                <div class="filler"></div>
                 <Touchable onAction={toggleModal} action="tap">
-                  <div class="action activable right">
+                  <div class="action activable">
                     <i class="icon icon-bell"></i>
                   </div>
                 </Touchable>
                 <Touchable onAction={showSettings} action="tap">
-                  <div class="action activable right">
+                  <div class="action activable">
                     <i class="icon icon-settings"></i>
                   </div>
                 </Touchable>
                 <Touchable onAction={showAbout} action="tap">
-                  <div class="action activable right">
+                  <div class="action activable">
                     <i class="icon icon-help-circle"></i>
                   </div>
                 </Touchable>

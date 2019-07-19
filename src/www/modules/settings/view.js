@@ -122,8 +122,9 @@ Stage.defineView({
                 <div class={"action" + (!previousView ? " first" : "")}>
                   <span class="text">Settings</span>
                 </div>
+                <div class="filler"></div>
                 <Touchable onAction={showAbout} action="tap">
-                  <div class="action activable right">
+                  <div class="action activable">
                     <i class="icon icon-help-circle"></i>
                   </div>
                 </Touchable>

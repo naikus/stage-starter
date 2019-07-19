@@ -1,4 +1,4 @@
-@actionbar-height: 53px;
+@actionbar-height: 63px;
 @actionbar-zindex: 110;
 
 .stage-view {
@@ -18,8 +18,8 @@
   min-height: @actionbar-height;
   // overflow: hidden;
 
-  background-color: @toolbar-bg-color;
-  color: @toolbar-text-color;
+  // background-color: @toolbar-bg-color;
+  // color: @toolbar-text-color;
 
   // will only work if user-scalable=no in viewport meta tag
   position: fixed;
@@ -53,6 +53,13 @@
     // list-style-type: none;
     overflow: hidden;
     .no-select;
+    display: flex;
+    align-items: center;
+    height: @actionbar-height;
+  }
+
+  .filler {
+    flex-grow: 1;
   }
 
   .action {
@@ -67,7 +74,8 @@
     position: relative;
     user-select: none;
     // transition: background-color 100ms ease;
-    padding: 17px 0 14px;
+    // padding: 17px 0 14px;
+    padding: 16px;
 
     .border-box;
 
@@ -75,14 +83,8 @@
       padding-left: 10px;
     }
 
-    &.right {
-      float: right;
-      border: none;
-    }
-
     &.active {
-      // background-color: transparent !important;
-      color: saturate(lighten(@brand-color, 15%), 10%) !important;
+
     }
 
     .icon, .text {
