@@ -2,7 +2,7 @@
 const {hasClass, addClass, removeClass} = require("clazz"),
     defaults = {
       level: 4,
-      delay: 90,
+      delay: 50,
       targetClass: "activable",
       activeClass: "active"
     };
@@ -83,10 +83,10 @@ function Activables(container, opts) {
           clearTimeout(timer);
 
           if(hasClass(element, activeClass)) {
-            deactivate();
+            setTimeout(deactivate, 100);
           }else {
             addClass(element, activeClass);
-            setTimeout(deactivate, delay);
+            setTimeout(deactivate, 100);
           }
         }
       },
