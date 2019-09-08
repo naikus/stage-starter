@@ -5,14 +5,15 @@
 @invalid-color: @error-color;
 
 
-@brand-color: rgba(64, 204, 247, 0.911);
-@base-color: #223344;
+// @brand-color: rgba(64, 204, 247, 0.911);
+@brand-color: #d84093;
+@base-color: #24303d;
 // Background color for viewport views and other boxes
 @bg-color: #2E3D4C;
 // Background color for overlays, inlays etc.
-@alt-bg-color: @base-color;
+@alt-bg-color: rgb(52, 62, 75);
 // Text color to complement the background color
-@text-color: rgb(143, 154, 158);
+@text-color: rgb(179, 192, 197);
 // Text color to complement alternate background color
 @alt-text-color: @text-color;
 // Default selected background color
@@ -26,7 +27,7 @@
 @active-text-color: lighten(@text-color, 10%);
 
 // @primary-action-bg-color: rgba(245, 117, 117, 0.911);
-@primary-action-bg-color: rgba(55, 176, 212, 0.911);
+@primary-action-bg-color: desaturate(@brand-color, 15%);
 @primary-action-text-color: #fff;
 
 @secondary-action-bg-color: lighten(@bg-color, 10%); // darken(#4cc3ff, 0%);
@@ -43,7 +44,7 @@
 @button-bg-color: rgba(150, 150, 190, 0.3);
 @button-text-color: #fff;
 
-// /*
+/*
 @brand-color: #c9387b;
 @base-color: #33333d;
 @bg-color: @base-color;
@@ -68,4 +69,4 @@
 @input-label-color: @text-color;
 @button-bg-color: rgba(150, 150, 190, 0.3);
 @button-text-color: @text-color;
-// */
+*/
