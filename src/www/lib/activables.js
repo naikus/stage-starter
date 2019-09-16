@@ -2,7 +2,7 @@
 const {hasClass, addClass, removeClass} = require("clazz"),
     defaults = {
       level: 4,
-      delay: 50,
+      delay: 100,
       targetClass: "activable",
       activeClass: "active"
     };
@@ -75,7 +75,8 @@ function Activables(container, opts) {
         // console.log("adding listener");
         container.addEventListener(touchmove, move, false);
         // start the timer
-        timer = setTimeout(activate, delay);
+        // timer = setTimeout(activate, delay);
+        activate();
       },
 
       end = e => {
@@ -83,10 +84,10 @@ function Activables(container, opts) {
           clearTimeout(timer);
 
           if(hasClass(element, activeClass)) {
-            setTimeout(deactivate, 100);
+            setTimeout(deactivate, delay);
           }else {
             addClass(element, activeClass);
-            setTimeout(deactivate, 100);
+            setTimeout(deactivate, delay);
           }
         }
       },

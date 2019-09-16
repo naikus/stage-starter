@@ -36,7 +36,7 @@ module.exports = createComponent({
     stopEvent(e);
     const {onAction} = this.attrs;
     if(!isDisabled(this.domElement) && onAction) {
-      onAction(e);
+      window.setTimeout(_ => onAction(e), 100);
     }
   }
 });
