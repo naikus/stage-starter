@@ -117,7 +117,7 @@ const {createComponent, mount} = require("vidom"),
         let stageInstance = this.stageInstance = Stage({
           viewport: viewport,
           transition: transition,
-          transitionDelay: 50,
+          transitionDelay: 10,
           context
         });
 

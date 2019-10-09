@@ -6,7 +6,7 @@
 
 
 // @brand-color: rgba(64, 204, 247, 0.911);
-@brand-color: #d84093;
+@brand-color: #ccb138;
 @base-color: #24303d;
 // Background color for viewport views and other boxes
 @bg-color: #2E3D4C;
@@ -17,13 +17,13 @@
 // Text color to complement alternate background color
 @alt-text-color: @text-color;
 // Default selected background color
-@selected-bg-color: #19b7e7;
+@selected-bg-color: rgba(255,255,255,0.1);
 // @selected-bg-color: rgba(245, 117, 117, 0.911);
 @selected-bg-color-alt: darken(@selected-bg-color, 5%); // darken(#fc3b6b, 5%);
 // Default selected text color
-@selected-text-color: #fff;
+@selected-text-color: @text-color;
 // Active background color, when an element becomes active i.e. :active class
-@active-bg-color: darken(@bg-color, 25%); // lighten(#f34277, 10%);
+@active-bg-color: darken(@bg-color, 5%); // lighten(#f34277, 10%);
 @active-text-color: lighten(@text-color, 10%);
 
 // @primary-action-bg-color: rgba(245, 117, 117, 0.911);
@@ -33,8 +33,8 @@
 @secondary-action-bg-color: lighten(@bg-color, 10%); // darken(#4cc3ff, 0%);
 @secondary-action-text-color: @text-color; // #fff;
 
-@toolbar-bg-color: @alt-bg-color;
-@toolbar-text-color: @alt-text-color;
+@toolbar-bg-color: @bg-color;
+@toolbar-text-color: @text-color;
 
 @link-color: lighten(#4590e4, 10%);
 @input-bg-color: rgba(24, 24, 24, 0.08);
@@ -70,3 +70,30 @@
 @button-bg-color: rgba(150, 150, 190, 0.3);
 @button-text-color: @text-color;
 */
+
+// /*
+@brand-color: #d33376;
+@base-color: #000000;
+@bg-color: #1c1c1c;
+@alt-bg-color: lighten(@bg-color, 3%);
+@text-color: #f0f0f0;
+@alt-text-color: @text-color;
+@selected-bg-color: rgba(255,255,255,0.1);
+@selected-bg-color-alt: rgba(255,255,255,0.1);
+@selected-text-color: @text-color;
+@active-bg-color: rgba(255, 255, 255, 0.08);
+@active-text-color: @text-color;
+@primary-action-bg-color: @brand-color;
+@primary-action-text-color: #fff;
+@secondary-action-bg-color: desaturate(@primary-action-bg-color, 15%); // darken(#4cc3ff, 0%);
+@secondary-action-text-color: @text-color; // #fff;
+@toolbar-bg-color: darken(@bg-color, 3%);
+@toolbar-text-color: @text-color;
+@link-color: lighten(#0e87ce, 10%);
+@input-bg-color: rgba(165,165,165,0.05);
+@input-text-color: darken(@text-color, 5%);
+@input-hint-color: desaturate(darken(@text-color, 30%), 10%);
+@input-label-color: @text-color;
+@button-bg-color: rgba(150, 150, 190, 0.3);
+@button-text-color: @text-color;
+// */

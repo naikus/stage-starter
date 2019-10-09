@@ -18,8 +18,8 @@
   min-height: @actionbar-height;
   // overflow: hidden;
 
-  // background-color: @toolbar-bg-color;
-  // color: @toolbar-text-color;
+  background-color: @toolbar-bg-color;
+  color: @toolbar-text-color;
 
   // will only work if user-scalable=no in viewport meta tag
   position: fixed;
@@ -84,7 +84,8 @@
     }
 
     &.active {
-
+      background-color: transparent;
+      color: @brand-color;
     }
 
     .icon, .text {

@@ -84,6 +84,13 @@ Stage.defineView({
       getActionBar() {
         return ActionBar;
       },
+      onBackButton() {
+        if(modalVisible) {
+          toggleModal();
+        }else {
+          navigator.app.exitApp();
+        }
+      },
       activate(viewOpts, done) {
         renderContent(viewOpts, done);
       },

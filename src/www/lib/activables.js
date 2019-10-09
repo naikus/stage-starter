@@ -73,10 +73,10 @@ function Activables(container, opts) {
 
         if(!element) return;
         // console.log("adding listener");
+        activate();
         container.addEventListener(touchmove, move, false);
         // start the timer
         // timer = setTimeout(activate, delay);
-        activate();
       },
 
       end = e => {
