@@ -11,7 +11,7 @@ fi
 mkdir -p dist
 gulp build
 
-cordova create cordova-app naikus.github.io.swagpos SwagPos --link-to=./dist
+cordova create cordova-app naikus.github.io.stagestarter StageStarter --link-to=./dist
 
 # copy the existing config.xml (Note the app id and name in this file will take precedence over the
 # cordova 'create' command above)
