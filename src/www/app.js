@@ -1,6 +1,6 @@
 /* global setTimeout, clearTimeout */
 const {createComponent, mount} = require("vidom"),
-    Stage = require("stage"),
+    Stage = require("@naikus/stage"),
     Config = require("./config"),
     // Router = require("simple-router").default,
     Storage = require("store2").namespace(Config.appnamespace),

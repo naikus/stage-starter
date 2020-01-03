@@ -1,4 +1,4 @@
-const Stage = require("stage"),
+const Stage = require("@naikus/stage"),
     {createComponent, mount} = require("vidom"),
     Touchable = require("touchable");
 

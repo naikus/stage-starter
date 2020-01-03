@@ -1,5 +1,5 @@
 /* global location */
-const Stage = require("stage"),
+const Stage = require("@naikus/stage"),
     {createComponent, mount, unmount} = require("vidom"),
     Touchable = require("touchable"),
     {SpinButton, Form, rb} = require("form"),
