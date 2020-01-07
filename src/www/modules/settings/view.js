@@ -69,7 +69,7 @@ Stage.defineView({
                 </Form>
                 <div class="actions">
                   <SpinButton onClick={this.saveSettings.bind(this)}
-                    class="_pull-right primary inline"
+                    class="_pull-right activable primary inline"
                     disabled={!valid || busy}
                     busy={busy}>
                     Save

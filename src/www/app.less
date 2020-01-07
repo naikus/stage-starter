@@ -71,15 +71,6 @@ h1,h2,h3,h4,h5,h6 {
   }
 }
 
-// /*
-.activable {
-  cursor: pointer;
-  -moz-transition: background-color 350ms ease, color 150ms ease;
-  -webkit-transition: background-color 350ms ease, color 150ms ease;
-  transition: background-color 350ms ease, color 150ms ease;
-}
-// */
-
 @import "components/form/style.less";
 @import "components/tabs/style.less";
 .tab-panel {
@@ -191,6 +182,22 @@ h1,h2,h3,h4,h5,h6 {
   // background-color: @alt-bg-color;
   // color: @alt-text-color;
 }
+
+
+
+// /*
+.activable {
+  cursor: pointer;
+  -moz-transition: background-color 350ms ease, color 150ms ease;
+  -webkit-transition: background-color 350ms ease, color 150ms ease;
+  transition: background-color 350ms ease, color 150ms ease;
+
+  &.active {
+    background-color: @active-bg-color;
+    color: @active-text-color;
+  }
+}
+// */
 
 
 

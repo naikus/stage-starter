@@ -13,7 +13,7 @@ Stage.defineView({
               <div class="content text-center">
                 <p>Made using stage.js and vidom</p>
                 <Touchable action="tap" onAction={goBack}>
-                  <span class="button primary inline">OK</span>
+                  <span class="button activable primary inline">OK</span>
                 </Touchable>
               </div>
             );

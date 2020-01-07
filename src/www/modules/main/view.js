@@ -24,12 +24,12 @@ Stage.defineView({
                 <Tabs>
                   <Tabs.Tab icon="icon-calendar" title="Tab One">
                     <Touchable action="tap" onAction={setSidebarVisible}>
-                      <span class="button inline primary">Show/Hide Sidebar</span>
+                      <span class="button activable inline primary">Show/Hide Sidebar</span>
                     </Touchable>
                   </Tabs.Tab>
                   <Tabs.Tab icon="icon-clock" title="Tab Two">
                     <Touchable action="tap" onAction={showSettings}>
-                      <span class="button inline primary">Settings</span>
+                      <span class="button activable inline">Settings</span>
                     </Touchable>
                   </Tabs.Tab>
                 </Tabs>

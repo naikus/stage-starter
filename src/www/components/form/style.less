@@ -59,9 +59,8 @@ textarea {
 .button, input[type=button], button, input[type=reset], input[type=submit] {
    background-color: @button-bg-color;
    color: @button-text-color;
-   border: 1px solid rgba(0,0,0,0);
+   border: 1px solid rgba(0,0,0,0.07);
    border-radius: @input-border-radius;
-   border: none;
    // text-transform: uppercase;
    font-weight: 500;
    // border-bottom-width: 1px;
@@ -79,12 +78,6 @@ textarea {
       // box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
       border-color: rgba(0, 0, 0, 0.15);
       outline: 0;
-   }
-   &:active, &.active {
-     border-color: rgba(0, 0, 0, 0.15);
-     // box-shadow: 0 0 3px rgba(0, 0, 0, 0.3) inset;
-     color: @active-text-color;
-     // background-color: darken(@alt-bg-color, 5%);
    }
 
    &.primary {
@@ -110,6 +103,7 @@ textarea {
      box-shadow: none !important;
      border-color: rgba(0,0,0,0.1) !important;
      color: darken(@button-text-color, 45%) !important;
+     cursor: not-allowed;
    }
 
    /*

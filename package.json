@@ -40,7 +40,6 @@
   },
   "dependencies": {
     "@naikus/stage": "git+https://github.com/naikus/stage.git",
-    "stage": "git+https://github.com/naikus/stage.git",
     "store2": "^2.3.2",
     "vidom": "^0.11.3",
     "whatwg-fetch": "^2.0.2"
