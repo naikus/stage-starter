@@ -1,6 +1,6 @@
 const Stage = require("@naikus/stage"),
     {createComponent, mount} = require("vidom"),
-    Touchable = require("touchable");
+    Touchable = require("@components/touchable");
 
 Stage.defineView({
   id: "about",

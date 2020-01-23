@@ -1,5 +1,5 @@
 const {createComponent} = require("vidom"),
-    Touchable = require("touchable"),
+    Touchable = require("@components/touchable"),
     SelectableList = createComponent({
       comparator: (itemA, itemB) => itemA && itemB && itemA.id === itemB.id,
       setItem(item) {

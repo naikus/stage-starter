@@ -3,8 +3,8 @@ const gulp = require("gulp"),
     del = require("del"),
     cliargs = require("yargs").argv,
     vbuffer = require("vinyl-buffer"),
-    uglify = require("gulp-uglify"),
-    rename = require("gulp-rename"),
+    terser = require("gulp-terser"),
+    // uglify = require("gulp-uglify"),
     iife = require("gulp-iife"),
     less = require("gulp-less"),
     vsource = require("vinyl-source-stream"),
@@ -15,6 +15,8 @@ const gulp = require("gulp"),
     pkg = require("./package.json"),
     mergeStream = require("merge-stream"),
     // workbox = require("workbox-build"),
+    config = require("./build.config"),
+    testConfig = require("./jest.config"),
 
     isProductionEnv = () => cliargs.env === "production" || process.env.NODE_ENV === "production",
 
@@ -25,74 +27,28 @@ const gulp = require("gulp"),
         stream = stream
             .pipe(vbuffer())
             .pipe(sourcemaps.init({loadMaps: true}))
-            .pipe(uglify())
+            .pipe(terser())
             // .pipe(rename())
             .pipe(sourcemaps.write("./"))
-            .on("error", errorHandler("Uglify"));
+            .on("error", errorHandler("Terser"));
       }
       return stream;
-    },
-
-    builddir = cliargs.builddir || "dist",
-
-    config = {
-      src: {
-        dir: "src/www/",
-        assets: [
-          "css/**/*",
-          "font/**/*",
-          "images/**/*",
-          "modules/**/*",
-          "!modules/**/*.js",
-          "!modules/**/*.less",
-          "!less"
-        ],
-        libs: [
-          // add libraries here that you want to 'require'
-          {name: "activables", path: "lib"},
-          {name: "clazz", path: "lib"},
-          {name: "touch", path: "lib"},
-          {name: "api-client", path: "lib", file: "api-client"},
-
-          // Components
-          {name: "form", path: "components/form", file: "index"},
-          {name: "tabs", path: "components/tabs", file: "index"},
-          {name: "modal", path: "components/modal", file: "index"},
-          {name: "touchable", path: "components"}
-
-          // Services
-        ],
-        // /*
-        serviceworkers: [
-          "sw.js",
-          "sw-config.js"
-        ]
-        // */
-      },
-      dist: {
-        app_dir: builddir,
-        css_dir: builddir + "/css"
-      },
-      browserify: {
-        debug: false,
-        sourceMaps: true,
-        extensions: [
-          ".js",
-          ".json"
-        ]
-      }
     };
 
 
 gulp.task("help", () => {
-  console.log("Available tasks:");
   console.log([
-    "------------------------------------------------------------------------",
-    "build           Build webapp in the dest directory",
-    "clean           Clean the dest directory",
-    "server          Start the dev server",
-    "prod:server     Start the production (minified) server",
-    "-------------------------------------------------------------------------"
+    "-------------------------------------------------------------------------------------------",
+    "",
+    "Available build targets",
+    "help           This target",
+    "clean          Cleans the build directory",
+    "<default>      Builds the app (Production build)",
+    "dev:server     Starts the dev server",
+    "",
+    "To make a production build:",
+    "Set the NODE_ENV environment variable to 'production' or pass --env=production option",
+    "-------------------------------------------------------------------------------------------"
   ].join("\n"));
 });
 
@@ -106,71 +62,43 @@ gulp.task("env:production", cb => {
 
 
 gulp.task("clean", cb => {
-  return del([config.dist.app_dir], cb);
+  return del([
+    config.build_dir + "/**",
+    config.build_dir
+  ], cb);
 });
 
-gulp.task("build:libs", () => {
-  const b = browserify({debug: false, builtins: true}),
-      deps = pkg.dependencies,
-      distDir = config.dist.app_dir;
 
-  Object.keys(deps).forEach(dep => b.require(dep));
+
+gulp.task("copy:assets", () => {
+  const src = config.src_dir,
+      dist = config.build_dir;
+  return gulp.src(config.assets, {base: src, cwd: src}).pipe(gulp.dest(dist));
   /*
-  // Expose additional libs in the js and lib directories
-  config.src.libs.forEach(lib => {
-    b.require("./" + (lib.file || lib.name), {
-      basedir: config.src.dir + lib.path,
-      expose: lib.name
-    });
-  });
-  */
-  let stream = b.transform("babelify").bundle().pipe(vsource("lib.js"));
-  return uglifyIfProduction(stream).pipe(gulp.dest(distDir + "/js"));
-});
-
-
-
-gulp.task("copy-assets", () => {
-  const src = config.src.dir,
-      dist = config.dist.app_dir;
-      /*
-      assets = config.src.assets.map(a => {
-        return a.indexOf("!") === 0 ? "!" + src + a.substring(1) : src + a;
-      });
-      */
-
-  console.log("Copying assets", config.src.assets);
   return mergeStream(
-    gulp.src(config.src.assets, {base: src, cwd: src}).pipe(gulp.dest(dist)),
+    gulp.src(config.assets, {base: src, cwd: src}).pipe(gulp.dest(dist))
     gulp.src([
-      src + "*.{html, css, png, jpg}"
+      src + "/*.{html, css, png, jpg}"
     ]).pipe(gulp.dest(dist))
   );
+  */
 });
 
 
 
-gulp.task("lessc", () => {
-  return gulp.src(config.src.dir + "app.less")
+gulp.task("build:less", () => {
+  return gulp.src(config.src_dir + "/app.less")
       .pipe(less())
-      .pipe(gulp.dest(config.dist.css_dir));
+      .pipe(gulp.dest(config.build_dir + "/css"));
 });
 
-
-/*
-gulp.task("jshint", () => {
-  return gulp.src(["src/js", "!src/js/lib"])
-      .pipe(jshint())
-      .pipe(jshint.reporter("default"));
-});
-*/
 
 
 gulp.task("build:service-worker", () => {
-  const src = config.src.dir,
-      dist = config.dist.app_dir,
-      sworkers = config.src.serviceworkers.map(sw => {
-        return src + sw;
+  const src = config.src_dir,
+      dist = config.build_dir,
+      sworkers = config.serviceworkers.map(sw => {
+        return `${src}/${sw}`;
       });
   // Copy the service worker related files
   return gulp.src(sworkers)
@@ -205,37 +133,47 @@ gulp.task("build:service-worker", callback => {
 */
 
 
-gulp.task("build:app", () => {
-  const src = config.src.dir,
-      dist = config.dist.app_dir,
-      b = browserify({builtins: false});
 
-  b.require("./src/www/app.js", {expose: "app"});
+gulp.task("build:vendor", () => {
+  const b = browserify(config.browserify),
+      deps = pkg.dependencies,
+      distDir = config.build_dir;
+
+  Object.keys(deps).forEach(dep => b.require(dep));
+  let stream = b/* .transform() */
+      .bundle()
+      .pipe(vsource("vendor.js"));
+  return uglifyIfProduction(stream).pipe(gulp.dest(distDir + "/js"));
+});
+
+
+
+gulp.task("build:app", () => {
+  const src = config.src_dir,
+      dist = config.build_dir,
+      b = browserify(Object.assign({}, config.browserify, {builtins: false}));
+
+  b.require(`${src}/app.js`, {expose: "app"});
   // Exclude vendors since we've created a separate bundle for vendor libraries
   Object.keys(pkg.dependencies).forEach(dep => b.external(dep));
 
   // Expose additional libs in the js and lib directories
-  config.src.libs.forEach(lib => {
-    b.require("./" + (lib.file || lib.name), {
-      basedir: config.src.dir + lib.path,
+  config.libs.forEach(lib => {
+    b.require(`./${lib.path}`, {
+      basedir: config.src_dir,
       expose: lib.name
     });
   });
-  /*
-  config.src.libs.forEach(lib => {
-    b.external(lib.name);
-  });
-  */
 
   let modStream,
-      appStream = b.transform("babelify")
+      appStream = b/* .transform() */
           .bundle()
           .pipe(vsource("app.js"));
 
   appStream = uglifyIfProduction(appStream).pipe(gulp.dest(dist + "/js"));
 
   // babel transform view js files
-  modStream = gulp.src(src + "modules/**/*.js")
+  modStream = gulp.src(`${src}/modules/**/*.js`)
       .pipe(babel())
       .pipe(iife({
         useStrict: false, // since babel adds this
@@ -252,7 +190,7 @@ gulp.task("build:app", () => {
 
 
 
-gulp.task("build", gulp.series("build:libs", "build:app", "copy-assets", "lessc", cb => {
+gulp.task("build", gulp.series("build:vendor", "build:app", "copy:assets", "build:less", cb => {
   cb();
 }));
 
@@ -264,9 +202,9 @@ gulp.task("default", gulp.series("env:production", "build", "build:service-worke
 
 
 
-gulp.task("server", gulp.series("build", "build:service-worker", () => {
+gulp.task("dev:server", gulp.series("build", "build:service-worker", () => {
   return connect.server({
-    root: "dist",
+    root: config.build_dir,
     host: "0.0.0.0",
     port: 8080
   });
@@ -276,7 +214,7 @@ gulp.task("server", gulp.series("build", "build:service-worker", () => {
 
 gulp.task("prod:server", gulp.series("env:production", "build", "build:service-worker", () => {
   return connect.server({
-    root: "dist",
+    root: config.build_dir,
     port: 8080
   });
 }));

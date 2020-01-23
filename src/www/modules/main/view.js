@@ -1,8 +1,8 @@
 const Stage = require("@naikus/stage"),
     {createComponent, mount} = require("vidom"),
-    Touchable = require("touchable"),
-    Modal = require("modal"),
-    Tabs = require("tabs");
+    Touchable = require("@components/touchable"),
+    Modal = require("@components/modal"),
+    Tabs = require("@components/tabs");
 
 Stage.defineView({
   id: "main",
@@ -22,12 +22,12 @@ Stage.defineView({
             return (
               <fragment>
                 <Tabs>
-                  <Tabs.Tab icon="icon-calendar" title="Tab One">
+                  <Tabs.Tab key="tab1" icon="icon-calendar" title="Tab One">
                     <Touchable action="tap" onAction={setSidebarVisible}>
                       <span class="button activable inline primary">Show/Hide Sidebar</span>
                     </Touchable>
                   </Tabs.Tab>
-                  <Tabs.Tab icon="icon-clock" title="Tab Two">
+                  <Tabs.Tab key="tab2" icon="icon-clock" title="Tab Two">
                     <Touchable action="tap" onAction={showSettings}>
                       <span class="button activable inline">Settings</span>
                     </Touchable>

@@ -1,6 +1,6 @@
 /* global console */
 const {createComponent, mount} = require("vidom"),
-    Touchable = require("touchable"),
+    Touchable = require("@components/touchable"),
     isArray = that => Object.prototype.toString.call(that) === "[object Array]",
 
     Tab = createComponent({

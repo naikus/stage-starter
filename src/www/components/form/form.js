@@ -46,6 +46,7 @@ const {createComponent, elem} = require("vidom"),
             fieldId = fldNode.attrs.id || fldNode.key || "field_" + index,
             fieldName = name;
         return {
+          id: fieldId,
           node: fldNode,
           name: fieldName,
           valid: true,

@@ -1,8 +1,8 @@
 /* global location */
 const Stage = require("@naikus/stage"),
     {createComponent, mount, unmount} = require("vidom"),
-    Touchable = require("touchable"),
-    {SpinButton, Form, rb} = require("form"),
+    Touchable = require("@components/touchable"),
+    {SpinButton, Form, rb} = require("@components/form"),
     {Storage, Config} = require("app");
 
 // console.log(Storage, Config, Form, Rules, rb);

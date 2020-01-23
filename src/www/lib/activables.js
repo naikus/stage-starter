@@ -1,5 +1,5 @@
 /* global require module setTimeout clearTimeout */
-const {hasClass, addClass, removeClass} = require("clazz"),
+const {hasClass, addClass, removeClass} = require("@lib/clazz"),
     defaults = {
       level: 4,
       delay: 100,

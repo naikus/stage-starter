@@ -1,5 +1,5 @@
 const {createComponent} = require("vidom"),
-    {EventTypes, stopEvent, setup} = require("touch"),
+    {EventTypes, stopEvent, setup} = require("@lib/touch"),
 
     isDisabled = target => {
       const disabled = target.getAttribute("disabled");

@@ -5,8 +5,8 @@ const {createComponent, mount} = require("vidom"),
     // Router = require("simple-router").default,
     Storage = require("store2").namespace(Config.appnamespace),
 
-    Touchable = require("touchable"),
-    Activables = require("activables"),
+    Touchable = require("@components/touchable"),
+    Activables = require("@lib/activables"),
 
     Sidebar = createComponent({
       displayName: "Sidebar",

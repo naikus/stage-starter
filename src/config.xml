@@ -34,9 +34,9 @@
   <preference name="target-device" value="universal" />
   <preference name="deployment-target" value="6.0" />
 
-  <!--
+  
   <preference name="DisallowOverscroll" value="true" />
-  -->
+  
 
   <preference name="AllowInlineMediaPlayback" value="true" />
   <preference name="BackupWebStorage" value="cloud" />

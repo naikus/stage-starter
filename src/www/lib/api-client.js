@@ -1,6 +1,6 @@
 /* global console, Promise fetch Request */
 /* jshint eqnull:true */
-import "whatwg-fetch";
+require("whatwg-fetch");
 
 const ObjectToString = Object.prototype.toString,
     /**
@@ -221,7 +221,7 @@ const createApiClient = opts => {
   });
 };
 
-export default {
+module.exports = {
   create: createApiClient,
   asQueryParameters,
   asJson(response) {

@@ -1,5 +1,5 @@
 const {createComponent} = require("vidom"),
-    Touchable = require("touchable");
+    Touchable = require("@components/touchable");
 
 module.exports = createComponent({
   displayName: "SpinButton",
