@@ -8,7 +8,7 @@ const {createComponent} = require("vidom"),
 
 module.exports = createComponent({
   onMount() {
-    const {action} = this.attrs, {children} = this, event = EventTypes[action],
+    const {action = EventTypes.tap} = this.attrs, {children} = this, event = EventTypes[action],
         child = children[0] || children;
     if(child) {
       const node = this.domElement = child.getDomNode();

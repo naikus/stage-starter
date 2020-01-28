@@ -4,6 +4,7 @@ const cliargs = require("yargs").argv,
 
 module.exports = {
   src_dir: "./src/www",
+  views_dir: "views",
   build_dir: builddir,
   test_output_dir: `${builddir}/test-results`,
 
@@ -12,9 +13,9 @@ module.exports = {
     "css/**/*",
     "font/**/*",
     "images/**/*",
-    "modules/**/*",
-    "!modules/**/*.js",
-    "!modules/**/*.less",
+    "views/**/*",
+    "!views/**/*.js",
+    "!views/**/*.less",
     "!less"
   ],
 

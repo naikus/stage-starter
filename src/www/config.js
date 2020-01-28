@@ -7,15 +7,15 @@ module.exports = {
   views: {
     "/main": {
       view: "main",
-      template: "modules/main/view.js"
+      template: "views/main/view.js"
     },
     "/settings": {
       view: "settings",
-      template: "modules/settings/view.js"
+      template: "views/settings/view.js"
     },
     "/about": {
       view: "about",
-      template: "modules/about/view.js"
+      template: "views/about/view.js"
     }
   }
 };

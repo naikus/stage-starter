@@ -150,6 +150,7 @@ gulp.task("build:vendor", () => {
 
 gulp.task("build:app", () => {
   const src = config.src_dir,
+      viewsdir = config.views_dir,
       dist = config.build_dir,
       b = browserify(Object.assign({}, config.browserify, {builtins: false}));
 
@@ -173,7 +174,7 @@ gulp.task("build:app", () => {
   appStream = uglifyIfProduction(appStream).pipe(gulp.dest(dist + "/js"));
 
   // babel transform view js files
-  modStream = gulp.src(`${src}/modules/**/*.js`)
+  modStream = gulp.src(`${src}/${viewsdir}/**/*.js`)
       .pipe(babel())
       .pipe(iife({
         useStrict: false, // since babel adds this
@@ -183,7 +184,7 @@ gulp.task("build:app", () => {
         params: [],
         args: []
       }));
-  modStream = uglifyIfProduction(modStream).pipe(gulp.dest(dist + "/modules"));
+  modStream = uglifyIfProduction(modStream).pipe(gulp.dest(`${dist}/${viewsdir}`));
 
   return mergeStream(appStream, modStream);
 });

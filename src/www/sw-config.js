@@ -10,8 +10,8 @@ const config = {
     "/js/app.js",
     "/js/lib.js",
 
-    "/modules/about.js",
-    "/modules/main.html",
-    "/modules/main.js"
+    "/views/about.js",
+    "/views/main.html",
+    "/views/main.js"
   ]
 };
