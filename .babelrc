@@ -1,8 +1,8 @@
 {
-  "presets": ["es2015"],
+  "presets": ["@babel/preset-env"],
   "plugins": [
     "vidom-jsx",
-    "transform-object-assign",
-    "transform-object-rest-spread"
+    "@babel/plugin-proposal-object-rest-spread",
+    "@babel/plugin-transform-object-assign"
   ]
 }
