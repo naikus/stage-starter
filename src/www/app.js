@@ -94,15 +94,13 @@ const {createComponent, mount} = require("vidom"),
       },
       // Stage component manages its own views and rendering lifecycle
       shouldRerender() {
-        // console.log("will not re-render");
         return false;
       },
       onUnmount() {
         this.deregisterListeners();
       },
-
-      pushView(view, options = {}) {
-        this.stageInstance.pushView(view, options);
+      getViewContext() {
+        return this.stageInstance.getViewContext();
       },
       getViewController(viewId) {
         return this.stageInstance.getViewController(viewId);
@@ -111,14 +109,14 @@ const {createComponent, mount} = require("vidom"),
         const {viewport, attrs: {
           startView, viewConfig,
           transition,
-          context = {}
+          contextFactory
         }} = this;
 
         let stageInstance = this.stageInstance = Stage({
           viewport: viewport,
           transition: transition,
           transitionDelay: 10,
-          context
+          contextFactory
         });
 
         // Register view load listeners
@@ -196,20 +194,28 @@ const {createComponent, mount} = require("vidom"),
         {view: "settings", title: "Settings", icon: "icon-settings", transition: "slide"},
         {view: "about", title: "About", icon: "icon-help-circle", transition: "slide-up"}
       ],
-
-      getContext() {
+      contextFactory(stage, stageOpts) {
+        const self = this;
         return {
-          application: {
-            setNavVisible: show => {
-              this.setNavVisible(show);
-            }
+          pushView(viewId, options) {
+            // @todo Check if view is allowed for the current user
+            console.log("[App]: Pusing view", viewId, options);
+            return stage.pushView(viewId, options);
+          },
+          popView(options) {
+            // @todo Check if view is allowed for the current user
+            console.log("[App]: Popping view", options);
+            return stage.popView(options);
+          },
+          setNavVisible(show) {
+            self.setNavVisible(show);
           }
         };
       },
       navigateTo(view, transition) {
         this.setNavVisible(false);
         setTimeout(_ => {
-          this.stage.pushView(view, {transition});
+          this.stage.getViewContext().pushView(view, {transition});
         }, 200);
       },
       renderNavItems() {
@@ -268,15 +274,15 @@ const {createComponent, mount} = require("vidom"),
       },
       onRender() {
         const {startView = "sale"} = this.attrs,
-            {ViewActionBar, loading, showMainNav, viewId} = this.state,
-            context = this.getContext();
+            {ViewActionBar, loading, showMainNav, viewId} = this.state;
+        console.log("Render app");
         return (
           <fragment>
             <StageComponent ref={comp => this.stage = comp}
               viewConfig={Config.views}
               startView={startView}
               transition={this.defaultTransition}
-              context={context}
+              contextFactory={this.contextFactory.bind(this)}
               onViewLoadStart={this.onViewLoadStart.bind(this)}
               onViewLoadEnd={this.onViewLoadEnd.bind(this)}
               onBeforeViewTransitionIn={this.onBeforeViewTransitionIn.bind(this)} />
