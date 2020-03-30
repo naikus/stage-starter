@@ -5,8 +5,8 @@ const Stage = require("@naikus/stage"),
 Stage.defineView({
   id: "about",
   template: `<div class="stage-view no-actionbar about"></div>`,
-  factory(viewContext, viewUi) {
-    const goBack = _ => viewContext.popView(),
+  factory(appContext, viewUi) {
+    const goBack = _ => appContext.popView(),
         Content = createComponent({
           onRender() {
             return (

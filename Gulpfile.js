@@ -4,12 +4,11 @@ const gulp = require("gulp"),
     cliargs = require("yargs").argv,
     vbuffer = require("vinyl-buffer"),
     terser = require("gulp-terser"),
-    // uglify = require("gulp-uglify"),
-    iife = require("gulp-iife"),
     less = require("gulp-less"),
     vsource = require("vinyl-source-stream"),
     connect = require("gulp-connect"),
     sourcemaps = require("gulp-sourcemaps"),
+    tap = require("gulp-tap"),
     browserify = require("browserify"),
     babel = require("gulp-babel"),
     pkg = require("./package.json"),
@@ -20,7 +19,10 @@ const gulp = require("gulp"),
 
     isProductionEnv = () => cliargs.env === "production" || process.env.NODE_ENV === "production",
 
-    errorHandler = name => e => console.error(name + ": " + e.toString()),
+    errorHandler = name => e => {
+      console.error(name + ": " + e.toString());
+      console.log(e);
+    },
 
     uglifyIfProduction = stream => {
       if(isProductionEnv()) {
@@ -139,7 +141,10 @@ gulp.task("build:vendor", () => {
       deps = pkg.dependencies,
       distDir = config.build_dir;
 
-  Object.keys(deps).forEach(dep => b.require(dep));
+  Object.keys(deps).forEach(dep => {
+    console.log("   ", dep);
+    b.require(dep);
+  });
   let stream = b/* .transform() */
       .bundle()
       .pipe(vsource("vendor.js"));
@@ -152,11 +157,12 @@ gulp.task("build:app", () => {
   const src = config.src_dir,
       viewsdir = config.views_dir,
       dist = config.build_dir,
-      b = browserify(Object.assign({}, config.browserify, {builtins: false}));
+      b = browserify(Object.assign({}, config.browserify, {builtins: false})),
+      packageDeps = Object.keys(pkg.dependencies);
 
   b.require(`${src}/app.js`, {expose: "app"});
   // Exclude vendors since we've created a separate bundle for vendor libraries
-  Object.keys(pkg.dependencies).forEach(dep => b.external(dep));
+  packageDeps.forEach(dep => b.external(dep));
 
   // Expose additional libs in the js and lib directories
   config.libs.forEach(lib => {
@@ -174,16 +180,17 @@ gulp.task("build:app", () => {
   appStream = uglifyIfProduction(appStream).pipe(gulp.dest(dist + "/js"));
 
   // babel transform view js files
+  let externals = config.libs.map(l => l.name).concat(packageDeps);
+  // console.log(externals);
   modStream = gulp.src(`${src}/${viewsdir}/**/*.js`)
-      .pipe(babel())
-      .pipe(iife({
-        useStrict: false, // since babel adds this
-        trimCode: false,
-        prependSemicolon: false,
-        bindThis: false,
-        params: [],
-        args: []
-      }));
+      .pipe(tap(file => {
+        // console.log(file.contents);
+        const b = browserify(file.path, Object.assign({}, config.browserify, {builtins: false}));
+        externals.forEach(dep => b.external(dep));
+        file.contents = b.bundle();
+      }))
+      .pipe(vbuffer());
+
   modStream = uglifyIfProduction(modStream).pipe(gulp.dest(`${dist}/${viewsdir}`));
 
   return mergeStream(appStream, modStream);

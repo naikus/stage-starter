@@ -2,8 +2,7 @@
 const Stage = require("@naikus/stage"),
     {createComponent, mount, unmount} = require("vidom"),
     Touchable = require("@components/touchable"),
-    {SpinButton, Form, rb} = require("@components/form"),
-    {Storage, Config} = require("app");
+    {SpinButton, Form, rb} = require("@components/form");
 
 // console.log(Storage, Config, Form, Rules, rb);
 
@@ -11,11 +10,11 @@ Stage.defineView({
   id: "settings",
   // template not strictly needed unless you want custom CSS class
   template: `<div class="stage-view settings"></div>`,
-  factory(viewContext, viewUi) {
+  factory(appContext, viewUi) {
     let previousView = null;
-    const goBack = () => previousView ? viewContext.popView() : location.reload(),
-        showAbout = e => viewContext.pushView("about", {transition: "slide-up"}),
-
+    const goBack = () => previousView ? appContext.popView() : location.reload(),
+        showAbout = e => appContext.pushView("about", {transition: "slide-up"}),
+        storage = appContext.getLocalStorage(),
         validationRules = {
           fullName: [
             rb("required")
@@ -27,7 +26,7 @@ Stage.defineView({
 
         Content = createComponent({
           onInit() {
-            const settings = Storage.get("settings") || {};
+            const settings = storage.get("settings") || {};
             this.setState({
               valid: false,
               busy: false,
@@ -101,7 +100,7 @@ Stage.defineView({
             this.setState({busy: true});
             window.setTimeout(() => {
               this.setState({busy: false});
-              Storage.set("settings", settings);
+              storage.set("settings", settings);
               goBack();
             }, 2000);
           }
@@ -144,7 +143,7 @@ Stage.defineView({
       },
       activate(viewOpts, done) {
         const {fromView, viewAction} = viewOpts;
-        previousView = viewContext.previousView();
+        previousView = appContext.previousView();
         mount(viewUi, <Content />, {}, done);
       },
       update(viewOpts) {

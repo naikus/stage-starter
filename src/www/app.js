@@ -127,7 +127,7 @@ const {createComponent, mount} = require("vidom"),
           const {view, template} = viewConfig[path];
           Stage.view(view, template);
         });
-        stageInstance.pushView(startView, {});
+        stageInstance.getViewContext().pushView(startView, {});
       },
       setupBackButton() {
         document.addEventListener("backbutton", e => {
@@ -209,6 +209,12 @@ const {createComponent, mount} = require("vidom"),
           },
           setNavVisible(show) {
             self.setNavVisible(show);
+          },
+          getConfig() {
+            return Config
+          },
+          getLocalStorage() {
+            return Storage;
           }
         };
       },
@@ -338,7 +344,5 @@ if("serviceWorker" in navigator) {
 */
 
 module.exports = {
-  run: run,
-  Config,
-  Storage
+  run: run
 };
