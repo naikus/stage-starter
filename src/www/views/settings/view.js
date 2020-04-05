@@ -2,7 +2,8 @@
 const Stage = require("@naikus/stage"),
     {createComponent, mount, unmount} = require("vidom"),
     Touchable = require("@components/touchable"),
-    {SpinButton, Form, rb} = require("@components/form");
+    {SpinButton, Form, rb} = require("@components/form"),
+    {ActionBar, Action, Spacer} = require("@components/actionbar");
 
 // console.log(Storage, Config, Form, Rules, rb);
 
@@ -94,7 +95,6 @@ Stage.defineView({
               this.setState({valid: false});
             }
           },
-
           saveSettings() {
             const {settings} = this.state;
             this.setState({busy: true});
@@ -104,37 +104,22 @@ Stage.defineView({
               goBack();
             }, 2000);
           }
-        }),
-
-        ActionBar = createComponent({
-          onRender() {
-            const back = previousView ? (
-              <Touchable onAction={goBack} action="tap">
-                <div class="action activable">
-                  <i class="icon icon-arrow-left"></i>
-                </div>
-              </Touchable>
-            ) : null;
-            return (
-              <div class="actionbar">
-                {back}
-                <div class={"action" + (!previousView ? " first" : "")}>
-                  <span class="text">Settings</span>
-                </div>
-                <div class="filler"></div>
-                <Touchable onAction={showAbout} action="tap">
-                  <div class="action activable">
-                    <i class="icon icon-help-circle"></i>
-                  </div>
-                </Touchable>
-              </div>
-            );
-          }
         });
+
+    let actionbar;
 
     return {
       getActionBar() {
-        return ActionBar;
+        // return <ActionBar ref={el => this.actionBar = el} />;
+        const back = previousView ? (<Action icon="icon-arrow-left" handler={goBack} />) : null;
+        return (
+          <ActionBar class="settings" ref={comp => actionbar = comp}>
+            {back}
+            <Action class={previousView ? "" : "first"} text="Settings" />
+            <Spacer />
+            <Action icon="icon-help-circle" handler={showAbout} />
+          </ActionBar>
+        );
       },
       initialize(viewOpts) {
         viewUi.addEventListener("transitionout", e => {

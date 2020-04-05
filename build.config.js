@@ -30,7 +30,9 @@ module.exports = {
     {name: "@components/form", path: "components/form"},
     {name: "@components/tabs", path: "components/tabs"},
     {name: "@components/modal", path: "components/modal"},
-    {name: "@components/touchable", path: "components/touchable"}
+    {name: "@components/portal", path: "components/portal"},
+    {name: "@components/touchable", path: "components/touchable"},
+    {name: "@components/actionbar", path: "components/actionbar"}
 
     // Services
   ],
@@ -50,6 +52,7 @@ module.exports = {
   },
 
   browserify: {
+    // prelude: null,
     debug: true,
     extensions: [".js", ".json", "!**/__tests__/*.js"],
     transform: [

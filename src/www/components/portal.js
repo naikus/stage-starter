@@ -2,9 +2,9 @@ const {createComponent, mount, unmountSync} = require("vidom"),
     Portal = createComponent({
       displayName: "Portal",
       onInit() {
-        const element = this.element = document.createElement("div");
+        const {target = "body"} = this.attrs,
+            element = this.element = document.createElement("div");
         element.setAttribute("class", "portal");
-        const {target = "body"} = this.attrs;
         document.querySelector(target).appendChild(this.element);
       },
 

@@ -1,5 +1,5 @@
 const {createComponent} = require("vidom"),
-    Portal = require("./portal"),
+    Portal = require("@components/portal"),
     Modal = createComponent(
       {
         onInit() {

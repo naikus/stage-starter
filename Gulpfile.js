@@ -166,6 +166,7 @@ gulp.task("build:app", () => {
 
   // Expose additional libs in the js and lib directories
   config.libs.forEach(lib => {
+    console.log("   ", lib.name);
     b.require(`./${lib.path}`, {
       basedir: config.src_dir,
       expose: lib.name

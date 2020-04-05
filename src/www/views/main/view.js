@@ -2,13 +2,14 @@ const Stage = require("@naikus/stage"),
     {createComponent, mount} = require("vidom"),
     Touchable = require("@components/touchable"),
     Modal = require("@components/modal"),
-    Tabs = require("@components/tabs");
+    Portal = require("@components/portal"),
+    Tabs = require("@components/tabs"),
+    {ActionBar, Action, Spacer} = require("@components/actionbar");
 
 Stage.defineView({
   id: "main",
   template: `<div class="stage-view main"></div>`,
   factory(appContext, viewUi) {
-    let modalVisible = false;
     const setSidebarVisible = e => appContext.setNavVisible(true),
         showSettings = e => appContext.pushView("settings"/* , {transition: "slide"} */),
         showAbout = e => appContext.pushView("about", {transition: "slide-up"}),
@@ -23,7 +24,9 @@ Stage.defineView({
                 <Tabs>
                   <Tabs.Tab key="tab1" icon="icon-calendar" title="Tab One">
                     <Touchable action="tap" onAction={setSidebarVisible}>
-                      <span class="button activable inline primary">Show/Hide Sidebar</span>
+                      <span class="button activable inline primary">
+                        Show/Hide Sidebar
+                      </span>
                     </Touchable>
                   </Tabs.Tab>
                   <Tabs.Tab key="tab2" icon="icon-clock" title="Tab Two">
@@ -33,39 +36,11 @@ Stage.defineView({
                   </Tabs.Tab>
                 </Tabs>
                 <Modal visible={showModal} class="hello">
-                  <div className="hello-world" onClick={toggleModal}>Hello World!!!</div>
+                  <div className="hello-world" onClick={toggleModal}>
+                    Hello World!!!
+                  </div>
                 </Modal>
               </fragment>
-            );
-          }
-        }),
-
-        // Actionbar
-        ActionBar = createComponent({
-          onRender() {
-            return (
-              <div class="actionbar">
-                <div class="action first">
-                  <span class="text title">Dashboard</span>
-                  {/* <!-- img class="img" src="images/logo-actionbar.png" alt="Logo" / --> */}
-                </div>
-                <div class="filler"></div>
-                <Touchable onAction={toggleModal} action="tap">
-                  <div class="action activable">
-                    <i class="icon icon-bell"></i>
-                  </div>
-                </Touchable>
-                <Touchable onAction={showSettings} action="tap">
-                  <div class="action activable">
-                    <i class="icon icon-settings"></i>
-                  </div>
-                </Touchable>
-                <Touchable onAction={showAbout} action="tap">
-                  <div class="action activable">
-                    <i class="icon icon-help-circle"></i>
-                  </div>
-                </Touchable>
-              </div>
             );
           }
         }),
@@ -77,11 +52,21 @@ Stage.defineView({
           mount(viewUi, <Content options={viewOpts} />, null, done);
         };
 
+    let modalVisible = false, actionbar;
+
     return {
       // Stage app lifecycle functions.
       initialize(viewOpts) {},
       getActionBar() {
-        return ActionBar;
+        return (
+          <ActionBar class="main" ref={comp => actionbar = comp}>
+            <Action class="first" text="Dashboard" />
+            <Spacer />
+            <Action icon="icon-bell" handler={toggleModal} />
+            <Action icon="icon-settings" handler={showSettings} />
+            <Action icon="icon-help-circle" handler={showAbout} />
+          </ActionBar>
+        );
       },
       onBackButton() {
         if(modalVisible) {

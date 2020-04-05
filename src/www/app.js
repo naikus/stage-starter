@@ -7,6 +7,7 @@ const {createComponent, mount} = require("vidom"),
 
     Touchable = require("@components/touchable"),
     Activables = require("@lib/activables"),
+    {ActionBarContainer} = require("@components/actionbar"),
 
     Sidebar = createComponent({
       displayName: "Sidebar",
@@ -85,7 +86,9 @@ const {createComponent, mount} = require("vidom"),
     StageComponent = createComponent({
       onMount() {
         this.setupStage();
-        this.setupBackButton();
+        document.addEventListener("deviceready", e => {
+          this.setupBackButton();
+        });
       },
       onRender() {
         return (
@@ -127,7 +130,9 @@ const {createComponent, mount} = require("vidom"),
           const {view, template} = viewConfig[path];
           Stage.view(view, template);
         });
-        stageInstance.getViewContext().pushView(startView, {});
+        if(startView) {
+          stageInstance.getViewContext().pushView(startView, {});
+        }
       },
       setupBackButton() {
         document.addEventListener("backbutton", e => {
@@ -221,7 +226,7 @@ const {createComponent, mount} = require("vidom"),
       navigateTo(view, transition) {
         this.setNavVisible(false);
         setTimeout(_ => {
-          this.stage.getViewContext().pushView(view, {transition});
+          this.stageComponent.getViewContext().pushView(view, {transition});
         }, 200);
       },
       renderNavItems() {
@@ -247,7 +252,7 @@ const {createComponent, mount} = require("vidom"),
       // Stage event listeners
       onBeforeViewTransitionIn(e) {
         const viewId = e.viewId,
-            controller = this.stage.getViewController(viewId),
+            controller = this.stageComponent.getViewController(viewId),
             ViewActionBar = typeof controller.getActionBar === "function" ?
               controller.getActionBar() : null;
         // console.log("View actionbar", ViewActionBar);
@@ -281,10 +286,10 @@ const {createComponent, mount} = require("vidom"),
       onRender() {
         const {startView = "sale"} = this.attrs,
             {ViewActionBar, loading, showMainNav, viewId} = this.state;
-        console.log("Render app");
+        // console.log("Render app");
         return (
           <fragment>
-            <StageComponent ref={comp => this.stage = comp}
+            <StageComponent ref={comp => this.stageComponent = comp}
               viewConfig={Config.views}
               startView={startView}
               transition={this.defaultTransition}
@@ -294,7 +299,7 @@ const {createComponent, mount} = require("vidom"),
               onBeforeViewTransitionIn={this.onBeforeViewTransitionIn.bind(this)} />
             {/* onBeforeViewTransitionOut={this.onBeforeViewTransitionOut.bind(this)} /> */}
             <div class={"actionbar-container " + (ViewActionBar ? (viewId + " show") : "")}>
-              {ViewActionBar ? <ViewActionBar /> : null}
+              {ViewActionBar}
             </div>
             <Sidebar active={showMainNav} onEmptyAction={this.setNavVisible.bind(this, false)}>
               <div class="branding">
