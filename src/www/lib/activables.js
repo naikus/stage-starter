@@ -32,6 +32,25 @@ function shallowCopy(...args) {
 }
 
 
+/** Check for passive event listener support */
+let supportsPassive = false, noop = () => {}, passiveOpts = {passive: true};
+(() => {
+  try {
+    const opts = Object.defineProperty({}, "passive", {
+      get() {
+        supportsPassive = true;
+        return true;
+      }
+    });
+    window.addEventListener("testpassive", noop, opts);
+    window.removeEventListener("testpassive", noop, opts);
+  }catch(e) {
+    // ignore
+  }
+})();
+
+
+
 /**
  * Creates a new Activables for specified container. The activables object with start and stop
  * will  start listening to touch events and add/remove 'active' class on touch start and end
@@ -54,7 +73,7 @@ function Activables(container, opts) {
 
       deactivate = () => {
         if(!element) return;
-        container.removeEventListener(touchmove, move, false);
+        container.removeEventListener(touchmove, move, supportsPassive ? passiveOpts : false);
         removeClass(element, activeClass);
         element = null;
       },
@@ -74,7 +93,7 @@ function Activables(container, opts) {
         if(!element) return;
         // console.log("adding listener");
         activate();
-        container.addEventListener(touchmove, move, false);
+        container.addEventListener(touchmove, move, supportsPassive ? passiveOpts : false);
         // start the timer
         // timer = setTimeout(activate, delay);
       },
@@ -103,12 +122,12 @@ function Activables(container, opts) {
 
   return {
     start() {
-      container.addEventListener(touchstart, start, false);
-      container.addEventListener(touchend, end, false);
+      container.addEventListener(touchstart, start, supportsPassive ? passiveOpts : false);
+      container.addEventListener(touchend, end, supportsPassive ? passiveOpts : false);
     },
     stop() {
-      container.removeEventListener(touchstart, start, false);
-      container.removeEventListener(touchend, end, false);
+      container.removeEventListener(touchstart, start, supportsPassive ? passiveOpts : false);
+      container.removeEventListener(touchend, end, supportsPassive ? passiveOpts : false);
     }
   };
 }

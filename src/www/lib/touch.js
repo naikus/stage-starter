@@ -19,6 +19,27 @@
   window.CustomEvent = CustomEvent;
 })();
 
+
+
+/** Check for passive event listener support */
+let supportsPassive = false, noop = () => {}, passiveOpts = {passive: true};
+(() => {
+  try {
+    const opts = Object.defineProperty({}, "passive", {
+      get() {
+        supportsPassive = true;
+        return true;
+      }
+    });
+    window.addEventListener("testpassive", noop, opts);
+    window.removeEventListener("testpassive", noop, opts);
+  }catch(e) {
+    // ignore
+  }
+})();
+
+
+
 const Events = !("ontouchstart" in document.documentElement) ?
       {
         tap: "click",
@@ -62,11 +83,11 @@ const Events = !("ontouchstart" in document.documentElement) ?
     createEvent = (type, params) => {
       return new window.CustomEvent(type, params);
     },
-    on = (elem, type, listener, capture = false) => {
-      elem.addEventListener(type, listener, capture);
+    on = (elem, type, listener) => {
+      elem.addEventListener(type, listener, supportsPassive ? passiveOpts : false);
     },
-    off = (elem, type, listener, capture = false) => {
-      elem.removeEventListener(type, listener, capture);
+    off = (elem, type, listener) => {
+      elem.removeEventListener(type, listener, supportsPassive ? passiveOpts : false);
     },
     isDisabled = target => {
       const disabled = target.getAttribute("disabled");
