@@ -22,6 +22,13 @@ Stage.defineView({
           ],
           address: [
             rb("required")
+          ],
+          agreeToTerms: [
+            (value, field) => {
+              if(!value) {
+                return {valid: false, message: "You must agree to terms and conditions"};
+              }
+            }
           ]
         },
 
@@ -34,12 +41,13 @@ Stage.defineView({
               settings: {
                 fullName: settings.fullName,
                 city: settings.city || "Pune",
-                address: settings.address
+                address: settings.address,
+                agreeToTerms: true
               }
             });
           },
           onRender() {
-            const {settings: {fullName, city, address}, valid, busy} = this.state;
+            const {settings: {fullName, city, address, agreeToTerms}, valid, busy} = this.state;
             return (
               <div class="content">
                 <p class="message">
@@ -66,6 +74,12 @@ Stage.defineView({
                     defaultValue={address}
                     label="Address"
                     data-hint="Your street address" />
+
+                  <input name="agreeToTerms"
+                    type="checkbox"
+                    defaultValue={agreeToTerms}
+                    label="I agree to terms and conditions"
+                    data-hint="You must agree :D" />
                 </Form>
                 <div class="actions">
                   <SpinButton onClick={this.saveSettings.bind(this)}

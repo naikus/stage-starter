@@ -9,6 +9,15 @@
   -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
+::selection {
+  background: desaturate(lighten(@brand-color, 5%), 5%);
+  color: lighten(@text-color, 15%);
+}
+::-moz-selection {
+  background: desaturate(lighten(@brand-color, 5%), 5%);
+  color: lighten(@text-color, 15%);
+}
+
 .border-box {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;

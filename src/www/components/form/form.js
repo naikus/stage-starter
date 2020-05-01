@@ -6,20 +6,37 @@ const {createComponent, elem} = require("vidom"),
     defaultFieldRenderer = fldModel => {
       const {node: Field, valid, message, showLabel, hint} = fldModel,
           {id, type, name, label} = Field.attrs,
+          messageComponent = !valid ? (<span class="v-msg hint">{message}</span>) : null,
           labelComponent = showLabel ? (
-            <label htmlFor={id}>
-              <span>{label}</span>
-              {hint ? <span className="hint">{hint}</span> : null}
-            </label>
-          ) : null,
-          messageComponent = !valid ? (<span className="v-msg hint">{message}</span>) : null;
+            <div class="label">
+              <span class="title">{label}</span>
+              {hint ? <span class="hint">{hint}</span> : null}
+            </div>
+          ) : null;
 
       return (
-        <div class={`field-container ${name} ${type} valid-${valid}`}>
+        <label class={`field-container ${name} ${type} valid-${valid}`}>
           {labelComponent}
           {Field}
           {messageComponent}
-        </div>
+        </label>
+      );
+    },
+
+    checkboxFieldRenderer = fldModel => {
+      const {node: Field, valid, message, showLabel, hint} = fldModel,
+          {id, type, name, label} = Field.attrs,
+          messageComponent = !valid ? (<span class="v-msg hint">{message}</span>) : null;
+
+      return (
+        <label class={`field-container ${name} ${type} valid-${valid}`}>
+          {Field}
+          <div class="label">
+            <span class="title">{label}</span>
+            {hint ? <span class="hint">{hint}</span> : null}
+            {messageComponent}
+          </div>
+        </label>
       );
     },
 
@@ -148,27 +165,34 @@ const {createComponent, elem} = require("vidom"),
       },
 
       renderField(field, index) {
-        const {fieldRenderer = defaultFieldRenderer} = this.attrs,
-            nodeAttrs = field.node.attrs,
-            attrs = {
-              ...nodeAttrs,
-              value: field.value, // This important or else onChange event does not fire
-              onChange: e => {
-                this.handleFieldChange(attrs.name, e);
-                nodeAttrs.onChange && nodeAttrs.onChange(e);
-              }
-              /*
-              onInput: e => {
-                this.handleFieldChange(attrs.name, e);
-                nodeAttrs.onInput && nodeAttrs.onInput(e);
-              }
-              */
-            },
-            fieldModel = Object.assign({}, field, {
-              node: field.node.clone(attrs, field.node.children, null),
-              hint: attrs["data-hint"],
-              showLabel: attrs["data-showlabel"] === false ? false : true
-            });
+        const nodeAttrs = field.node.attrs,
+            type = nodeAttrs.type,
+            {fieldRenderer = (this.attrs.fieldRenderer || 
+                (type === "checkbox" || type === "radio") ? checkboxFieldRenderer : defaultFieldRenderer
+            )} = nodeAttrs;
+        let attrs = {
+          ...nodeAttrs,
+          value: field.value, // This important or else onChange event does not fire
+          onChange: e => {
+            this.handleFieldChange(attrs.name, e);
+            nodeAttrs.onChange && nodeAttrs.onChange(e);
+          }
+          /*
+          onInput: e => {
+            this.handleFieldChange(attrs.name, e);
+            nodeAttrs.onInput && nodeAttrs.onInput(e);
+          }
+          */
+        };
+        if(type === "checkbox" || type === "radio") {
+          attrs.checked = field.value;
+        }
+
+        const fieldModel = Object.assign({}, field, {
+          node: field.node.clone(attrs, field.node.children, null),
+          hint: attrs["data-hint"],
+          showLabel: attrs["data-showlabel"] === false ? false : true
+        });
 
         return fieldRenderer(fieldModel);
       },
@@ -198,5 +222,7 @@ const {createComponent, elem} = require("vidom"),
         );
       }
     });
+
+Form.defaultFieldRenderer = defaultFieldRenderer;
 
 module.exports = Form;

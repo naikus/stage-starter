@@ -52,6 +52,12 @@ a.button {
 select {
   -webkit-appearance: none; 
   -moz-appearance: none;
+  background-color: @input-bg-color;
+  color: @input-text-color;
+  option {
+    background-color: @input-bg-color;
+    color: @input-text-color;
+  }
 }
 textarea {
    min-height: 100px;
@@ -218,9 +224,24 @@ input[type=range] {
     color: @input-hint-color;
     margin: 4px 4px 4px 0;
   }
-
+  label {
+    span {
+      display: block;
+    }
+  }
   input, textarea, select, button {
     margin-bottom: 5px;
+  }
+
+  &.checkbox, &.radio {
+    display: flex;
+    align-items: flex-start;
+    input {
+      width: auto;
+      height: auto;
+      margin-right: 10px;
+      order: 0;
+    }
   }
 
   .v-msg {
@@ -231,10 +252,11 @@ input[type=range] {
     input, textarea, select {
       border-bottom-color: @invalid-color;
     }
-    > .v-msg {
+    .v-msg {
       color: @invalid-color;
     }
   }
+  
 }
 
 .spin-button {
@@ -247,3 +269,5 @@ input[type=range] {
     margin: 0;
   }
 }
+
+
