@@ -24,7 +24,7 @@ Stage.defineView({
             rb("required")
           ],
           agreeToTerms: [
-            (value, field) => {
+            (value, field, fields) => {
               if(!value) {
                 return {valid: false, message: "You must agree to terms and conditions"};
               }
