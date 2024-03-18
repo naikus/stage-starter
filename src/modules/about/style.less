@@ -1,0 +1,27 @@
+@import "@less/vars.less";
+
+.stage-view.about {
+  background-color: var(--base-color);
+  color: var(--text-color);
+  padding-top: 24px;
+
+  .content {
+    // padding-top: 80px;
+    .logo {
+      // width: 130px;
+      margin: 2% auto;
+      display: block;
+    }
+    h3 {
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-weight: 100;
+    }
+
+    .message {
+      border-radius: @base-border-radius;
+      padding: @padding-default;
+      background-color: color-mix(in srgb, var(--accent-color) 15%, var(--base-color) 40%);
+    }
+  }
+}

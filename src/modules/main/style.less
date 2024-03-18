@@ -1,0 +1,60 @@
+@import "@less/vars.less";
+
+.stage-view.main {
+  .content {
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;
+
+    h2 {
+      text-align: center;
+      margin-bottom: 24px;
+      font-weight: 200;
+      text-transform: uppercase;
+    }
+
+    .message {
+      border-radius: @base-border-radius;
+      padding: @padding-default;
+      background-color: color-mix(in srgb, var(--accent-color) 15%, var(--base-color) 40%);
+    }
+
+
+    .items {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+      background-color: var(--input-bg-color);
+      border-radius: @base-border-radius;
+      > li {
+        padding: @padding-default;
+        border-bottom: 1px solid rgba(0,0,0,0.1);
+        transition: background-color 200ms ease;
+
+        &:hover {
+          background-color: var(--base-color);
+        }
+      }
+    }
+  }
+
+  .main-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // height: 350px;
+
+    > img {
+      animation-duration: 10000ms;
+      animation-delay: 1000ms;
+      border-radius: 50%;
+      padding: 16px;
+    }
+  }
+  
+}
+
+.actionbar.main > .logo {
+  // width: 24px;
+  margin: 0 8px 0 16px;
+}
