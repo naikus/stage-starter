@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite --force --host 0.0.0.0",
-    "build": "vite build",
-    "preview": "vite preview"
+    "build": "vite build --emptyOutDir",
+    "preview": "vite preview --host 0.0.0.0"
   },
   "dependencies": {
     "@naikus/stage": "1.0.6-beta",

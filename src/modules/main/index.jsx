@@ -43,11 +43,13 @@ export default{
             closeExitOverlay();
           }
         },
+
         renderContent = (viewOpts, done, context = {}) => {
           // render(<Content options={viewOpts} />, viewUi, done, {});
           dispose = render(() => <Content options={viewOpts} />, viewUi);
           done();
         },
+
         handleTransitionOut = _ => {
           dispose && dispose();
         };

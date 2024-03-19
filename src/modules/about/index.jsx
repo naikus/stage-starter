@@ -41,24 +41,24 @@ export default {
             </div>
           );
         },
+
         handleTransitionOut = _ => {
           dispose && dispose();
         };
 
-    let dispose, timer;
+    let dispose;
     return {
       initialize(viewOpts) {
         viewUi.addEventListener("transitionout", handleTransitionOut);
       },
       activate(viewOpts, done) {
-        // dispose = createRoot(<Content />, viewUi, done, {});
         setViewOptions(viewOpts);
         dispose = render(() => <Content />, viewUi);
         done();
       },
 
       deactivate() {
-        clearInterval(timer);
+        
       }
     };
   }

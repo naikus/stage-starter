@@ -80,7 +80,7 @@ function App(props) {
   function setupStage() {
     const instance = Stage({
         viewport,
-        transition: "slide",
+        transition: props.transition || "lollipop",
         transitionDelay: 10,
         contextFactory: stageContextFactory
       }),
