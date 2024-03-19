@@ -15,9 +15,9 @@ export default {
           const {appName, appVersion, branding, logo} = appContext.getConfig();
           // setViewOptions(props.options);
           return (
-            <div className="content text-center">
+            <div class="content text-center">
               <img width="130" height="130"
-                className="logo"
+                class="logo"
                 alt="logo"
                 src={logo} />
               <h3>
@@ -27,8 +27,8 @@ export default {
                 Made using <a target="_blank" href="https://naikus.github.io/stage">stagejs</a> and 
                 <a target="_blank" href="https://solidjs.com">Solidjs</a>
               </p>
-              <pre className="message" style={{
-                "font-size": "0.8em",
+              <pre class="message" style={{
+                "font-size": "0.8em"
               }}>
                 View options: <br />
                 {JSON.stringify(viewOptions(), null, 2)}
@@ -37,7 +37,7 @@ export default {
                 View config: <br />
                 {JSON.stringify(vconfig, null, 2)}
               </pre>
-              <button onClick={goBack} className="primary">Go Back</button>
+              <button onClick={goBack} class="primary">Back</button>
             </div>
           );
         },
@@ -58,7 +58,6 @@ export default {
       },
 
       deactivate() {
-        
       }
     };
   }

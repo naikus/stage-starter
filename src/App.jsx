@@ -27,7 +27,7 @@ import "./style.less";
  */
 function BottomBar(props) {
   return (
-    <div className={"bottom-bar " + (props.visible ? "show" : "")}>
+    <div class={"bottom-bar " + (props.visible ? "show" : "")}>
       {props.children}
     </div>
   );
@@ -80,6 +80,7 @@ function App(props) {
   function setupStage() {
     const instance = Stage({
         viewport,
+        // available transitions: slide, fade, fancy, lollipop, slide-up, slide-down, pop-out
         transition: props.transition || "lollipop",
         transitionDelay: 10,
         contextFactory: stageContextFactory
@@ -115,7 +116,7 @@ function App(props) {
         setRouteLoading(false);
         const {route, view} = context,
             {state, action, params, handler} = route,
-            viewContext = stageInstance.getViewContext(),
+            // viewContext = stageInstance.getViewContext(),
             currentView = stageInstance.currentView(),
             viewOptions = Object.assign({}, state, {params: params}),
             showView = (id, viewOptions, action) => {
@@ -161,18 +162,18 @@ function App(props) {
   });
 
   onCleanup(() => {
-    eventUnsubscribes.forEach(unsubscribe => unsubscribe());
-    routerUnsubscribes.forEach(unsubscribe => unsubscribe());
+    eventUnsubscribes && eventUnsubscribes.forEach(unsubscribe => unsubscribe());
+    routerUnsubscribes && routerUnsubscribes.forEach(unsubscribe => unsubscribe());
   });
 
   return (
-    <div className="app">
-      <div ref={viewport} class="stage-viewport"></div>
+    <div class="app">
+      <div ref={viewport} class="stage-viewport" />
       <Show when={isRouteLoading()}>
-        <Progress className="route-progress" />
+        <Progress class="route-progress" />
       </Show>
     </div>
-  )
+  );
 }
 
 export default App;

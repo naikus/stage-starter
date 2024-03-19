@@ -10,12 +10,15 @@ import routes from "./routes";
 })();
 
 
-const dispose = render(() => (
+render(
+  () => (
     <App routes={routes} />
   ), 
   document.getElementById("root")
 );
 
 // Remove the loading screen
-const loading = document.getElementById("loading");
-loading && loading.remove();
+setTimeout(() => {
+  const loading = document.getElementById("loading");
+  loading && loading.remove();
+}, 300);

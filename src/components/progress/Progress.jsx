@@ -1,11 +1,6 @@
 
+import { createMemo, createSignal } from "solid-js";
 import "./style.less";
-
-const calculatePercentage = (value, min = 0, max = 0) => {
-  const val = value + Math.abs(min),
-      diff = max - min;
-  return val * 100 / diff;
-}
 
 /**
  * @param {{
@@ -17,19 +12,24 @@ const calculatePercentage = (value, min = 0, max = 0) => {
  * @returns 
  */
 function Progress(props) {
-  const min = props.min || 0,
-      max = props.max || 100, 
-      value = props.value, 
-      className = props.className || "",
-      val = Number(value),
-      indeterminate = isNaN(val),
-      style = {
-        width: `${indeterminate ? 20 : calculatePercentage(val, min, max)}%`
-      };
-  
+  const percentValue = createMemo(() => {
+      const min = props.min || 0,
+          max = props.max || 100, 
+          value = props.value, 
+          numVal = Number(value),
+          val = numVal + Math.abs(min),
+          diff = max - min;
+      return val * 100 / diff;
+    }),
+    indeterminate = createMemo(() => {
+      return isNaN(percentValue());
+    });
+
   return (
-    <div className={`progress ${indeterminate ? "indeterminate" : ""} ${className}`}>
-      <div className="progress-track" style={style}></div>
+    <div class={`progress ${indeterminate() ? "indeterminate" : ""} ${props.class || ""}`}>
+      <div class="progress-track" style={{
+        width: `${indeterminate() ? 20 : percentValue()}%`
+      }} />
     </div>
   );
 }
