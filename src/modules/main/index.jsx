@@ -10,7 +10,7 @@ export default{
   template: `<div class="stage-view main"></div>`,
   factory(appContext, viewUi, viewConfig) {
     const router = appContext.getRouter(),
-        showAbout = e => router.route("/about", {transition: "slide-up"}),
+        showAbout = () => router.route("/about"/*,{transition: "slide-up"}*/),
         config = appContext.getConfig(),
 
         Content = function(props) {

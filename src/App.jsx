@@ -50,7 +50,7 @@ function App(props) {
       stageInstance,
       eventUnsubscribes,
       router,
-      routerUnsubscribes;
+      routerSubs;
 
   function stageContextFactory(stage, stageOpts) {
     return {
@@ -108,7 +108,7 @@ function App(props) {
       errorRoute: "/~error"
     });
 
-    const routerUnsubscribes = [
+    const routerSubs = [
       router.on("before-route", (event, data) => {
         setRouteLoading(true);
       }),
@@ -146,12 +146,12 @@ function App(props) {
         console.warn("Error loading route", error);
       })
     ];
-    return [router, routerUnsubscribes];
+    return [router, routerSubs];
   }
 
   onMount(() => {
+    [router, routerSubs] = setupRouter();
     [stageInstance, eventUnsubscribes] = setupStage();
-    [router, routerUnsubscribes] = setupRouter();
     router.start();
     router.route(router.getBrowserRoute() || "/");
 
@@ -162,8 +162,8 @@ function App(props) {
   });
 
   onCleanup(() => {
-    eventUnsubscribes && eventUnsubscribes.forEach(unsubscribe => unsubscribe());
-    routerUnsubscribes && routerUnsubscribes.forEach(unsubscribe => unsubscribe());
+    eventUnsubscribes.forEach(unsubscribe => unsubscribe());
+    routerSubs.forEach(subs => subs.dispose());
   });
 
   return (

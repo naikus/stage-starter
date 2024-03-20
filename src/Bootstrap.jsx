@@ -19,6 +19,6 @@ render(
 
 // Remove the loading screen
 setTimeout(() => {
-  const loading = document.getElementById("loading");
-  loading && loading.remove();
-}, 300);
+const loading = document.getElementById("loading");
+loading && loading.remove();
+}, 500);
