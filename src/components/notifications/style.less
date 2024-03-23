@@ -1,0 +1,84 @@
+@import "@less/vars.less";
+@import "@less/css-helpers.less";
+
+@notification-transition-duration: 300ms;
+
+.notification {
+  display: flex;
+  align-items: space-between;
+  position: absolute;
+  margin: 1% auto;
+  z-index: 100;
+
+  background-color: var(--notification-bg-color);
+  color: var(--notification-text-color);
+  border-radius: @base-border-radius;
+  padding: @padding-container;
+  box-sizing: border-box;
+  border: 1px solid rgba(0,0,0,0.1);
+
+  // Initial state
+  transform: translate3d(0, 50%, 0);
+  opacity: 0;
+  transition: transform @notification-transition-duration, opacity @notification-transition-duration;
+
+  width: 90%;
+
+  &.bottom {
+    bottom: 5%;
+    left: 5%;
+  }
+
+  &.top {
+    transform: translate3d(0, -50%, 0);
+    top: 5%;
+    bottom: auto;
+    left: 5%;
+  }
+
+  &.show {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+
+  &.toast {}
+  &.info {
+    // border: 1px solid var(--info-color);
+    background-color: color-mix(in srgb, var(--info-color) 25%, var(--base-color));
+  }
+  &.success {
+    // border: 1px solid var(--success-color);
+    background-color: color-mix(in srgb, var(--success-color) 25%, var(--base-color));
+  }
+  &.warn {
+    // border: 1px solid var(--warn-color);
+    background-color: color-mix(in srgb, var(--warn-color) 25%, var(--base-color));
+  }
+  &.error {
+    // border: 1px solid var(--error-color);
+    background-color: color-mix(in srgb, var(--error-color) 25%, var(--base-color));
+  }
+}
+
+@media only screen and (min-width: @screen-md) {
+  .notification {
+    width: 50%;
+    &.bottom {
+      left: 25%;
+    }
+  }
+}
+
+
+:root[data-theme="light"] {
+  .notification {
+    // background-color: var(--alt-bg-color); // rgba(0,0,0,0.05);
+    // border: 1px solid rgba(0,0,0,0.2);
+  }
+}
+:root[data-theme="dark"] {
+  .notification {
+    // background-color: rgba(0,0,0,0.2);
+    // border: 1px solid rgba(0,0,0,0.2);
+  }
+}
