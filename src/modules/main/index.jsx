@@ -1,6 +1,7 @@
 // import Stage from "@naikus/stage";
 import {For} from "solid-js";
 import {render} from "solid-js/web";
+import {notify} from "@components/notifications/Notifications";
 
 import Items from "./items";
 import "./style.less";
@@ -13,10 +14,24 @@ export default{
         showAbout = () => router.route("/about"/*,{transition: "slide-up"}*/),
         config = appContext.getConfig(),
 
+        notificationTypes = ["info", "toast", "success", "error", "warn"],
+        positions = ["top", "bottom"],
+        showNotification = () => {
+          const type = Math.floor(Math.random() * notificationTypes.length),
+              pos = Math.floor(Math.random() * positions.length);
+          notify({
+            type: notificationTypes[type],
+            position: positions[pos],
+            content: `This is a example of notification of type ${notificationTypes[type]}`,
+            autoDismiss: Math.round(Math.random()) * 1500,
+            onDismiss: () => console.log("Notification dismissed")
+          });
+        },
+
         Content = function(props) {
           return (
             <div class="content">
-              <p class="message">
+              <p class="message" onClick={showNotification}>
                 Welcome to {config.appName} v{config.appVersion}.
                 Click on the logo to go to the about page.
               </p>

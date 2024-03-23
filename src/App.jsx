@@ -8,6 +8,7 @@ import "@node_modules/@naikus/stage/src/stage.less";
 import Progress from "@components/progress/Progress";
 import {addListener} from "@lib/event-utils";
 import Config from "@config";
+import {Notifications, notify} from "@components/notifications/Notifications";
 
 import "./style.less";
 
@@ -72,7 +73,7 @@ function App(props) {
         return stage.getViewConfig(viewId);
       },
       getConfig() {
-        return Config
+        return Config;
       }
     };
   }
@@ -162,8 +163,8 @@ function App(props) {
   });
 
   onCleanup(() => {
-    eventUnsubscribes.forEach(unsubscribe => unsubscribe());
-    routerSubs.forEach(subs => subs.dispose());
+    eventUnsubscribes && eventUnsubscribes.forEach(unsubscribe => unsubscribe());
+    routerSubs && routerSubs.forEach(subs => subs.dispose());
   });
 
   return (
@@ -172,6 +173,7 @@ function App(props) {
       <Show when={isRouteLoading()}>
         <Progress class="route-progress" />
       </Show>
+      <Notifications />
     </div>
   );
 }
