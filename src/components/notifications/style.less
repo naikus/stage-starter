@@ -12,10 +12,11 @@
 
   background-color: var(--notification-bg-color);
   color: var(--notification-text-color);
+
   border-radius: @base-border-radius;
   padding: @padding-container;
   box-sizing: border-box;
-  border: 1px solid rgba(0,0,0,0.1);
+  // border: 1px solid rgba(0,0,0,0.05);
 
   // Initial state
   transform: translate3d(0, 50%, 0);
@@ -44,26 +45,30 @@
   &.toast {}
   &.info {
     // border: 1px solid var(--info-color);
-    background-color: color-mix(in srgb, var(--info-color) 25%, var(--base-color));
+    background-color: color-mix(in srgb, var(--info-color) 15%, var(--base-color));
+    // color: var(--info-color);
   }
   &.success {
     // border: 1px solid var(--success-color);
-    background-color: color-mix(in srgb, var(--success-color) 25%, var(--base-color));
+    background-color: color-mix(in srgb, var(--success-color) 15%, var(--base-color));
+    // color: var(--success-color);
   }
   &.warn {
     // border: 1px solid var(--warn-color);
-    background-color: color-mix(in srgb, var(--warn-color) 25%, var(--base-color));
+    background-color: color-mix(in srgb, var(--warn-color) 15%, var(--base-color));
+    // color: var(--warn-color);
   }
   &.error {
     // border: 1px solid var(--error-color);
-    background-color: color-mix(in srgb, var(--error-color) 25%, var(--base-color));
+    background-color: color-mix(in srgb, var(--error-color) 15%, var(--base-color));
+    // color: var(--error-color);
   }
 }
 
 @media only screen and (min-width: @screen-md) {
   .notification {
     width: 50%;
-    &.bottom {
+    &.bottom, &.top {
       left: 25%;
     }
   }
@@ -72,13 +77,14 @@
 
 :root[data-theme="light"] {
   .notification {
-    // background-color: var(--alt-bg-color); // rgba(0,0,0,0.05);
-    // border: 1px solid rgba(0,0,0,0.2);
+    &.toast {
+      background-color: var(--text-color);
+      color: var(--base-color);
+    }
   }
 }
 :root[data-theme="dark"] {
   .notification {
-    // background-color: rgba(0,0,0,0.2);
-    // border: 1px solid rgba(0,0,0,0.2);
+    // customizations for dark theme
   }
 }

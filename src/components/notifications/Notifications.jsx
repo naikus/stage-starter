@@ -1,7 +1,7 @@
-import {Match, Show, Switch, createEffect, createSignal, onCleanup, onMount} from "solid-js";
+import {Match, Show, Switch, createEffect, createSignal, onCleanup, onMount, mergeProps} from "solid-js";
 import {createStore, produce} from "solid-js/store";
+import {Dynamic} from "solid-js/web";
 import "./style.less";
-import { Dynamic } from "solid-js/web";
 
 /**
  * @typedef {"toast" | "info" | "success" | "warn" | "error"} NotificationType
@@ -36,6 +36,7 @@ function Notifications(props) {
   const [current, setCurrent] = createSignal(null);
 
   function next() {
+    // This will trigger the effect to show the next notification
     setCurrent(null);
   }
 
@@ -74,7 +75,7 @@ function Notification(props) {
     clearTimeout(timeoutId);
   }
 
-  function handleTransitionOut(e) {
+  function handleTransitionEnd(e) {
     if(e.propertyName !== "transform") {
       return;
     }
@@ -104,7 +105,7 @@ function Notification(props) {
   });
 
   return (
-    <div onTransitionEnd={handleTransitionOut}
+    <div onTransitionEnd={handleTransitionEnd}
         class={
           `notification
           ${props.message.type || "toast"}
