@@ -1,6 +1,7 @@
 // import Stage from "@naikus/stage";
 import {render} from "solid-js/web";
 import {createSignal} from "solid-js";
+import {notify} from "@components/notifications/Notifications";
 
 import "./style.less";
 
@@ -10,7 +11,6 @@ export default {
   factory(appContext, viewUi, vconfig) {
     const goBack = _ => appContext.getRouter().back(),
         [viewOptions, setViewOptions] = createSignal({}),
-
         Content = function(props) {
           const {appName, appVersion, branding, logo} = appContext.getConfig();
           // setViewOptions(props.options);

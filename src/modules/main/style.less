@@ -20,6 +20,7 @@
       border-radius: @base-border-radius;
       padding: @padding-default;
       background-color: color-mix(in srgb, var(--accent-color) 15%, var(--base-color) 40%);
+      cursor: pointer;
     }
 
 
@@ -34,9 +35,19 @@
         padding: @padding-default;
         border-bottom: 1px solid rgba(0,0,0,0.05);
         transition: background-color 200ms ease;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
 
         &:hover {
           background-color: var(--active-bg-color);
+        }
+
+        .type {
+          background-color: rgba(0,0,0,0.1);
+          padding: @padding-tiny @padding-default;
+          font-size: 0.8rem;
+          border-radius: @base-border-radius;
         }
 
         &:first-child {
@@ -63,6 +74,7 @@
       animation-delay: 1000ms;
       border-radius: 50%;
       padding: 16px;
+      cursor: pointer;
     }
   }
   

@@ -11,19 +11,27 @@ export default{
   template: `<div class="stage-view main"></div>`,
   factory(appContext, viewUi, viewConfig) {
     const router = appContext.getRouter(),
-        showAbout = () => router.route("/about"/*,{transition: "slide-up"}*/),
+        showAbout = () => router.route("/about", {transition: "slide"}),
         config = appContext.getConfig(),
 
-        notificationTypes = ["info", "toast", "success", "error", "warn"],
+        toggleScheme = () => {
+          const root = document.firstElementChild,
+              data = root.dataset,
+              theme = data.theme;
+          if(theme === "light") {
+            data.theme = "dark";
+          }else {
+            data.theme = "light";
+          }
+        },
+
         positions = ["top", "bottom"],
-        showNotification = () => {
-          const type = Math.floor(Math.random() * notificationTypes.length),
-              pos = Math.floor(Math.random() * positions.length);
+        showNotification = (type) => {
           notify({
-            type: notificationTypes[type],
-            position: positions[pos],
-            content: `This is a example of notification of type ${notificationTypes[type]}`,
-            autoDismiss: Math.round(Math.random()) * 1500,
+            type: type,
+            position: "bottom",
+            content: `This is a example of notification/toast of type ${type}.`,
+            autoDismiss: 1500,
             onDismiss: () => console.log("Notification dismissed")
           });
         },
@@ -31,7 +39,7 @@ export default{
         Content = function(props) {
           return (
             <div class="content">
-              <p class="message" onClick={showNotification}>
+              <p class="message" onClick={toggleScheme}>
                 Welcome to {config.appName} v{config.appVersion}.
                 Click on the logo to go to the about page.
               </p>
@@ -44,7 +52,12 @@ export default{
               </div>
               <ul class="items">
                 <For each={Items}>
-                  {item => <li>{item.name}</li>}
+                  {item => (
+                    <li onClick={[showNotification, item.type]}>
+                      <span class="title">{item.name}</span>
+                      <span class="type">{item.type}</span>
+                    </li>
+                  )}
                 </For>
               </ul>
             </div>
