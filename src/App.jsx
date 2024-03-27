@@ -1,6 +1,6 @@
 import {Show, createSignal, onCleanup, onMount} from "solid-js";
-// import createRouter from "@lib/simple-router";
-import createRouter from "simple-router";
+import createRouter from "@lib/simple-router";
+// import createRouter from "simple-router";
 
 import Stage from "@naikus/stage";
 import "@node_modules/@naikus/stage/src/stage.less";
@@ -51,7 +51,7 @@ function App(props) {
       stageInstance,
       eventUnsubscribes,
       router,
-      routerSubs;
+      routerUnsubscribers;
 
   function stageContextFactory(stage, stageOpts) {
     return {
@@ -110,10 +110,11 @@ function App(props) {
     });
 
     const routerSubs = [
-      router.on("before-route", (event, data) => {
+      router.on("before-route", (data) => {
         setRouteLoading(true);
       }),
-      router.on("route", (event, context) => {
+      router.on("route", (context) => {
+        console.log("Route Event", context);
         setRouteLoading(false);
         const {route, view} = context,
             {state, action, params, handler} = route,
@@ -142,16 +143,25 @@ function App(props) {
           console.warn("No view or handler found for route", route);
         }
       }),
-      router.on("route-error", (event, error) => {
+      router.on("route-error", (error) => {
         setRouteLoading(false);
-        console.warn("Error loading route", error);
+        // console.warn("Error loading route", error);
+        notify({
+          type: "error",
+          content: () => (
+            <span>
+              Error loading route: {error.message} <a href="#/">Home</a>
+            </span>
+          ),
+          autoDismiss: false
+        });
       })
     ];
     return [router, routerSubs];
   }
 
   onMount(() => {
-    [router, routerSubs] = setupRouter();
+    [router, routerUnsubscribers] = setupRouter();
     [stageInstance, eventUnsubscribes] = setupStage();
     router.start();
     router.route(router.getBrowserRoute() || "/");
@@ -163,8 +173,8 @@ function App(props) {
   });
 
   onCleanup(() => {
-    eventUnsubscribes && eventUnsubscribes.forEach(unsubscribe => unsubscribe());
-    routerSubs && routerSubs.forEach(subs => subs.dispose());
+    eventUnsubscribes && eventUnsubscribes.forEach(unsub => unsub());
+    routerUnsubscribers && routerUnsubscribers.forEach(unsub => unsub());
   });
 
   return (

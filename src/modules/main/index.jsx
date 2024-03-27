@@ -25,13 +25,12 @@ export default{
           }
         },
 
-        positions = ["top", "bottom"],
         showNotification = (type) => {
           notify({
             type: type,
             position: "bottom",
             content: `This is a example of notification/toast of type ${type}.`,
-            autoDismiss: 1500,
+            // autoDismiss: 1500,
             onDismiss: () => console.log("Notification dismissed")
           });
         },
@@ -73,6 +72,9 @@ export default{
         },
 
         renderContent = (viewOpts, done) => {
+          if(dispose) {
+            dispose();
+          }
           // render(<Content options={viewOpts} />, viewUi, done, {});
           dispose = render(() => <Content options={viewOpts} />, viewUi);
           done();
@@ -87,7 +89,8 @@ export default{
     return {
       // Stage app lifecycle functions.
       initialize(viewOpts) {
-        viewUi.addEventListener("transitionout", handleTransitionOut);
+        // viewUi.addEventListener("transitionout", handleTransitionOut);
+        console.log("Initialize", viewOpts);
       },
       onBackButton() {
         exitApp();
@@ -96,7 +99,14 @@ export default{
         renderContent(viewOpts, done);
       },
       update(viewOpts) {
-        renderContent(viewOpts);
+        const {params: {action}} = viewOpts;
+        notify({
+          type: action ? "info" : "warn",
+          position: "top",
+          content: `View updated with action: ${action}`,
+          autoDismiss: false
+          // onDismiss: () => console.log("Notification dismissed")
+        });
       },
       deactivate(viewOpts) {},
       destroy() {}

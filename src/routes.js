@@ -22,7 +22,7 @@ export default [
     }
   },
   {
-    path: "/main",
+    path: "/main/:action?",
     controller () {
       return import("./modules/main/index").then(viewDef => {
         return {

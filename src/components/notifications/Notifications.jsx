@@ -27,6 +27,9 @@ const [
   setMessages
 ] = createStore([]);
 
+
+const DEFAULT_AUTO_DISMISS = 3500;
+
 /**
  * @param {{
  *  class: string
@@ -139,28 +142,28 @@ function notify(message) {
     })
   );
 }
-notify.info = (content, autoDismiss = 5000) => {
+notify.info = (content, autoDismiss = DEFAULT_AUTO_DISMISS) => {
   notify({
     type: "info",
     content,
     autoDismiss
   });
 };
-notify.success = (content, autoDismiss = 5000) => {
+notify.success = (content, autoDismiss = DEFAULT_AUTO_DISMISS) => {
   notify({
     type: "success",
     content,
     autoDismiss
   });
 };
-notify.warn = (content, autoDismiss = 5000) => {
+notify.warn = (content, autoDismiss = DEFAULT_AUTO_DISMISS) => {
   notify({
     type: "warn",
     content,
     autoDismiss
   });
 };
-notify.error = (content, autoDismiss = 5000) => {
+notify.error = (content, autoDismiss = DEFAULT_AUTO_DISMISS) => {
   notify({
     type: "error",
     content,

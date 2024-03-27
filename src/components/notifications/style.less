@@ -25,6 +25,19 @@
 
   width: 90%;
 
+  &::after {
+    content: "";
+    position: absolute;
+    top: 15%;
+    left: @padding-smaller;
+    width: 6px;
+    height: 70%;
+    border-radius: @base-border-radius;
+    background-color: var(--text-color);
+    z-index: -1;
+  }
+  padding-left: @padding-container + @padding-smaller;
+
   &.bottom {
     bottom: 5%;
     left: 5%;
@@ -42,26 +55,39 @@
     opacity: 1;
   }
 
-  &.toast {}
+  &.toast {
+    &::after {
+      display: none;
+    }
+    padding-left: @padding-container;
+  }
   &.info {
     // border: 1px solid var(--info-color);
-    background-color: color-mix(in srgb, var(--info-color) 15%, var(--base-color));
-    // color: var(--info-color);
+    // background-color: color-mix(in srgb, var(--info-color) 15%, var(--base-color));
+    &::after {
+      background-color: var(--info-color);
+    }
   }
   &.success {
     // border: 1px solid var(--success-color);
-    background-color: color-mix(in srgb, var(--success-color) 15%, var(--base-color));
-    // color: var(--success-color);
+    // background-color: color-mix(in srgb, var(--success-color) 15%, var(--base-color));
+    &::after {
+      background-color: var(--success-color);
+    }
   }
   &.warn {
     // border: 1px solid var(--warn-color);
-    background-color: color-mix(in srgb, var(--warn-color) 15%, var(--base-color));
-    // color: var(--warn-color);
+    // background-color: color-mix(in srgb, var(--warn-color) 15%, var(--base-color));
+    &::after {
+      background-color: var(--warn-color);
+    }
   }
   &.error {
     // border: 1px solid var(--error-color);
-    background-color: color-mix(in srgb, var(--error-color) 15%, var(--base-color));
-    // color: var(--error-color);
+    // background-color: color-mix(in srgb, var(--error-color) 15%, var(--base-color));
+    &::after {
+      background-color: var(--error-color);
+    }
   }
 }
 
@@ -71,20 +97,5 @@
     &.bottom, &.top {
       left: 25%;
     }
-  }
-}
-
-
-:root[data-theme="light"] {
-  .notification {
-    &.toast {
-      background-color: var(--text-color);
-      color: var(--base-color);
-    }
-  }
-}
-:root[data-theme="dark"] {
-  .notification {
-    // customizations for dark theme
   }
 }

@@ -8,7 +8,7 @@ import "./style.less";
 export default {
   id: "about",
   template: `<div class="stage-view no-actionbar about"></div>`,
-  factory(appContext, viewUi, vconfig) {
+  factory(appContext, viewUi, viewConfig) {
     const goBack = _ => appContext.getRouter().back(),
         [viewOptions, setViewOptions] = createSignal({}),
         Content = function(props) {
@@ -35,7 +35,7 @@ export default {
 
                 <br />
                 View config: <br />
-                {JSON.stringify(vconfig, null, 2)}
+                {JSON.stringify(viewConfig, null, 2)}
               </pre>
               <button onClick={goBack} class="primary">Back</button>
             </div>
