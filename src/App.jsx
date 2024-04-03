@@ -114,10 +114,10 @@ function App(props) {
         setRouteLoading(true);
       }),
       router.on("route", (context) => {
-        console.log("Route Event", context);
+        // console.log("Route Event", context);
         setRouteLoading(false);
-        const {route, view} = context,
-            {state, action, params, handler} = route,
+        const {route, view, handler} = context,
+            {state, action, params} = route,
             // viewContext = stageInstance.getViewContext(),
             currentView = stageInstance.currentView(),
             viewOptions = Object.assign({}, state, {params: params}),

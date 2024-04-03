@@ -1,3 +1,5 @@
+import {notify} from "@components/notifications/Notifications";
+
 /**
  * @typedef {import("./components/stage/Stage").ViewConfig} ViewConfig
  */
@@ -49,6 +51,17 @@ export default [
           }
         };
       });
+    }
+  },
+  {
+    path: "/handler",
+    controller () {
+      return {
+        handler(context) {
+          // console.log("Handler route", context);
+          notify.info(`Handling route ${context.route.runtimePath}`);
+        }
+      };
     }
   }
 

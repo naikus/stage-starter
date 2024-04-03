@@ -276,7 +276,8 @@ const isPromise = type => type && (typeof type.then) === "function",
           const route = {
                 action,
                 from: origRoute,
-                path: routeInfo.path,
+                // path: routeInfo.path,
+                path,
                 runtimePath: routeInfo.runtimePath,
                 params: routeInfo.params
                 // ...routeInfo

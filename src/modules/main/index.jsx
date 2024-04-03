@@ -30,8 +30,8 @@ export default{
             type: type,
             position: "bottom",
             content: `This is a example of notification/toast of type ${type}.`,
-            // autoDismiss: 1500,
-            onDismiss: () => console.log("Notification dismissed")
+            autoDismiss: 4000
+            // onDismiss: () => console.log("Notification dismissed")
           });
         },
 
@@ -59,6 +59,9 @@ export default{
                   )}
                 </For>
               </ul>
+              <p class="block">
+                <a class="button" href="#/handler">Invoke route handler function</a>
+              </p>
             </div>
           );
         },
@@ -99,11 +102,16 @@ export default{
         renderContent(viewOpts, done);
       },
       update(viewOpts) {
-        const {params: {action}} = viewOpts;
+        const {params} = viewOpts, {action} = params;
         notify({
           type: action ? "info" : "warn",
           position: "top",
-          content: `View updated with action: ${action}`,
+          content: () => (
+            <pre class="text-small">
+              View updated with params: <br />
+              {JSON.stringify(params, null, 2)}
+            </pre>
+          ),
           autoDismiss: false
           // onDismiss: () => console.log("Notification dismissed")
         });
