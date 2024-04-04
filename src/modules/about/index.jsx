@@ -1,7 +1,7 @@
 // import Stage from "@naikus/stage";
 import {render} from "solid-js/web";
 import {createSignal} from "solid-js";
-import {notify} from "@components/notifications/Notifications";
+import Overlay from "@components/overlay/Overlay";
 
 import "./style.less";
 
@@ -12,13 +12,16 @@ export default {
     const goBack = _ => appContext.getRouter().back(),
         [viewOptions, setViewOptions] = createSignal({}),
         Content = function(props) {
-          const {appName, appVersion, branding, logo} = appContext.getConfig();
-          // setViewOptions(props.options);
+          const {appName, appVersion, branding, logo} = appContext.getConfig(),
+              [show, setShow] = createSignal(false),
+              toggleOverlay = _ => setShow(!show());
+
           return (
             <div class="content text-center">
               <img width="130" height="130"
                 class="logo"
                 alt="logo"
+                onClick={toggleOverlay}
                 src={logo} />
               <h3>
                 {appName} ({appVersion})
@@ -27,7 +30,7 @@ export default {
                 Made using <a target="_blank" href="https://naikus.github.io/stage">stagejs</a> and 
                 <a target="_blank" href="https://solidjs.com">Solidjs</a>
               </p>
-              <pre class="message" style={{
+              <pre id="about-message" class="message" style={{
                 "font-size": "0.8em"
               }}>
                 View options: <br />
@@ -38,6 +41,17 @@ export default {
                 {JSON.stringify(viewConfig, null, 2)}
               </pre>
               <button onClick={goBack} class="primary">Back</button>
+              <Overlay show={show()} class="modal alert" target={Math.round(Math.random()) ? "body" : "#about-message"}>
+                <div class="title">
+                  <h4 class="title">Overlay</h4>
+                </div>
+                <div class="content">
+                  This is an overlay
+                </div>
+                <div class="actions">
+                  <button onClick={toggleOverlay} class="primary">Close</button>
+                </div>
+              </Overlay>
             </div>
           );
         },
