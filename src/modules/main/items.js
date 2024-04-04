@@ -3,5 +3,6 @@ export default [
   {id: "0", name: "Learn Japanese", type: "info"},
   {id: "1", name: "Play guitar", type: "success"},
   {id: "2", name: "Practice LD", type: "warn"},
-  {id: "3", name: "Practice Sketching", type: "error"}
+  {id: "3", name: "Practice Sketching", type: "error"},
+  {id: "5", name: "Practice Sketching", type: "blurb"}
 ];
