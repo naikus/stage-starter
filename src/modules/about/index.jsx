@@ -30,23 +30,28 @@ export default {
                 Made using <a target="_blank" href="https://naikus.github.io/stage">stagejs</a> and 
                 <a target="_blank" href="https://solidjs.com">Solidjs</a>
               </p>
-              <pre id="about-message" class="message" style={{
-                "font-size": "0.8em"
+              <div id="about-message" class="message" style={{
+                "font-size": "0.8em",
+                "font-family": "monospace"
               }}>
-                View options: <br />
-                {JSON.stringify(viewOptions(), null, 2)}
-
+                View options:
+                <pre>
+                  {JSON.stringify(viewOptions(), null, 2)}
+                </pre>
                 <br />
-                View config: <br />
-                {JSON.stringify(viewConfig, null, 2)}
-              </pre>
+                View config:
+                <pre>
+                  {JSON.stringify(viewConfig, null, 2)}
+                </pre>
+              </div>
               <button onClick={goBack} class="primary">Back</button>
-              <Overlay show={show()} class="modal alert" target={Math.round(Math.random()) ? "body" : "#about-message"}>
+              <Overlay show={show()} class="modal alert" target={Math.round(Math.random()) ? ".stage-view.about" : "#about-message"}>
                 <div class="title">
                   <h4 class="title">Overlay</h4>
                 </div>
-                <div class="content">
-                  This is an overlay
+                <div style={{"text-wrap": "pretty"}} class="content alert-content">
+                  Example of an overlay. It can be shown on top of the current view or any other 
+                  element and also has a focus guard.
                 </div>
                 <div class="actions">
                   <button onClick={toggleOverlay} class="primary">Close</button>
