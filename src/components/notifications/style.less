@@ -28,10 +28,11 @@
   &::after {
     content: "";
     position: absolute;
-    top: 15%;
+    top: @padding-smaller;
+    bottom: @padding-smaller;
     left: @padding-smaller;
     width: 6px;
-    height: 70%;
+    // height: 70%;
     border-radius: @base-border-radius;
     background-color: var(--alt-bg-color);
     z-index: -1;
