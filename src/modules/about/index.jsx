@@ -45,7 +45,8 @@ export default {
                 </pre>
               </div>
               <button onClick={goBack} class="primary">Back</button>
-              <Overlay show={show()} class="modal alert" target={Math.round(Math.random()) ? ".stage-view.about" : "#about-message"}>
+              <Overlay show={show()} class="modal alert"
+                  target={Math.round(Math.random()) ? "body" : "#about-message"}>
                 <div class="title">
                   <h4 class="title">Overlay</h4>
                 </div>

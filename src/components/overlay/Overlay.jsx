@@ -37,9 +37,15 @@ const FocusGuard = (props) => {
 
   onMount(() => {
     document.addEventListener("keydown", shiftKeyListener);
+
+    /**
+     * @Note The FocusGuard component is a work in progress and may not work as expected in all cases.
+     * It causes problems with the focus in some cases, e.g. when using bottom. Hence the timeout.
+     * This should be ideally same as the animation duration in the style.less file.
+     */
     setTimeout(() => {
       focusFirstElem(fcGuard);
-    }, 30);
+    }, 600);
   });
 
   onCleanup(() => {

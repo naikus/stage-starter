@@ -26,7 +26,7 @@
   animation-timing-function: @bezier-func;
   animation-name: overlay_close;
 
-  > .overlay {
+  .overlay {
     // min-height: 200px;
     // padding: @overlay-padding;
     // border: 1px solid rgba(0,0,0,0.04);
@@ -53,7 +53,7 @@
 
   &.__visible {
     animation-name: overlay_open;
-    > .overlay {
+    .overlay {
       animation-name: overlay_content_open;
 
       &.bottom  {
