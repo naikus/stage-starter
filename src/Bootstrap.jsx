@@ -19,6 +19,10 @@ render(
 
 // Remove the loading screen
 setTimeout(() => {
-const loading = document.getElementById("loading");
-loading && loading.remove();
-}, 500);
+  const loading = document.getElementById("loading");
+  // loading && loading.remove();
+  if(loading) {
+    // loading.querySelector(".loading-msg").innerText = "DONE";
+    loading.remove();
+  }
+}, 100);

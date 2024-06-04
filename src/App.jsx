@@ -164,6 +164,7 @@ function App(props) {
     [router, routerUnsubscribers] = setupRouter();
     [stageInstance, eventUnsubscribes] = setupStage();
     router.start();
+    // window.router = router;
     router.route(router.getBrowserRoute() || "/");
 
     // console.log(stageComponent);

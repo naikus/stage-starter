@@ -31,7 +31,7 @@ export default {
                 <a target="_blank" href="https://solidjs.com">Solidjs</a>
               </p>
               <div id="about-message" class="message" style={{
-                "font-size": "0.8em",
+                "font-size": "0.75em",
                 "font-family": "monospace"
               }}>
                 View options:
@@ -45,7 +45,7 @@ export default {
                 </pre>
               </div>
               <button onClick={goBack} class="primary">Back</button>
-              <Overlay show={show()} class="modal alert"
+              <Overlay show={show()} class="bottom modal alert"
                   target={Math.round(Math.random()) ? "body" : "#about-message"}>
                 <div class="title">
                   <h4 class="title">Overlay</h4>

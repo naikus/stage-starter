@@ -45,6 +45,9 @@ export default{
               <div class="main-logo anim">
                 <img width="200" height="200"
                   class="spin"
+                  style={{
+                    "-webkit-tap-highlight-color": "transparent"
+                  }}
                   alt="Spinning Logo" 
                   onClick={showAbout}
                   src={config.logo} />
@@ -60,7 +63,7 @@ export default{
                 </For>
               </ul>
               <p class="block">
-                <a class="button" href="#/handler">Invoke route handler function</a>
+                <a class="button primary" href="#/handler">Invoke route handler</a>
               </p>
             </div>
           );
