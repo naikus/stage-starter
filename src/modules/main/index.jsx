@@ -1,5 +1,5 @@
 // import Stage from "@naikus/stage";
-import {For} from "solid-js";
+import {For, Show, createSignal} from "solid-js";
 import {render} from "solid-js/web";
 import {notify} from "@components/notifications/Notifications";
 
@@ -43,7 +43,7 @@ export default{
                 Click on the logo to go to the about page.
               </p>
               <div class="main-logo anim">
-                <img width="200" height="200"
+                <img width="150" height="150"
                   class="spin"
                   style={{
                     "-webkit-tap-highlight-color": "transparent"
@@ -62,9 +62,11 @@ export default{
                   )}
                 </For>
               </ul>
-              <p class="block">
-                <a class="button primary" href="#/handler">Invoke route handler</a>
-              </p>
+              <Show when={currentRoute() === "/main"}>
+                <p class="block">
+                  <a class="button primary" href="#/handler">Invoke route handler</a>
+                </p>
+              </Show>
             </div>
           );
         },
@@ -83,20 +85,25 @@ export default{
           }
           // render(<Content options={viewOpts} />, viewUi, done, {});
           dispose = render(() => <Content options={viewOpts} />, viewUi);
-          done();
+          done && done();
         },
 
         handleTransitionOut = () => {
           dispose && dispose();
         };
 
-    let dispose;
+    const [currentRoute, setCurrRoute] = createSignal(router.getCurrentRoute().path);
+    let dispose, routerSub;
 
     return {
       // Stage app lifecycle functions.
       initialize(viewOpts) {
         // viewUi.addEventListener("transitionout", handleTransitionOut);
         console.log("Initialize", viewOpts);
+        routerSub = router.on("route", ({route}) => {
+          console.log("Setting current route", route.path);
+          setCurrRoute(route.path);
+        });
       },
       onBackButton() {
         exitApp();
