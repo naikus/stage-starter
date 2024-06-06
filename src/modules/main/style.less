@@ -103,12 +103,16 @@
 
 @media only screen and (min-width: @screen-md) {
   .stage-view.main {
-    .items {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      li {
-        width: 27%;
+    .content {
+      .items {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        > li {
+          // align-items: flex-start;
+          width: 30%;
+          height: 80px;
+        }
       }
     }
   }
