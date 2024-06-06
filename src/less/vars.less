@@ -8,9 +8,9 @@
 
 @base-unit: @size_smaller + 0px;
 @padding-tiny: @size_tiny + 0px;
-@padding-smaller: @size_smaller + 0px;
-@padding-default: @size_small + 0px;
-@padding-container: @size_default + 0px;
+@padding-smaller: @base-unit + 0px;
+@padding-default: @base-unit + 2px;
+@padding-container: @base-unit + @size_tiny;
 @base-border-radius: @base-unit;
 @input-border-radius: @base-border-radius - 2px;
 
