@@ -62,7 +62,7 @@ export default{
                   )}
                 </For>
               </ul>
-              <Show when={currentRoute() === "/main"}>
+              <Show when={currentRoute() !== "/handler"}>
                 <p class="block">
                   <a class="button primary" href="#/handler">Invoke route handler</a>
                 </p>
@@ -99,7 +99,7 @@ export default{
       // Stage app lifecycle functions.
       initialize(viewOpts) {
         // viewUi.addEventListener("transitionout", handleTransitionOut);
-        console.log("Initialize", viewOpts);
+        console.info(viewOpts);
         routerSub = router.on("route", ({route}) => {
           console.log("Setting current route", route.path);
           setCurrRoute(route.path);
