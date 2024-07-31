@@ -1,7 +1,6 @@
 /**
  * @callback EventListener
  * @param {...*} args The event arguments
- * @returns {function} The unsubscriber function
  */
 
 /**
@@ -32,9 +31,9 @@
 
 /**
  * @typedef {Object} NsEventEmitter
- * @property {function(string|namespace, EventListener | NsEventListener)} on - Subscribe to an event or a namespace
- * @property {function(string, EventListener)} on - Subscribe to an event or a namespace
- * @property {function(string|namespace, EventListener | NsEventListener)} once - Subscribe to an event or a namespace once
+ * @property {function(string|namespace, EventListener | NsEventListener) : function} on - Subscribe to an event or a namespace
+ * @property {function(string, EventListener) : function} on - Subscribe to an event or a namespace
+ * @property {function(string|namespace, EventListener | NsEventListener) : function} once - Subscribe to an event or a namespace once
  * @property {function(string|namespace, ...*)} emit - Emit an event or a namespace 
  * @property {function()} close - Close the event emitter and remove all listeners
  */

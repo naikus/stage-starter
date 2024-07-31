@@ -45,7 +45,7 @@ const FocusGuard = (props) => {
      */
     setTimeout(() => {
       focusFirstElem(fcGuard);
-    }, 600);
+    }, 300);
   });
 
   onCleanup(() => {
