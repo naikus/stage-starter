@@ -92,7 +92,7 @@ export default{
           dispose && dispose();
         };
 
-    const [currentRoute, setCurrRoute] = createSignal(router.getCurrentRoute().path);
+    const [currentRoute, setCurrRoute] = createSignal(router.getCurrentRoute().runtimePath);
     let dispose, routerSub;
 
     return {
@@ -101,7 +101,7 @@ export default{
         // viewUi.addEventListener("transitionout", handleTransitionOut);
         console.info(viewOpts);
         routerSub = router.on("route", ({route}) => {
-          console.log("Setting current route", route.path);
+          console.log("Setting current route", route.runtimePath);
           setCurrRoute(route.path);
         });
       },
@@ -119,7 +119,7 @@ export default{
           content: () => (
             <pre class="text-small">
               View updated with params: <br />
-              {JSON.stringify(params, null, 2)}
+              {JSON.stringify(params)}
             </pre>
           ),
           autoDismiss: false
@@ -127,7 +127,9 @@ export default{
         });
       },
       deactivate(viewOpts) {},
-      destroy() {}
+      destroy() {
+        routerSub && routerSub();
+      }
     };
   }
 };

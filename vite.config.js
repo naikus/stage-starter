@@ -4,7 +4,6 @@ import path, {resolve} from "path";
 import {defineConfig} from "vite";
 import solid from "vite-plugin-solid";
 import legacy from "@vitejs/plugin-legacy";
-import {VitePWA} from "vite-plugin-pwa";
 
 
 // https://vitejs.dev/config/

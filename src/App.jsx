@@ -1,5 +1,5 @@
 import {Show, createSignal, onCleanup, onMount} from "solid-js";
-import createRouter from "@lib/simple-router";
+import createRouter from "simple-router";
 // import createRouter from "simple-router";
 
 import Stage from "@naikus/stage";
@@ -138,7 +138,7 @@ function App(props) {
           }
           showView(id, viewOptions, action);
         }else if(typeof handler === "function") {
-          handler(context);
+          handler();
         }else {
           console.warn("No view or handler found for route", route);
         }

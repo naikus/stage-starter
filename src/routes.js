@@ -24,8 +24,8 @@ export default [
     }
   },
   {
-    path: "/main/:action?",
-    controller () {
+    path: "/main{/:action}",
+    controller(context) {
       return import("./modules/main/index").then(viewDef => {
         return {
           view: {
@@ -39,7 +39,7 @@ export default [
   },
   {
     path: "/about",
-    controller () {
+    controller(context) {
       return import("./modules/about/index").then(viewDef => {
         return {
           view: {
@@ -55,10 +55,10 @@ export default [
   },
   {
     path: "/handler",
-    controller () {
+    controller(context) {
       return {
-        handler(context) {
-          // console.log("Handler route", context);
+        handler() {
+          console.log("Handler route", context);
           notify.info(`Handling route ${context.route.runtimePath}`);
         }
       };

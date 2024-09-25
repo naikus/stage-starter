@@ -18,7 +18,7 @@ export default {
 
           return (
             <div class="content text-center">
-              <img width="130" height="130"
+              <img width="80" height="80"
                 class="logo"
                 alt="logo"
                 onClick={toggleOverlay}
