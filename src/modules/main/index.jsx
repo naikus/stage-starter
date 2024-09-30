@@ -43,7 +43,7 @@ export default{
                 Click on the logo to go to the about page.
               </p>
               <div class="main-logo anim">
-                <img width="150" height="150"
+                <img width="120" height="120"
                   class="spin"
                   style={{
                     "-webkit-tap-highlight-color": "transparent"

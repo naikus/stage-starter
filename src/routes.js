@@ -64,15 +64,4 @@ export default [
       };
     }
   }
-
-  // This will generate a error notification as the view does not exist
-  /*
-  {
-    path: "/foo",
-    view: {
-      id: "foo",
-      src: "views/foo/index.js"
-    }
-  },
-  */
 ];
