@@ -1,5 +1,5 @@
 // import Stage from "@naikus/stage";
-import {For, Show, createSignal} from "solid-js";
+import {For, Show, createSignal, onMount, onCleanup} from "solid-js";
 import {render} from "solid-js/web";
 import {notify} from "@components/notifications/Notifications";
 
@@ -11,7 +11,7 @@ export default{
   template: `<div class="stage-view main"></div>`,
   factory(appContext, viewUi, viewConfig) {
     const router = appContext.getRouter(),
-        showAbout = () => router.route("/about", {transition: "slide"}),
+        showAbout = () => router.route("/about", {transition: "slide-fade"}),
         config = appContext.getConfig(),
 
         toggleScheme = () => {
@@ -44,7 +44,7 @@ export default{
               </p>
               <div class="main-logo anim">
                 <img width="120" height="120"
-                  class="spin"
+                  class="spin-"
                   style={{
                     "-webkit-tap-highlight-color": "transparent"
                   }}

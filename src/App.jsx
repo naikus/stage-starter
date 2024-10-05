@@ -83,7 +83,7 @@ function App(props) {
         viewport,
         // available transitions: slide, fade, fancy, lollipop, slide-up, slide-down, pop-out
         transition: props.transition || "lollipop",
-        transitionDelay: 10,
+        transitionDelay: 100,
         contextFactory: stageContextFactory
       }),
 
