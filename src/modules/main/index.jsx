@@ -11,7 +11,11 @@ export default{
   template: `<div class="stage-view main"></div>`,
   factory(appContext, viewUi, viewConfig) {
     const router = appContext.getRouter(),
-        showAbout = () => router.route("/about", {transition: "slide-fade"}),
+        transitions = ["slide", "fade", "fancy", "lollipop", "slide-up", "slide-down", "pop-out", "slide-fade"],
+        randomTransition = () => {
+          return transitions[Math.floor(Math.random() * transitions.length)];
+        },
+        showAbout = () => router.route("/about", {transition: randomTransition()}),
         config = appContext.getConfig(),
 
         toggleScheme = () => {
@@ -40,7 +44,7 @@ export default{
             <div class="content">
               <p class="message" onClick={toggleScheme}>
                 Welcome to {config.appName} v{config.appVersion}.
-                Click on the logo to go to the about page.
+                Click the logo to go to the about page. (A random page transition is chosen).
               </p>
               <div class="main-logo anim">
                 <img width="120" height="120"
