@@ -31,9 +31,9 @@ export default {
                 <a target="_blank" href="https://solidjs.com">Solidjs</a>
               </p>
               <div id="about-message" class="message" style={{
-                "font-size": "0.75em",
-                "font-family": "monospace"
-              }}>
+                  "font-size": "0.75em",
+                  "font-family": "monospace"
+                }}>
                 View options:
                 <pre>
                   {JSON.stringify(viewOptions(), null, 2)}

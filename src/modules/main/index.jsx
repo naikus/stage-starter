@@ -11,7 +11,10 @@ export default{
   template: `<div class="stage-view main"></div>`,
   factory(appContext, viewUi, viewConfig) {
     const router = appContext.getRouter(),
-        transitions = ["slide", "fade", "fancy", "lollipop", "slide-up", "slide-down", "pop-out", "slide-fade"],
+        transitions = [
+          "slide", "fade", "fancy", "lollipop",
+          "slide-up", "slide-down", "pop-out", "slide-fade"
+        ],
         randomTransition = () => {
           return transitions[Math.floor(Math.random() * transitions.length)];
         },
