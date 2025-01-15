@@ -1,20 +1,20 @@
 import {Show, createSignal, onCleanup, onMount} from "solid-js";
 import createRouter from "simple-router";
-// import createRouter from "simple-router";
 
 import Stage from "@naikus/stage";
 import "@node_modules/@naikus/stage/src/stage.less";
 
+import {Notifications, notify} from "@components/notifications/Notifications";
 import Progress from "@components/progress/Progress";
 import {addListener} from "@lib/event-utils";
 import Config from "@config";
-import {Notifications, notify} from "@components/notifications/Notifications";
 
 import "./style.less";
 
 /**
- * @typedef {import("./routes").RouteConfig} RouteConfig
- * @typedef {import("./components/stage/Stage").ViewConfig} ViewConfig
+ * @typedef {import("simple-router/src/types").Router} Router
+ * @typedef {import("simple-router/src/types").RouteInfo} RouteInfo
+ * @typedef {import("simple-router/src/types").create} createRouter 
  * @typedef {import("solid-js").JSXElement} JSXElement
  */
 
@@ -39,7 +39,7 @@ function BottomBar(props) {
 /**
  * 
  * @param {{
- *  routes: RouteConfig[]
+ *  routes: RouteDefn[]
  *  transition: string
  * }} props 
  */

@@ -1,24 +1,18 @@
 import {notify} from "@components/notifications/Notifications";
 
 /**
- * @typedef {import("./components/stage/Stage").ViewConfig} ViewConfig
+ * @typedef {import("simple-router/src/types").RouteDefn} RouteDefn
  */
 
 /**
- * @typedef RouteConfig
- * @property {string} path The route path
- * @property {(context) => ViewConfig} controller The (optional) route controller
- * @property {ViewConfig} view The view config
- */
-
-/**
- * @type {RouteConfig[]}
+ * @type {RouteDefn[]}
  */
 export default [
   {
     path: "/",
     controller() {
       return {
+        // forwards are handled by the router itself
         forward: "/main"
       };
     }
@@ -26,6 +20,7 @@ export default [
   {
     path: "/main{/:action}",
     controller(context) {
+      // console.log(context.route);
       return import("./modules/main/index").then(viewDef => {
         return {
           view: {
