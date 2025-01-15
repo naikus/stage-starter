@@ -1,4 +1,4 @@
-import {Match, Show, Switch, createEffect, createSignal, onCleanup, onMount, mergeProps} from "solid-js";
+import {Match, Show, Switch, createEffect, createSignal, onCleanup, onMount} from "solid-js";
 import {createStore, produce} from "solid-js/store";
 import {Dynamic} from "solid-js/web";
 import "./style.less";

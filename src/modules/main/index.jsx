@@ -16,7 +16,8 @@ export default{
           "slide-up", "slide-down", "pop-out", "slide-fade"
         ],
         randomTransition = () => {
-          return transitions[Math.floor(Math.random() * transitions.length)];
+          // return transitions[Math.floor(Math.random() * transitions.length)];
+          return "slide-fade";
         },
         showAbout = () => router.route("/about", {transition: randomTransition()}),
         config = appContext.getConfig(),
