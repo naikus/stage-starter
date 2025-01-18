@@ -12,9 +12,9 @@ export default{
   factory(appContext, viewUi, viewConfig) {
     const router = appContext.getRouter(),
         transitions = [
-          "slide", "slide-fade"
-          // "fade", "fancy", "lollipop",
-          // "slide-up", "slide-down", "pop-out", "slide-fade"
+          "slide", "slide-fade",
+          "fade", "fancy", "lollipop",
+          "slide-up", "slide-down", "pop-out", "slide-fade"
         ],
         randomTransition = () => {
           // return transitions[Math.floor(Math.random() * transitions.length)];
