@@ -73,8 +73,7 @@ const FocusGuard = (props) => {
  * }} props
  */
 function Overlay(props) {
-  const {target} = props,
-    [wasShown, setWasShown] = createSignal(false),
+  const [wasShown, setWasShown] = createSignal(false),
     [anim, setAnim] = createSignal(false),
     [mount, setMount] = createSignal(false),
 
@@ -103,7 +102,7 @@ function Overlay(props) {
 
   return (
     <Show when={mount()} fallback={null}>
-      <Portal mount={props.target ? document.querySelector(target) : document.body}>
+      <Portal mount={props.target ? document.querySelector(props.target) : document.body}>
         <FocusGuard>
           <div ref={overlayBackdropRef} 
               class={`overlay-backdrop ${anim() ? "__visible" : ""}`}

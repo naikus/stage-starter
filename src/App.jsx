@@ -120,15 +120,7 @@ function App(props) {
             {state, action, params} = route,
             // viewContext = stageInstance.getViewContext(),
             currentView = stageInstance.currentView(),
-            viewOptions = Object.assign({}, state, {params: params}),
-            showView = (id, viewOptions, action) => {
-              // console.debug("Show view", id, viewOptions, action);
-              if((currentView === id) || action !== "POP") {
-                stageInstance.pushView(id, viewOptions);
-              }else {
-                stageInstance.popView(viewOptions);  
-              }
-            };
+            viewOptions = Object.assign({}, state, {params: params});
 
         if(view) {
           const {id, viewDef, config} = view;
@@ -136,7 +128,13 @@ function App(props) {
             // Stage.view(id, null, config);
             Stage.defineView(viewDef, config);
           }
-          showView(id, viewOptions, action);
+          // showView(id, viewOptions, action);
+          // console.debug("Show view", id, viewOptions, action);
+          if((currentView === id) || action !== "POP") {
+            stageInstance.pushView(id, viewOptions);
+          }else {
+            stageInstance.popView(viewOptions);  
+          }
         }else if(typeof handler === "function") {
           handler();
         }else {
@@ -171,6 +169,16 @@ function App(props) {
     addListener(document, "deviceready", () => {
       setupBackButton();
     });
+
+    /*
+    // Set theme based on system preference
+    if(window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      document.firstElementChild.dataset.theme = "dark";
+    }else {
+      document.firstElementChild.dataset.theme = "light";
+    }
+    */
+
   });
 
   onCleanup(() => {

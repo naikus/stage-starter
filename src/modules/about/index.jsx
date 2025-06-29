@@ -44,7 +44,9 @@ export default {
                   {JSON.stringify(viewConfig, null, 2)}
                 </pre>
               </div>
-              <button onClick={goBack} class="primary">Back</button>
+              <div class="actions">
+                <button onClick={goBack} class="primary">Back</button>
+              </div>
               <Overlay show={show()} class="bottom modal alert"
                   target={Math.round(Math.random()) ? "body" : "#about-message"}>
                 <div class="title">
@@ -55,6 +57,7 @@ export default {
                   element and also has a focus guard.
                 </div>
                 <div class="actions">
+                  <button>Dummy</button>
                   <button onClick={toggleOverlay} class="primary">Close</button>
                 </div>
               </Overlay>
