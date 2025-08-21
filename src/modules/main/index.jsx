@@ -13,12 +13,12 @@ export default{
     const router = appContext.getRouter(),
         transitions = [
           "slide", "slide-fade",
-          "fade", "fancy", "lollipop",
+          "fade", "fancy", "lollipop", "slide-fase",
           "slide-up", "slide-down", "pop-out", "slide-fade"
         ],
         randomTransition = () => {
-          // return transitions[Math.floor(Math.random() * transitions.length)];
-          return "slide-fade";
+          return transitions[Math.floor(Math.random() * transitions.length)];
+          // return "slide-fade";
         },
         showAbout = () => router.route("/about", {transition: randomTransition()}),
         config = appContext.getConfig(),
