@@ -18,6 +18,24 @@ export default [
     }
   },
   {
+    path: "/main{\\?:query}",
+    controller: async (context) => {
+      const {route: {params}} = context,
+          {query = ""} = params,
+          queryParams = new URLSearchParams(query);
+      return import("./modules/main/index").then(viewDef => {
+        return {
+          view: {
+            id: "main",
+            viewDef: viewDef.default || viewDef,
+            config: {}
+          }
+        };
+      });
+    }
+  },
+  /*
+  {
     path: "/main{/:action}",
     controller(context) {
       // console.log(context.route);
@@ -32,6 +50,7 @@ export default [
       });
     }
   },
+  */
   {
     path: "/about",
     controller(context) {
