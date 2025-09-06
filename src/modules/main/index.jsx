@@ -11,17 +11,20 @@ export default{
   template: `<div class="stage-view main"></div>`,
   factory(appContext, viewUi, viewConfig) {
     const router = appContext.getRouter(),
+        config = appContext.getConfig(),
         transitions = [
           "slide", "slide-fade",
-          "fade", "fancy", "lollipop", "slide-fase",
-          "slide-up", "slide-down", "pop-out", "slide-fade"
+          "fade", "fancy", "lollipop", "slide-fade",
+          "slide-up", "slide-down", "pop-out", "slide-fade",
+          null // null transition will route  without any animation
         ],
+
         randomTransition = () => {
           return transitions[Math.floor(Math.random() * transitions.length)];
           // return "slide-fade";
         },
+
         showAbout = () => router.route("/about", {transition: randomTransition()}),
-        config = appContext.getConfig(),
 
         toggleScheme = () => {
           const root = document.firstElementChild,
@@ -108,7 +111,6 @@ export default{
       // Stage app lifecycle functions.
       initialize(viewOpts) {
         // viewUi.addEventListener("transitionout", handleTransitionOut);
-        console.info(viewOpts);
         routerSub = router.on("route", ({route}) => {
           console.log("Setting current route", route.runtimePath);
           setCurrRoute(route.path);
@@ -118,6 +120,7 @@ export default{
         exitApp();
       },
       activate(viewOpts, done) {
+        console.info(viewOpts);
         renderContent(viewOpts, done);
       },
       update(viewOpts) {

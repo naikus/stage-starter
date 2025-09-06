@@ -66,6 +66,7 @@ export default {
         },
 
         handleTransitionOut = _ => {
+          // console.log(_);
           dispose && dispose();
         };
 
