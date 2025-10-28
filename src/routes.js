@@ -18,7 +18,7 @@ export default [
     }
   },
   {
-    path: "/main{\\?:query}",
+    path: "/main{\\?*query}",
     controller: async (context) => {
       const {route: {params}} = context,
           {query = ""} = params,
