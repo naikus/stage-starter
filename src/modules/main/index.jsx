@@ -15,8 +15,8 @@ export default{
         transitions = [
           "slide", "slide-fade",
           "fade", "fancy", "lollipop", "slide-fade",
-          "slide-up", "slide-down", "pop-out", "slide-fade",
-          null // null transition will route  without any animation
+          "slide-up", "slide-down", "pop-out", "slide-fade"
+          // null // null transition will route  without any animation
         ],
 
         randomTransition = () => {
@@ -24,7 +24,7 @@ export default{
           // return "slide-fade";
         },
 
-        showAbout = () => router.route("/about", {transition: randomTransition()}),
+        showAbout = () => router.route(`/about?transition=${randomTransition()}`),
 
         toggleScheme = () => {
           const root = document.firstElementChild,
@@ -60,7 +60,7 @@ export default{
                   style={{
                     "-webkit-tap-highlight-color": "transparent"
                   }}
-                  alt="Spinning Logo" 
+                  alt="Spinning Logo"
                   onClick={showAbout}
                   src={config.logo} />
               </div>
@@ -82,7 +82,7 @@ export default{
             </div>
           );
         },
-        
+
         exitApp = () => {
           if(navigator.app) {
             navigator.app.exitApp();
@@ -111,8 +111,11 @@ export default{
       // Stage app lifecycle functions.
       initialize(viewOpts) {
         // viewUi.addEventListener("transitionout", handleTransitionOut);
-        routerSub = router.on("route", ({route}) => {
-          console.log("Setting current route", route.runtimePath);
+
+        routerSub = router.on("route", event => {
+          const {route} = event.detail;
+          console.log(route)
+          console.log("Setting current route", route.path);
           setCurrRoute(route.path);
         });
       },
@@ -120,7 +123,6 @@ export default{
         exitApp();
       },
       activate(viewOpts, done) {
-        console.info(viewOpts);
         renderContent(viewOpts, done);
       },
       update(viewOpts) {

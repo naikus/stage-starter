@@ -1,4 +1,5 @@
 import {notify} from "@components/notifications/Notifications";
+import {extractQueryParams} from "@lib/route-utils";
 
 /**
  * @typedef {import("simple-router/src/types").RouteDefn} RouteDefn
@@ -20,9 +21,8 @@ export default [
   {
     path: "/main{\\?*query}",
     controller: async (context) => {
-      const {route: {params}} = context,
-          {query = ""} = params,
-          queryParams = new URLSearchParams(query);
+      const {route} = context,
+          queryParams = extractQueryParams(route);
       return import("./modules/main/index").then(viewDef => {
         return {
           view: {
@@ -52,8 +52,11 @@ export default [
   },
   */
   {
-    path: "/about",
+    path: "/about{\\?*query}",
     controller(context) {
+      const {route} = context;
+      route.params = extractQueryParams(route);
+
       return import("./modules/about/index").then(viewDef => {
         return {
           view: {

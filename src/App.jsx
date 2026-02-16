@@ -14,17 +14,17 @@ import "./style.less";
 /**
  * @typedef {import("simple-router/src/types").Router} Router
  * @typedef {import("simple-router/src/types").RouteInfo} RouteInfo
- * @typedef {import("simple-router/src/types").create} createRouter 
+ * @typedef {import("simple-router/src/types").create} createRouter
  * @typedef {import("solid-js").JSXElement} JSXElement
  */
 
 
 /**
- * 
+ *
  * @param {{
  *  visible: boolean
  *  children: JSXElement
- * }} props 
+ * }} props
  */
 function BottomBar(props) {
   return (
@@ -37,11 +37,11 @@ function BottomBar(props) {
 
 
 /**
- * 
+ *
  * @param {{
  *  routes: RouteDefn[]
  *  transition: string
- * }} props 
+ * }} props
  */
 function App(props) {
   const noop = () => {},
@@ -110,17 +110,17 @@ function App(props) {
     });
 
     const routerSubs = [
-      router.on("before-route", (data) => {
+      router.on("before-route", event => {
         setRouteLoading(true);
       }),
-      router.on("route", (context) => {
-        // console.log("Route Event", context);
+      router.on("route", event => {
         setRouteLoading(false);
-        const {route, view, handler} = context,
+        const context = event.detail,
+            {route, view, handler} = context,
             {state, action, params} = route,
             // viewContext = stageInstance.getViewContext(),
             currentView = stageInstance.currentView(),
-            viewOptions = Object.assign({}, state, {params: params});
+            viewOptions = Object.assign({}, params);
 
         if(view) {
           const {id, viewDef, config} = view;
@@ -133,7 +133,7 @@ function App(props) {
           if((currentView === id) || action !== "POP") {
             stageInstance.pushView(id, viewOptions);
           }else {
-            stageInstance.popView(viewOptions);  
+            stageInstance.popView(viewOptions);
           }
         }else if(typeof handler === "function") {
           handler();
@@ -153,6 +153,7 @@ function App(props) {
           ),
           autoDismiss: false
         });
+        throw error;
       })
     ];
     return [router, routerSubs];
