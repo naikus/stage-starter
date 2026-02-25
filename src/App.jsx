@@ -128,6 +128,12 @@ function App(props) {
             // Stage.view(id, null, config);
             Stage.defineView(viewDef, config);
           }
+
+          const transiton = viewOptions.transition || config.transition;
+          if(transiton) {
+            viewOptions.transition = transiton
+          }
+
           // showView(id, viewOptions, action);
           // console.debug("Show view", id, viewOptions, action);
           if((currentView === id) || action !== "POP") {

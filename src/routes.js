@@ -63,7 +63,8 @@ export default [
             id: "about",
             viewDef: viewDef.default || viewDef,
             config: {
-              actionBar: false
+              actionBar: false,
+              transition: "slide-up"
             }
           }
         };
