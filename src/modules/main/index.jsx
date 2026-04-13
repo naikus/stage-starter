@@ -133,7 +133,7 @@ export default{
           content: () => (
             <pre class="text-small">
               View updated with params: <br />
-              {JSON.stringify(params)}
+              {JSON.stringify(params, null, " ")}
             </pre>
           ),
           autoDismiss: false

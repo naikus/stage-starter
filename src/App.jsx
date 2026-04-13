@@ -120,7 +120,7 @@ function App(props) {
             {state, action, params} = route,
             // viewContext = stageInstance.getViewContext(),
             currentView = stageInstance.currentView(),
-            viewOptions = Object.assign({}, params);
+            viewOptions = Object.assign({}, {params});
 
         if(view) {
           const {id, viewDef, config} = view;

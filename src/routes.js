@@ -21,8 +21,8 @@ export default [
   {
     path: "/main{\\?*query}",
     controller: async (context) => {
-      const {route} = context,
-          queryParams = extractQueryParams(route);
+      const {route} = context;
+      route.params = extractQueryParams(route);
       return import("./modules/main/index").then(viewDef => {
         return {
           view: {
@@ -77,7 +77,7 @@ export default [
       return {
         handler() {
           console.log("Handler route", context);
-          notify.info(`Handling route ${context.route.runtimePath}`);
+          notify.info(`Handling route ${context.route.path}`);
         }
       };
     }

@@ -4,8 +4,17 @@ function extractQueryParams(route) {
     return {};
   }
   const qp = new URLSearchParams(query);
-  const retVal = {}
+  const retVal = {};
   for(const [key, val] of qp) {
+    const existing = retVal[key];
+    if(existing) {
+      if(Array.isArray(existing)) {
+        existing.push(val);
+      }else {
+        retVal[key] = [existing, val];
+      }
+      continue;
+    }
     retVal[key] = val;
   }
   return retVal;
