@@ -11,7 +11,7 @@
   "dependencies": {
     "@naikus/stage": "1.0.7-beta",
     "normalize.css": "8.0.1",
-    "simple-router": "github:naikus/simple-router#cleanup-auto-abort",
+    "simple-router": "github:naikus/simple-router",
     "solid-js": "^1.9.12"
   },
   "devDependencies": {
@@ -19,7 +19,7 @@
     "eslint": "^9.39.4",
     "eslint-plugin-solid": "^0.14.5",
     "less": "^4.2.0",
-    "vite": "^8.0.3",
+    "vite": "^8.0.13",
     "vite-plugin-solid": "^2.11.11"
   }
 }
