@@ -31,8 +31,8 @@ export default {
                 <a target="_blank" href="https://solidjs.com">Solidjs</a>
               </p>
               <div id="about-message" class="message" style={{
-                  "font-size": "0.75em",
-                  "font-family": "monospace"
+                  "font-size": "0.9rem",
+                  "line-height": "1.1rem"
                 }}>
                 View options:
                 <pre>

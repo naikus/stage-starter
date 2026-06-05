@@ -64,7 +64,8 @@ export default [
             viewDef: viewDef.default || viewDef,
             config: {
               actionBar: false,
-              transition: "slide-up"
+              // transition: "slide-up"
+              transition: route.params.transition || "slide-fade"
             }
           }
         };

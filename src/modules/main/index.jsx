@@ -55,8 +55,8 @@ export default{
                 Click the logo to go to the about page. (A random page transition is chosen).
               </p>
               <div class="main-logo anim">
-                <img width="120" height="120"
-                  class="spin-"
+                <img width="100" height="100"
+                  class="spin"
                   style={{
                     "-webkit-tap-highlight-color": "transparent"
                   }}
