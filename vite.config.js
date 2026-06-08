@@ -38,9 +38,11 @@ export default defineConfig({
   },
   plugins: [
     solid(),
+    /*
     legacy({
       targets: ["defaults", "IE 11"]
     })
+    */
   ],
   build: {
     outDir: "../dist"
