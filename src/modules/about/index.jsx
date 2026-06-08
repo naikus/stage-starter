@@ -32,7 +32,8 @@ export default {
               </p>
               <div id="about-message" class="message" style={{
                   "font-size": "0.9rem",
-                  "line-height": "1.1rem"
+                  "line-height": "1.1rem",
+                  "border-radius": "16px"
                 }}>
                 View options:
                 <pre>
